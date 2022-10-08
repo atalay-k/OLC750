@@ -1,0 +1,269 @@
+---
+title: "`r emo::ji('muscle')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` R Faktörler"
+author: "<br> <br> `r emo::ji('woman_teacher')` Doç. Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+
+
+---
+## Faktorler
+
+- Faktorler bir veri setindeki **kesikli/sureksiz** degiskeni gostermektedir. 
+
+- Faktorler analizlerde grupları belirtir. 
+
+- Faktörler hem karakter veri türünden hem de sayısal veri turunden olusturulabilmektedir.
+```{r}
+load("data/hsb2.rda")
+str(hsb2)
+```
+
+---
+## Faktorler
+
+- **table()** fonksiyonu ile frekans tabloları oluşturulur.
+```{r message=FALSE, warning=FALSE}
+table(hsb2$ses)
+```
+
+- Faktor nesnelerinin aldığı değerlere düzey (level) denir.
+
+```{r}
+levels(hsb2$ses)
+```
+
+---
+## Faktorler
+
+- **prop.table()** fonksiyonu ile oran tabloları oluşturulur.
+
+```{r}
+prop.table(table(hsb2$gender))
+
+```
+
+- **table()** fonksiyonu ile belirli bir koşul test edilebilir.
+
+```{r}
+table(hsb2$write>50)
+```
+
+---
+## Faktorler
+
+- **table()** fonksiyonu içinde birden fazla değişken kullanılarak çapraz tablolar oluşturulabilir.
+```{r}
+table(hsb2$ses,hsb2$gender)
+```
+
+```{r}
+prop.table(table(hsb2$ses,hsb2$gender))
+```
+
+---
+## Faktorler
+
+- Özellikle verinin bir alt kümesi ile ilgilendiğinde faktör düzeyleri kullanılabilir.
+
+- Bu işlem **subset()** fonksiyonu ile yapılabilir.
+```{r}
+devletokulu <- subset(hsb2,schtyp == "public")
+head(devletokulu)
+```
+
+
+---
+## Faktorler
+
+- Alt küme seçme işlemi veri düzenlemede en sık kullanılan paketlerden biri olan `dplyr` paketinin **filter()** 
+fonksiyonu ile de yapılabilir.
+
+- `dplyr` paketindeki tüm fonksiyonlar daha az değişken olusturmak amacıyla pipe operatoru `%>%` ile kullanilabilir. `%>%` operator sık kullanılan bir operatordur, kısa yolu: **Ctrl+Shift+M**
+
+Operator kullanimi
+
+```{r eval=FALSE, error=TRUE}
+veri seti %>% filter(degisken adi, degisken adi,..)
+filter(`veri seti,degisken adi, degisken adi,..)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+hsb2_1 <- hsb2 %>%   filter(schtyp == "public")
+```
+
+---
+## Faktorler
+
+- Veride alt grup seçme işlemi yapılsa bile, önceki faktör düzeyleri kalabilir. Faktör düzeyleri kaldırmak için **droplevels()** fonksiyonu kullanılabilir.
+
+
+```{r}
+table(devletokulu$schtyp)
+devletokulu$schtyp <- droplevels(devletokulu$schtyp)
+table(devletokulu$schtyp)
+```
+
+---
+## Faktorler
+
+```{r fig.height=6, fig.width=6}
+library(ggplot2)
+ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +    geom_point()
+```
+
+---
+## Faktorler
+
+```{r}
+# cinsiyet nesnesi olusturulması
+
+ad  <-  c("Ali","Elif","Su","Deniz","Aras","Berk","Can","Ece","Efe","Arda")
+cinsiyet <-c("erkek","kadin","kadin","kadin","erkek","erkek","erkek","kadin","erkek","erkek")
+
+```
+
+- cinsiyet nesnesinin faktore/sureksiz degiskene donusturulmesi `as.factor()` ya da `factor()` fonksiyonlari ile saglanir.
+
+```{r}
+cinsiyet <- factor(cinsiyet)
+cinsiyet
+```
+
+---
+## Duzey Isimlendirme - I
+
+- Faktor nesnelerin (grup duzeyine sahip nesnelerin) grup duzeyleri `levels()` fonksiyonu ile belirlenebilir.
+
+```{r}
+levels(cinsiyet) # faktor duzeyleri alfabetik siralanir.
+```
+
+- Faktor nesneler grup adlari ile olusturulabilecegi gibi, sayisal nesnelerde faktor olarak tanimlanabilir. Olusan nesnenin grup isimleri/duzeyleri `levels()` fonksiyonu ile olusturulabilir. cinsiyet2 nesnesi olusturmanin diger bir yolu ise asagidaki gibidir.
+
+```{r}
+# 1 erkek, 2 kadin olmak uzere yeni nesne olusturulmustur.
+cinsiyet2 <-c(1,2,2,2,1,1,1,2,1,1)
+cinsiyet2 <- factor(cinsiyet2)
+cinsiyet2
+levels(cinsiyet2)
+```
+
+---
+## Duzey Isimlendirme - I
+
+- Sayisal degere sahip olan faktor nesnesine duzey isimleri `levels()` fonksiyonu ile atanabilir.
+
+```{r}
+levels(cinsiyet2) <- c("erkek","kadin")
+cinsiyet2
+```
+
+---
+## Duzey Siralamasi - I
+
+- Faktor duzeylerinin siralanmasi ozellikle dogrusal modellerde onemlidir. Eger duzeylerin sirasi onemli ise, `order()` fonksiyonunu kullanarak siralama yapabilmektedir.
+
+```{r message=FALSE, warning=FALSE}
+attach(diamonds)
+levels(cut)
+```
+
+- Sıralandırılmıs bir faktor
+---
+## Duzey Siralamasi - II
+
+- 10 kisiye alinacak olan basketbol formalarinin beden vektoru asagidaki gibi olusturulmustur.
+```{r}
+
+beden <- c("S","M","S","M","S","L","M","L","S","S")
+(beden <- factor(beden))
+```
+- `beden` nesnesi siralanmak istediginde bu siralama alfabetik siralama ile yapilir. Ancak bu siralama farkli sekilde yapilmak istendiginde, `ordered()` fonksiyonu kullanılarak faktorlerde duzey siralamasi yapilabilir.
+```{r}
+# Duzeylerin siralamasinin kucuten buyuge yapilmasi
+(beden<- ordered(beden, levels=c("S","M","L")))
+```
+
+---
+## Duzey Siralamasi - III
+
+- Faktor nesnelerinin karakter degerleri sayisal degerlere donusturulebilir.
+
+```{r}
+beden.sayisal <- as.numeric(beden)
+beden.sayisal
+```
+
+- Sayisal veride olsa matematiksel islem yapilamaz. Sayisal degerler sadece duzeyler icindir. Duzeyleri `levels()` fonksiyonu ile isimlendirilebilir.
+
+Bu sekilde daha onceden sayisal olarak kayitli olan faktor nesnelere de duzey atanabilir.
+
+```{r}
+levels(beden.sayisal) <-c("S","M","L")
+beden.sayisal
+```
+
+---
+## Faktör oluşturma
+
+- Duzeyleri belirli bir oruntude olan faktorler olusturmak icin, `gl()` fonksiyonu kullanilabilir.
+
+- Fonksiyona duzey sayisi *(n)*,
+- her bir duzeyin kac kere tekrar edecegi *(k)*,
+- faktor uzunlugu (length),
+- istenirse duzeylerin etiketleri ve duzeylerin siralanma durumu (ordered) girilebilir.
+
+---
+## Faktör oluşturma
+
+cikti nasil olusturulur?
+
+```{r echo=FALSE}
+
+gl(4, 2,10, labels = c("0", "A","B","AB"))
+
+```
+
+cikti nasil olusturulur?
+
+```{r echo=FALSE}
+
+gl(8, 2,20, labels = c("A", "B","C","D","E","F1","F2","F3"),ordered=TRUE )
+```
+
+---
+## **KAYNAKCA**
+
+  **Atar, B., Atalay Kabasakal, K, Ünsal Özberk, E. B., Özberk, E. H. Ve Kıbrıslıoğlu Uysal, N. (2020). R ile Veri Analizi ve Psikometri Uygulamaları, Editör, Pegem Akademi, Ankara.**
+
+  Faktorlerle ilgili daha ust duzey islemler icin `forcats` paketi kullanılabilir. <http://www.flutterbys.com.au/stats/downloads/slides/figure/factors.pdf>
+
+
+---
+## **ODEV**
+
+  -   Kitap Bölüm 2 1. Soruyu tamamlayiniz.
+
+-   swirl package - learn R in R (Programming ilk 6 modul)
+
+
+-   *NOT: Ders2_uygulama dosyasi uzerinde calisiniz.*
+
+
+<!-- https://irene.vrbik.ok.ubc.ca/slides/NHSRxaringan.html?panelset1=tab-12#13 -->

@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>💪 R ile Veri Analizi</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
+    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 💪 R ile Veri Analizi
+]
+.subtitle[
+## <br> 📉 R Veri Setleri
+]
+.author[
+### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
+]
+.date[
+### <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
+]
+
+---
+
+
+## R Veri Setleri .huge[📊]
+
+.hand[İçerik...]
+ 
+   - Veri Seti Oluşturma
+   
+   - Alt Küme Seçimi
+   
+   - Veri Betimleme
+
+ 
+   
+---
+
+## Veri Setleri
+
+- Veri setleri iki boyutludur.
+
+- R'da bir çok fonksiyonun veri setleri ile çalışmaktadır. 
+
+- Veri setleri R ortamında `data.frame()` fonksiyonu ile oluşturulabilir.
+
+- `data.frame()` fonksiyonu ile aynı uzunluktaki vektörlerden bir veri seti oluşturulabilir.
+
+---
+## R Nesneler
+
+.pull-left[
+
+```r
+ad  &lt;-  c("Ali","Elif","Su","Deniz","Aras",
+          "Berk","Can","Ece","Efe","Arda")
+boy &lt;- c(160,165,170,155,167,162,
+         169,158,160,164)
+kilo &lt;- c(55,55,57,50,48,65,
+          58,62,45,47)
+beden &lt;- c("S","M","S","M","S",
+           "L","M","L","S","S")
+beden &lt;- factor(beden)
+
+
+df &lt;- data.frame(ad,boy, kilo, beden) 
+```
+]
+
+.pull-right[
+
+```r
+df # 4 sütunlu df 3 farklı yapı içerir
+```
+
+```
+##       ad boy kilo beden
+## 1    Ali 160   55     S
+## 2   Elif 165   55     M
+## 3     Su 170   57     S
+## 4  Deniz 155   50     M
+## 5   Aras 167   48     S
+## 6   Berk 162   65     L
+## 7    Can 169   58     M
+## 8    Ece 158   62     L
+## 9    Efe 160   45     S
+## 10  Arda 164   47     S
+```
+]
+
+---
+## R Nesneler
+
+
+- Eğer uzunlukları farklı olan vektörlerle veri setleri oluşturulmaya çalışılırsa kısa vektör, uzun vektör uzunluğunda tekrar eder.
+
+
+```r
+# 4 farklı uzunlukta vektör oluşturulması
+x &lt;- 11:14; y &lt;- 10; M &lt;- c(10,35); N &lt;- 2:4
+```
+
+.pull-left[
+
+```r
+data.frame(x, y) # (4,1)
+```
+
+```
+##    x  y
+## 1 11 10
+## 2 12 10
+## 3 13 10
+## 4 14 10
+```
+]
+
+--
+
+.pull-right[
+
+```r
+data.frame(x, M) # (4,2)
+```
+
+```
+##    x  M
+## 1 11 10
+## 2 12 35
+## 3 13 10
+## 4 14 35
+```
+]
+
+---
+## data.frame()
+
+
+.pull-left[
+
+```r
+data.frame(x,N)  #(4,3) hata
+```
+
+```
+## Error in data.frame(x, N): arguments imply differing number of rows: 4, 3
+```
+]
+
+--
+
+.pull-right[
+
+```r
+data.frame(y, M) #(1,2)
+```
+
+```
+##    y  M
+## 1 10 10
+## 2 10 35
+```
+]
+
+---
+## data.frame()
+
+
+.pull-left[
+
+```r
+data.frame(y, N) #(1,3)
+```
+
+```
+##    y N
+## 1 10 2
+## 2 10 3
+## 3 10 4
+```
+]
+
+--
+
+.pull-right[
+
+```r
+data.frame(M, N) #(2,3)
+```
+
+```
+## Error in data.frame(M, N): arguments imply differing number of rows: 2, 3
+```
+]
+
+
+
+---
+## Veri Setleri
+
+- Temel pakette yer alan veri setlerinin bir listesi
+
+
+```r
+data() # yeni bir pencerede açılır.
+```
+
+- Veri setlerinin yer aldığı paketlerde bulunmaktadır.
+
+
+```r
+# install.packages("datasets")
+library (datasets)
+# install.packages("dslabs")
+library (dslabs)
+```
+
+---
+## Veri Setleri
+- Hazır veri setleri çalışma ortamına `data()` fonksiyonu ile aktarılabilir.
+
+
+```r
+data(WorldPhones) # environmete kontrol ediniz. 
+```
+
+- hazır veri setlerini inceleme
+
+
+```r
+data(cars) # enviromente ekler
+iris      # enviromente eklemez!
+```
+
+```
+##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1            5.1         3.5          1.4         0.2     setosa
+## 2            4.9         3.0          1.4         0.2     setosa
+## 3            4.7         3.2          1.3         0.2     setosa
+## 4            4.6         3.1          1.5         0.2     setosa
+## 5            5.0         3.6          1.4         0.2     setosa
+## 6            5.4         3.9          1.7         0.4     setosa
+## 7            4.6         3.4          1.4         0.3     setosa
+## 8            5.0         3.4          1.5         0.2     setosa
+## 9            4.4         2.9          1.4         0.2     setosa
+## 10           4.9         3.1          1.5         0.1     setosa
+## 11           5.4         3.7          1.5         0.2     setosa
+## 12           4.8         3.4          1.6         0.2     setosa
+## 13           4.8         3.0          1.4         0.1     setosa
+## 14           4.3         3.0          1.1         0.1     setosa
+## 15           5.8         4.0          1.2         0.2     setosa
+## 16           5.7         4.4          1.5         0.4     setosa
+## 17           5.4         3.9          1.3         0.4     setosa
+## 18           5.1         3.5          1.4         0.3     setosa
+## 19           5.7         3.8          1.7         0.3     setosa
+## 20           5.1         3.8          1.5         0.3     setosa
+## 21           5.4         3.4          1.7         0.2     setosa
+## 22           5.1         3.7          1.5         0.4     setosa
+## 23           4.6         3.6          1.0         0.2     setosa
+## 24           5.1         3.3          1.7         0.5     setosa
+## 25           4.8         3.4          1.9         0.2     setosa
+## 26           5.0         3.0          1.6         0.2     setosa
+## 27           5.0         3.4          1.6         0.4     setosa
+## 28           5.2         3.5          1.5         0.2     setosa
+## 29           5.2         3.4          1.4         0.2     setosa
+## 30           4.7         3.2          1.6         0.2     setosa
+## 31           4.8         3.1          1.6         0.2     setosa
+## 32           5.4         3.4          1.5         0.4     setosa
+## 33           5.2         4.1          1.5         0.1     setosa
+## 34           5.5         4.2          1.4         0.2     setosa
+## 35           4.9         3.1          1.5         0.2     setosa
+## 36           5.0         3.2          1.2         0.2     setosa
+## 37           5.5         3.5          1.3         0.2     setosa
+## 38           4.9         3.6          1.4         0.1     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 40           5.1         3.4          1.5         0.2     setosa
+## 41           5.0         3.5          1.3         0.3     setosa
+## 42           4.5         2.3          1.3         0.3     setosa
+## 43           4.4         3.2          1.3         0.2     setosa
+## 44           5.0         3.5          1.6         0.6     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 46           4.8         3.0          1.4         0.3     setosa
+## 47           5.1         3.8          1.6         0.2     setosa
+## 48           4.6         3.2          1.4         0.2     setosa
+## 49           5.3         3.7          1.5         0.2     setosa
+## 50           5.0         3.3          1.4         0.2     setosa
+## 51           7.0         3.2          4.7         1.4 versicolor
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 53           6.9         3.1          4.9         1.5 versicolor
+## 54           5.5         2.3          4.0         1.3 versicolor
+## 55           6.5         2.8          4.6         1.5 versicolor
+## 56           5.7         2.8          4.5         1.3 versicolor
+## 57           6.3         3.3          4.7         1.6 versicolor
+## 58           4.9         2.4          3.3         1.0 versicolor
+## 59           6.6         2.9          4.6         1.3 versicolor
+## 60           5.2         2.7          3.9         1.4 versicolor
+## 61           5.0         2.0          3.5         1.0 versicolor
+## 62           5.9         3.0          4.2         1.5 versicolor
+## 63           6.0         2.2          4.0         1.0 versicolor
+## 64           6.1         2.9          4.7         1.4 versicolor
+## 65           5.6         2.9          3.6         1.3 versicolor
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 67           5.6         3.0          4.5         1.5 versicolor
+## 68           5.8         2.7          4.1         1.0 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 70           5.6         2.5          3.9         1.1 versicolor
+## 71           5.9         3.2          4.8         1.8 versicolor
+## 72           6.1         2.8          4.0         1.3 versicolor
+## 73           6.3         2.5          4.9         1.5 versicolor
+## 74           6.1         2.8          4.7         1.2 versicolor
+## 75           6.4         2.9          4.3         1.3 versicolor
+## 76           6.6         3.0          4.4         1.4 versicolor
+## 77           6.8         2.8          4.8         1.4 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 79           6.0         2.9          4.5         1.5 versicolor
+## 80           5.7         2.6          3.5         1.0 versicolor
+## 81           5.5         2.4          3.8         1.1 versicolor
+## 82           5.5         2.4          3.7         1.0 versicolor
+## 83           5.8         2.7          3.9         1.2 versicolor
+## 84           6.0         2.7          5.1         1.6 versicolor
+## 85           5.4         3.0          4.5         1.5 versicolor
+## 86           6.0         3.4          4.5         1.6 versicolor
+## 87           6.7         3.1          4.7         1.5 versicolor
+## 88           6.3         2.3          4.4         1.3 versicolor
+## 89           5.6         3.0          4.1         1.3 versicolor
+## 90           5.5         2.5          4.0         1.3 versicolor
+## 91           5.5         2.6          4.4         1.2 versicolor
+## 92           6.1         3.0          4.6         1.4 versicolor
+## 93           5.8         2.6          4.0         1.2 versicolor
+## 94           5.0         2.3          3.3         1.0 versicolor
+## 95           5.6         2.7          4.2         1.3 versicolor
+## 96           5.7         3.0          4.2         1.2 versicolor
+## 97           5.7         2.9          4.2         1.3 versicolor
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 99           5.1         2.5          3.0         1.1 versicolor
+## 100          5.7         2.8          4.1         1.3 versicolor
+## 101          6.3         3.3          6.0         2.5  virginica
+## 102          5.8         2.7          5.1         1.9  virginica
+## 103          7.1         3.0          5.9         2.1  virginica
+## 104          6.3         2.9          5.6         1.8  virginica
+## 105          6.5         3.0          5.8         2.2  virginica
+## 106          7.6         3.0          6.6         2.1  virginica
+## 107          4.9         2.5          4.5         1.7  virginica
+## 108          7.3         2.9          6.3         1.8  virginica
+## 109          6.7         2.5          5.8         1.8  virginica
+## 110          7.2         3.6          6.1         2.5  virginica
+## 111          6.5         3.2          5.1         2.0  virginica
+## 112          6.4         2.7          5.3         1.9  virginica
+## 113          6.8         3.0          5.5         2.1  virginica
+## 114          5.7         2.5          5.0         2.0  virginica
+## 115          5.8         2.8          5.1         2.4  virginica
+## 116          6.4         3.2          5.3         2.3  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 118          7.7         3.8          6.7         2.2  virginica
+## 119          7.7         2.6          6.9         2.3  virginica
+## 120          6.0         2.2          5.0         1.5  virginica
+## 121          6.9         3.2          5.7         2.3  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 124          6.3         2.7          4.9         1.8  virginica
+## 125          6.7         3.3          5.7         2.1  virginica
+## 126          7.2         3.2          6.0         1.8  virginica
+## 127          6.2         2.8          4.8         1.8  virginica
+## 128          6.1         3.0          4.9         1.8  virginica
+## 129          6.4         2.8          5.6         2.1  virginica
+## 130          7.2         3.0          5.8         1.6  virginica
+## 131          7.4         2.8          6.1         1.9  virginica
+## 132          7.9         3.8          6.4         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 136          7.7         3.0          6.1         2.3  virginica
+## 137          6.3         3.4          5.6         2.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 139          6.0         3.0          4.8         1.8  virginica
+## 140          6.9         3.1          5.4         2.1  virginica
+## 141          6.7         3.1          5.6         2.4  virginica
+## 142          6.9         3.1          5.1         2.3  virginica
+## 143          5.8         2.7          5.1         1.9  virginica
+## 144          6.8         3.2          5.9         2.3  virginica
+## 145          6.7         3.3          5.7         2.5  virginica
+## 146          6.7         3.0          5.2         2.3  virginica
+## 147          6.3         2.5          5.0         1.9  virginica
+## 148          6.5         3.0          5.2         2.0  virginica
+## 149          6.2         3.4          5.4         2.3  virginica
+## 150          5.9         3.0          5.1         1.8  virginica
+```
+
+---
+## Veri Setleri
+
+- Boyut sorgulamamak için farklı fonksiyonlar kullanılabilir.
+
+
+```r
+dim(cars) # satir Sutun
+```
+
+```
+## [1] 50  2
+```
+
+```r
+nrow(cars)
+```
+
+```
+## [1] 50
+```
+
+```r
+ncol(cars)
+```
+
+```
+## [1] 2
+```
+
+---
+## Veri Setleri
+
+
+- Veri setlerin ilk satirlar `head()`, son satırları ise `tail()` fonksiyonu ile incelenebilir. `head()` fonksiyonu olağan olarak ilk 6 satırı yazdırır.
+
+```r
+head(WorldPhones)
+```
+
+```
+##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer
+## 1951  45939  21574 2876   1815    1646     89      555
+## 1956  60423  29990 4708   2568    2366   1411      733
+## 1957  64721  32510 5230   2695    2526   1546      773
+## 1958  68484  35218 6662   2845    2691   1663      836
+## 1959  71799  37598 6856   3000    2868   1769      911
+## 1960  76036  40341 8220   3145    3054   1905     1008
+```
+
+- Yazdırılacak satır sayısı `n` argümanı ile ayarlanır.
+
+```r
+head(WorldPhones,n=2)
+```
+
+```
+##      N.Amer Europe Asia S.Amer Oceania Africa Mid.Amer
+## 1951  45939  21574 2876   1815    1646     89      555
+## 1956  60423  29990 4708   2568    2366   1411      733
+```
+
+---
+## Veri Setleri
+
+- `datasets` paketinde yer alan veri setlerinde `examples()` bölümünde çeşitli örneklere yer verilmiştir. Örneğin `example(WorldPhones)`
+
+
+```r
+matplot(rownames(WorldPhones), WorldPhones, type = "b", log = "y",
+        xlab = "Year", ylab = "Number of telephones (1000's)")
+legend("bottomright", colnames(WorldPhones), col = 1:6, lty = 1:5,
+       pch = rep(21, 7))
+title(main = "World phones data: log scale for response")
+```
+
+![](T_Veri_Setleri_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+
+---
+## Veri Setleri
+
+-  Temel paket hariç diğer paketlerdeki veri setlerine `data(veriseti, package="packagename")` şeklinde ulaşılabilir.
+
+
+```r
+data(CTTdata, package="CTT") 
+head(CTTdata)
+```
+
+```
+##   i1 i2 i3 i4 i5 i6 i7 i8 i9 i10 i11 i12 i13 i14 i15 i16 i17 i18 i19 i20
+## 1  A  B  B  B  B  C  B  C  B   D   D   C   A   B   A   D   B   D   A   C
+## 2  C  D  A  D  C  B  D  B  D   A   D   D   A   B   C   C   C   A   D   C
+## 3  B  D  C  D  A  B  A  C  B   D   B   A   A   D   D   A   B   C   B   B
+## 4  C  C  D  D  D  A  A  D  D   D   A   B   C   B   D   B   C   B   C   A
+## 5  A  A  A  D  A  A  D  B  A   C   A   D   C   C   C   C   A   A   A   B
+## 6  A  A  B  C  C  A  A  A  A   A   B   C   C   C   C   B   D   C   D   D
+```
+
+---
+## Veri Setleri
+
+🔗[sik kullanılan veri setleri ile ilgili bir yazi:](http://r-tutorials.com/famous-useful-pre-installed-exercise-datasets-r/)
+
+🔗[tüm veri setlerine ulaşabilmek için ise:](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
+
+---
+## Veri Setleri
+
+- Kullanışlı olmasa da excel, spps gibi veri girişi sağlayan bir arayüz bulunmaktadır.
+
+
+```r
+df1&lt;- data.frame() 
+df1 &lt;- edit(df1)
+# duzenlemek icin
+fix(df)
+# gozatmak icin 
+View(df)
+```
+
+---
+## Veri setlerinde eleman secme
+
+Veri setlerinde eleman secme matrislerdeki gibidir.
+
+`df[satirindeks, sutunindeks]`
+
+
+```r
+# df'nin birinci satir elemanlarının seçilmesi
+
+# df'nin birinci sütun elemanlarının seçilmesi
+ 
+# df'nin ikinci satir elemanlarının seçilmesi
+
+# df'nin ikinci sütun elemanlarının seçilmesi
+
+# df'nin birinci satir üçüncü sütun elemanlarının seçilmesi
+
+# Ali, Elif ve Su isimli öğrencilerin boylarının seçilmesi
+#
+# Ali, Su ve Ece'nin boylarının ve kilolarının seçilmesi
+```
+
+
+
+---
+## Veri setlerinde eleman seçme
+
+.pull-left[
+- Veri setlerinde satır elemanları yazdırıldığında veri seti (`data.frame)`, sütun elemanları yazdırıldığında ise vektör (`vector)` oluşmaktadır.
+
+
+```r
+# satir secimi
+is.data.frame(df[1,])
+```
+
+```
+## [1] TRUE
+```
+
+```r
+# sutun secimi
+is.data.frame(df[,1])
+```
+
+```
+## [1] FALSE
+```
+]
+
+--
+
+.pull-left[
+- Sütun secimi veri seti (`data.frame`) olarak yapılmak istenirse, `drop` argümanı FALSE değeri ile kullanılır.
+
+
+```r
+df[,1,drop=FALSE]
+```
+
+```
+##       ad
+## 1    Ali
+## 2   Elif
+## 3     Su
+## 4  Deniz
+## 5   Aras
+## 6   Berk
+## 7    Can
+## 8    Ece
+## 9    Efe
+## 10  Arda
+```
+
+]
+
+---
+## Veri setlerinde eleman seçme
+
+- Veri seçim işlemi icin `subset()` fonksiyonu kullanılabilir.
+
+- `?subset` bir fonksiyonu ilk daha kullanıyorsanız, mutlaka yardım sayfasını inceleyin. 
+
+`subset(veriseti, kosul/Kosullar)`
+
+
+
+.pull-left[
+
+```r
+# Boyu 165cm den uzun öğrencilerin 
+# bilgilerinin seçilmesi
+subset(df, boy &gt;165)
+```
+
+```
+##     ad boy kilo beden
+## 3   Su 170   57     S
+## 5 Aras 167   48     S
+## 7  Can 169   58     M
+```
+]
+
+--
+.pull-right[
+
+```r
+# Boyu 165cm den uzun öğrencilerin 
+# bilgilerinin seçilmesi
+subset(df, boy &gt;165)
+```
+
+```
+##     ad boy kilo beden
+## 3   Su 170   57     S
+## 5 Aras 167   48     S
+## 7  Can 169   58     M
+```
+]
+
+---
+## subset()
+
+- Fonksiyonun yardım sayfasındaki örnekleri inceleyebilirsiniz.
+
+.pull-left[
+
+```r
+subset(airquality, Temp &gt; 90, 
+select = c(Ozone, Temp))
+```
+
+```
+##     Ozone Temp
+## 42     NA   93
+## 43     NA   92
+## 69     97   92
+## 70     97   92
+## 75     NA   91
+## 102    NA   92
+## 120    76   97
+## 121   118   94
+## 122    84   96
+## 123    85   94
+## 124    96   91
+## 125    78   92
+## 126    73   93
+## 127    91   93
+```
+]
+
+--
+.pull-right[
+
+```r
+subset(airquality, Day == 1, select = -Temp)
+```
+
+```
+##     Ozone Solar.R Wind Month Day
+## 1      41     190  7.4     5   1
+## 32     NA     286  8.6     6   1
+## 62    135     269  4.1     7   1
+## 93     39      83  6.9     8   1
+## 124    96     167  6.9     9   1
+```
+]
+
+---
+## subset()
+
+.pull-left[
+
+```r
+## df verisi sadece "S" beden 
+subset(df,beden =="S")
+```
+
+```
+##      ad boy kilo beden
+## 1   Ali 160   55     S
+## 3    Su 170   57     S
+## 5  Aras 167   48     S
+## 9   Efe 160   45     S
+## 10 Arda 164   47     S
+```
+]
+
+--
+.pull-right[
+
+```r
+# 50 kilo alti ve belilri sutunlar
+subset(df,kilo &lt;50,select = ad:boy)
+```
+
+```
+##      ad boy
+## 5  Aras 167
+## 9   Efe 160
+## 10 Arda 164
+```
+]
+
+---
+## Eleman ekleme işlemi
+
+- Veri setine yeni sütun ekleme isleme `$` operatörü ile `[[]]` operatörü ile `cbind()` fonksiyonları ile yapılabilmektedir.
+
+.pull-left[
+
+```r
+df2 &lt;- data.frame(
+      S1 = sample(0:100,20),
+      S2 = runif(n=20 ,min= 50 , max=70)
+)
+
+head(df2)
+```
+
+```
+##   S1       S2
+## 1 40 55.34972
+## 2 94 58.08091
+## 3 55 55.27409
+## 4 53 63.90025
+## 5 57 57.76045
+## 6 61 64.14275
+```
+
+```r
+df2 &lt;- round(df2,2)
+```
+
+]
+
+--
+.pull-right[
+
+
+`$` operatörü ile sütun ekleme
+
+
+```r
+df2$S3 &lt;- sample(60:80,20,replace = TRUE)
+head(df2)
+```
+
+```
+##   S1    S2 S3
+## 1 40 55.35 71
+## 2 94 58.08 76
+## 3 55 55.27 77
+## 4 53 63.90 65
+## 5 57 57.76 66
+## 6 61 64.14 72
+```
+
+]
+
+---
+## Eleman ekleme işlemi
+
+.pull-left[
+
+- `[[]]` operatörü ile sütun ekleme
+
+- df2 veri setinin ilk üç sütunun `rowMeans()` fonksiyonu ile ortalamasının alınarak ort isimi ile veri setine eklenmesi
+
+
+```r
+df2[["ort"]] &lt;- round(rowMeans(df2),2)
+head(df2)
+```
+
+```
+##   S1    S2 S3   ort
+## 1 40 55.35 71 55.45
+## 2 94 58.08 76 76.03
+## 3 55 55.27 77 62.42
+## 4 53 63.90 65 60.63
+## 5 57 57.76 66 60.25
+## 6 61 64.14 72 65.71
+```
+
+]
+
+--
+
+.pull-right[
+
+- `cbind()` fonksiyonu ile sütun ekleme
+
+
+```r
+cbind( df2, S4 = 10)
+```
+
+```
+##    S1    S2 S3   ort S4
+## 1  40 55.35 71 55.45 10
+## 2  94 58.08 76 76.03 10
+## 3  55 55.27 77 62.42 10
+## 4  53 63.90 65 60.63 10
+## 5  57 57.76 66 60.25 10
+## 6  61 64.14 72 65.71 10
+## 7  93 56.51 64 71.17 10
+## 8  16 51.81 63 43.60 10
+## 9  23 60.77 74 52.59 10
+## 10 49 66.50 60 58.50 10
+## 11  9 53.41 63 41.80 10
+## 12 56 65.84 73 64.95 10
+## 13 71 69.09 61 67.03 10
+## 14 63 59.62 75 65.87 10
+## 15 14 65.71 77 52.24 10
+## 16 72 51.80 75 66.27 10
+## 17 99 64.57 70 77.86 10
+## 18 42 50.97 70 54.32 10
+## 19 83 54.21 74 70.40 10
+## 20 30 55.42 64 49.81 10
+```
+
+]
+
+---
+## Eleman çıkarma işlemi
+
+- Veri setinden istenilen sütunun çıkarılabilir. Bu işlemi yapmak için iki farklı yol kullanılabilir. 
+
+.pull-left[
+
+`-` operatörü
+
+
+```r
+head(df2,3)
+```
+
+```
+##   S1    S2 S3   ort
+## 1 40 55.35 71 55.45
+## 2 94 58.08 76 76.03
+## 3 55 55.27 77 62.42
+```
+
+```r
+df2 &lt;- df2[,-4] 
+head(df2,3)
+```
+
+```
+##   S1    S2 S3
+## 1 40 55.35 71
+## 2 94 58.08 76
+## 3 55 55.27 77
+```
+]
+
+--
+
+.pull-right[
+
+`NULL` operatörü
+
+
+```r
+df2$S3 &lt;- NULL
+head(df2,3)
+```
+
+```
+##   S1    S2
+## 1 40 55.35
+## 2 94 58.08
+## 3 55 55.27
+```
+
+]
+
+---
+## Eleman ekleme işlemi
+
+- Veri setlerine değişken ekleyip, çıkarabileceğiniz gibi gözlem de ekleyip, çıkarabilirsiniz. Veri setine iki satır ekleme
+
+
+```r
+dim(df2)
+```
+
+```
+## [1] 20  2
+```
+
+```r
+# eklenecek iki satırlık veri seti oluşturma
+df3 &lt;- data.frame(S1=c(50,60),S2=c(55.3,65.5))
+# yeni veri seti
+df4 &lt;- rbind (df2,df3)
+dim(df4)
+```
+
+```
+## [1] 22  2
+```
+
+---
+## Veri yapisi
+
+- Veri setlerinin yapısını incelemek icin `str()` fonksiyonundan yararlanılmaktadır.
+
+
+```r
+str(df)
+```
+
+```
+## 'data.frame':	10 obs. of  4 variables:
+##  $ ad   : chr  "Ali" "Elif" "Su" "Deniz" ...
+##  $ boy  : num  160 165 170 155 167 162 169 158 160 164
+##  $ kilo : num  55 55 57 50 48 65 58 62 45 47
+##  $ beden: Factor w/ 3 levels "L","M","S": 3 2 3 2 3 1 2 1 3 3
+```
+
+- "df" veri seti 10 gözlemden, 4 değişken. Her bir değişkenin önünde `$` operatörü olduğuna dikkat ediniz.
+
+
+---
+## Veri yapısı
+
+- veri setinin incelenmek için kullanılabilecek diğer fonksiyon ise `attributes()`
+
+
+```r
+attributes(df)
+```
+
+```
+## $names
+## [1] "ad"    "boy"   "kilo"  "beden"
+## 
+## $class
+## [1] "data.frame"
+## 
+## $row.names
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+---
+## Isimlendirme
+
+- Veri setleri vektör birleştirme üzerinden yapılırsa, vektör adları sütun ismi olarak kullanılır. Ancak bu isimler değiştirilebilir. Bu işlem `data.frame()` fonksiyonu içinde yapılabilir.
+
+
+```r
+df &lt;- data.frame(isim = ad,
+                 boyolcum = boy,
+                 kiloolcum= kilo, 
+                 bedenolcum=beden)
+df
+```
+
+```
+##     isim boyolcum kiloolcum bedenolcum
+## 1    Ali      160        55          S
+## 2   Elif      165        55          M
+## 3     Su      170        57          S
+## 4  Deniz      155        50          M
+## 5   Aras      167        48          S
+## 6   Berk      162        65          L
+## 7    Can      169        58          M
+## 8    Ece      158        62          L
+## 9    Efe      160        45          S
+## 10  Arda      164        47          S
+```
+
+---
+## İsimlendirme
+
+- Veri seti isimlendirme de diğer bir yol ise `names()` ya da `colnames()` fonksiyonlarıdır.
+
+
+```r
+df &lt;- data.frame(ad,boy,kilo,beden)
+names(df) &lt;- c("isim","boyolcum ","kiloolcum","bedenolcum")
+df
+```
+
+```
+##     isim boyolcum  kiloolcum bedenolcum
+## 1    Ali       160        55          S
+## 2   Elif       165        55          M
+## 3     Su       170        57          S
+## 4  Deniz       155        50          M
+## 5   Aras       167        48          S
+## 6   Berk       162        65          L
+## 7    Can       169        58          M
+## 8    Ece       158        62          L
+## 9    Efe       160        45          S
+## 10  Arda       164        47          S
+```
+
+---
+## Betimsel istatistikler
+
+- Veri setinin tümüne ilişkin betimsel istatistikler
+
+
+```r
+summary(cars)
+```
+
+```
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+```
+
+--
+
+- Veri setinin tek değişkenine ilişkin betimsel istatistikler
+
+
+```r
+summary(cars$speed)
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     4.0    12.0    15.0    15.4    19.0    25.0
+```
+
+---
+## attach() fonksiyonu
+
+`attach()` fonksiyonu ile bir veri setinin sütunları sütun isimi ile enviromente eklenir. Aynı işlem `detach()` fonksiyonu ile tersine alınabilir.
+
+
+```r
+summary(women$height)   
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    58.0    61.5    65.0    65.0    68.5    72.0
+```
+
+```r
+attach(women)
+summary(height)   # Ayni nesne isimi ile çağırılır.
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    58.0    61.5    65.0    65.0    68.5    72.0
+```
+
+```r
+height &lt;- height*2.54   # Bunu yapmamaya calisin!!
+find("height")
+```
+
+```
+## [1] ".GlobalEnv" "women"
+```
+
+
+
+---
+## attach() fonksiyonu
+
+
+```r
+summary(height)         # Yeni değişken
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   147.3   156.2   165.1   165.1   174.0   182.9
+```
+
+```r
+rm(height)
+detach("women")
+summary(women$height)   # unchanged
+```
+
+```
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    58.0    61.5    65.0    65.0    68.5    72.0
+```
+
+---
+## Veri setlerini düzenleme
+
+
+- BKI vektörünün üç farklı yollar farklı isimler ile veri setine eklenmesi 
+.pull-left-narrow[
+
+```r
+df &lt;-data.frame(ad,boy,kilo)
+df
+```
+
+```
+##       ad boy kilo
+## 1    Ali 160   55
+## 2   Elif 165   55
+## 3     Su 170   57
+## 4  Deniz 155   50
+## 5   Aras 167   48
+## 6   Berk 162   65
+## 7    Can 169   58
+## 8    Ece 158   62
+## 9    Efe 160   45
+## 10  Arda 164   47
+```
+]
+
+--
+.pull-right-wide[
+
+
+
+```r
+df$BKI &lt;- df$kilo/ (df$boy/100 * df$boy/100)
+df[["BKI2"]] &lt;- df$kilo/ (df$boy/100 * df$boy/100)
+df &lt;- cbind(df, BKI3 = df$kilo/ (df$boy/100 * df$boy/100))
+```
+]
+
+
+---
+## Veri setlerini düzenleme
+
+- Eklenen değişkenlerin çıkarılması
+
+.pull-left-wide[
+
+```r
+df 
+```
+
+```
+##       ad boy kilo      BKI     BKI2     BKI3
+## 1    Ali 160   55 21.48438 21.48438 21.48438
+## 2   Elif 165   55 20.20202 20.20202 20.20202
+## 3     Su 170   57 19.72318 19.72318 19.72318
+## 4  Deniz 155   50 20.81165 20.81165 20.81165
+## 5   Aras 167   48 17.21109 17.21109 17.21109
+## 6   Berk 162   65 24.76757 24.76757 24.76757
+## 7    Can 169   58 20.30741 20.30741 20.30741
+## 8    Ece 158   62 24.83576 24.83576 24.83576
+## 9    Efe 160   45 17.57812 17.57812 17.57812
+## 10  Arda 164   47 17.47472 17.47472 17.47472
+```
+]
+
+--
+.pull-right-narrow[
+
+```r
+df$BKI3 &lt;- NULL
+
+df$BKI2 &lt;- NULL
+df
+```
+
+```
+##       ad boy kilo      BKI
+## 1    Ali 160   55 21.48438
+## 2   Elif 165   55 20.20202
+## 3     Su 170   57 19.72318
+## 4  Deniz 155   50 20.81165
+## 5   Aras 167   48 17.21109
+## 6   Berk 162   65 24.76757
+## 7    Can 169   58 20.30741
+## 8    Ece 158   62 24.83576
+## 9    Efe 160   45 17.57812
+## 10  Arda 164   47 17.47472
+```
+]
+
+
+---
+## Günün sorusu
+
+**S5:** 
+
+Sırayla değişken adları TamSayi, OndalikSayi, Karakter, Mantıksal, Faktör olan 5 değişkenli hiçbir gözlemi olmayan bir data.frame oluşturmanızı ve bu data.framenin yapısını yazdırmanızı bekliyorum. Beklenen çıktı aşağıdaki gibi olmalıdır.
+
+
+Show in New Window
+[1] "Bos data.framenin yapısı:"
+'data.frame':	0 obs. of  5 variables:
+ $ TamSayi    : int 
+ $ OndalikSayi: num 
+ $ Karakter   : chr 
+ $ Mantiksal  : logi 
+ $ Faktor     : Factor w/ 0 levels: 
+NULL
+
+---
+## Günün sorusu
+
+**S6:** 
+
+Aşağıda size verilen dört vektörden bir veri seti oluşturunuz. Oluşturduğunuz veri setinin deneme sütunundaki eksik veri sayısını hesaplayan komut yazınız.
+
+
+```r
+ad = c('Su', 'Pera', 'Sule', 'Can', 'Cem', 'Name', 'Aras', 'Mete', 'Kaan', 'Pelin')
+puan = c(12.5, 9, 16.5, 12, 9, 20, 14.5, 13.5, 8, 19)
+deneme = c(1, NA, 2, NA, 2, NA, 1, NA, 2, 1)
+bonus = c(1,0,1, 0, 0, 1, 1, 0,0, 1)
+```
+
+"Deneme sütunundaki NA sayisi:"
+[1] 4
+
+---
+## KAYNAKCA
+
+Atar, B., Atalay Kabasakal, K, Ünsal Özberk, E. B., Özberk, E. H. Ve Kıbrıslıoğlu Uysal, N. (2020).  R ile Veri Analizi ve Psikometri Uygulamaları, Editör, Pegem Akademi, Ankara.
+
+---
+## Odev
+
+Lütfen aşağıdaki bölümleri haftaya kadar okuyunuz.
+
+-   &lt;http://adv-r.had.co.nz/Data-structures.html&gt;
+
+-   &lt;http://adv-r.had.co.nz/Subsetting.html&gt;
+
+Veri düzenleme konusunda iki paket: **DataEditR** , **editData** inceleyiniz.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

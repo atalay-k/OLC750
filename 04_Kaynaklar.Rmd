@@ -1,0 +1,55 @@
+---
+title: "Kaynaklar"
+output: html_document
+bibliography: packages.bib
+csl: apa.csl
+---
+
+İnternette R programlama diliyle ilgili çok sayıda kaynak var. Burada yararlı bulabileceğiniz bazı çevrimiçi kurslar, kitaplar ve web siteleri bulunmaktadır. 
+
+<br/>
+
+__Online Kaynaklar:__   
+
+
+-   `r emo::ji("link")`[Alana ozgu paketler](https://cran.r-project.org/web/views/Psychometrics.html)
+-   Paket yardım sayfaları ve paket vignetteleri
+-   e-posta gruplarindaki e-postalara `RSiteSearch ("sample.int")` "
+-   `ltm reliability` gibi fonskiyon isimler argumansiz kullanirlirsa icerigi gorunur. Karmasik gorunse de siz de yapabilirsiniz. Ogrenmek icin iyi bir yoldur.
+-   `r emo::ji("link")`[https://www.learnr4free.com/tr/index.html](https://www.learnr4free.com/tr/index.html){.uri}
+-   `r emo::ji("link")`[Referans kartları](http://cran.r-project.org/doc/contrib/Short-refcard.pdf)
+-   `r emo::ji("link")`[Cheat Sheets](https://www.rstudio.com/resources/cheatsheets/)
+-   `r emo::ji("link")`[Hadley Wickham](http://adv-r.had.co.nz/)
+-  `r emo::ji("link")`[rforstats](http://r4stats.com/)
+-   `r emo::ji("link")`[r is hot](https://blog.revolutionanalytics.com/r-is-hot/)
+-   `r emo::ji("link")`[paralel programlama](http://www.matthewckeller.com/)
+
+
+* `r emo::ji("link")` An Introduction to R: <https://cran.r-project.org/doc/manuals/R-intro.pdf>   
+* `r emo::ji("link")` Using R for Introductory Statistics: <https://goo.gl/owJbLg>   
+* `r emo::ji("link")` Quick R: <http://www.statmethods.net/index.html>   
+* `r emo::ji("link")` R Cookbook: <http://www.cookbook-r.com/>
+* `r emo::ji("link")` Data wrangling, exploration, and analysis with R: <https://stat545.com/>
+* `r emo::ji("link")` Using R for psychological research: <http://personality-project.org/r/r.guide.html>
+
+<br/>
+
+* An Introduction to R: <https://cran.r-project.org/doc/manuals/R-intro.pdf>   
+* Using R for Introductory Statistics: <https://goo.gl/owJbLg>   
+* Quick R: <http://www.statmethods.net/index.html>   
+* R Cookbook: <http://www.cookbook-r.com/>
+* Data wrangling, exploration, and analysis with R: <https://stat545.com/>
+* Using R for psychological research: <http://personality-project.org/r/r.guide.html>
+
+
+* [R for Data Science](https://r4ds.had.co.nz/)
+* [OpenIntro Statistics](https://openintro-ims.netlify.app)
+
+<br/>
+
+__Online Kurslar:__   
+
+* Coursera: <https://www.coursera.org/learn/r-programming>   
+* DataCamp: <https://www.datacamp.com/courses/free-introduction-to-r>   
+* Sayısız youtube videosu [YouTube](https://www.youtube.com/)!!!   
+

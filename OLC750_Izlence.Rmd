@@ -1,0 +1,67 @@
+---
+output: html_document
+title: "OLC750: R Yazilimina Giris"
+author: Dr. Atalay Kabasakal
+date: "Guz 2022-2023"
+
+
+
+
+---
+
+## Ders Amaci
+
+Bu dersin amacı, R yazilimini kullanarak veri uzerinde istenilen istatistiksel ve psikometrik işlemlerin yapılabilmesini sağlamaktır.
+
+Dersten beklentilerinizi ogrenebilem icin lutfen anketi [doldurunuz](https://docs.google.com/forms/d/e/1FAIpQLSe9rhA8Y8A_tp9h7kLNlSJCEt5wLjrz2vb3OkVrSaNNOnDNqg/viewform?usp=sf_link).
+
+# Ders Hedefleri
+
+1.  Orenciler programlama ve algoritma mantigini kavrar.
+2.  R yazilimi ile lisanslı/ucretli program kullanimina ihtiyac duymadan istatistiksel analizleri yapabilmeyi öğrenir.
+3.  Amacına yönelik olarak uygun paketi kullanarak analizler yapabilir.
+4.  Amacına yönelik olarak uygun fonksiyonları yazarak analizler yapabilir.
+
+# Ders Islenisi
+
+- Dersler "Ders Plani" basligi altindaki siralamaya gore islenecektir. 
+
+- Belirtilen baslik altinda her haftanin ilgili ders dokumunina baglanti sunulmustur (<https://atalay-k.github.io/OLC750/>). Bu baglantilar sizleri farkli kaynaklara da yönlendirecektir. 
+
+- Ders ile ilgili duyuru ve metaryel paylaşımlarımda moodle (<lisansustu.hacettepe.edu.tr>) kullanılacaktır. Ayrica bu sanal sinifa 6. haftadan sonra sizlerden sorular olusturup gondermeniz beklenecektir.
+
+# Notlandirma
+
+-   **20%** Ara Sinav I
+
+    -   Ara sinav - I sinav saatinde ders saati baslangicinda size gonderilecektir. Ders saati sonunda ise <https://lisansustu.hacettepe.edu.tr> adresine gondermeniz beklenecektir.
+
+-   **20%** Ara Sinav II
+
+    -   Ara sinav - I I ise ilgili ders haftasinda sizlere <https://lisansustu.hacettepe.edu.tr> adresinden gönderilecek ve bir hafta sürede teslim etmeniz gerekecektir.
+
+-   **10%** Derse Katilim ve Odevler
+
+    -   Her ders sonrasinda kitapta takip eden bolumun alistirmalarini yapmaniz beklenmektedir. Bu alistirmalarin cevaplarina <https://github.com/rverianalizi/Kitap> adresinden ulasabilirsiniz.
+
+    -   Ders sirasinda ve sonunda gunun sonusu ya da bonus soru isimli sorular size iletilecektir. Bu sorulara verdiginiz cevaplar ve sizlerin olusturmaya calistigi sorular puanlamaya dahil edilecektir.
+
+-   **50%** Genel Sinav
+
+    -   Genel Sinav haftasi baslangicinda sizlere gonderilecek olan donem sonu projenizi E notu almak istemeyen ogrencilerin 10 Ocak Saat 12:00'a kadar göndermeleri, E notu almak isteyen ogrencilerin ise 24 Ocak Saat 12:00'a kadar göndermeleri gerekmektedir.
+
+# Derse Katilim
+
+Teorik ve uygulamalı derslere devam zorunludur. Teorik ve uygulamalı derslerin %20'sinden fazlasına devam etmeyen ogrenci, o ders ya da derslerin yariyil sonu genel sinavlarina alinmaz ve ogrenciye F1 notu verilir.
+
+
+## E-mail ile İletisim
+
+Bu dokumanda yazmayan her turlu konuda bana e-mail ile ulasabilirsiniz.
+
+Tum sinifi ilgilendiren konular icin ise ilk derste aranizdan secitigimiz gonullu ogrenci iletisim kurulacakir.
+
+# Ders Plani
+
+Uzerinde degisikler yapilabilecek, taslak program asagidaki gibidir.
+

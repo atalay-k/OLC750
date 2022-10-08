@@ -1,0 +1,118 @@
+---
+title: "`r emo::ji('muscle')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` Veri Aktarimi"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+  lib_dir: libs
+css: ["xaringan-themer.css", "slides-style.css"]
+nature:
+  highlightStyle: solarized-light
+highlightLines: true
+countIncrementalSlides: false
+ratio: "16:9"
+slideNumberFormat: |
+  <div class="progress-bar-container">
+  <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+  </div>
+  </div>
+  
+---
+
+# Veri Aktarimi
+  
+- Veri setleri genellikle Excel, SPSS veya metin dosyaları (.txt, .csv, .dat, vb.) gibi uygun veri biçimlerinde kaydedilir
+
+- R, çeşitli veri formatlarını içe aktarabilir (yani okuyabilir).
+
+Bir veri setini R'ye aktarmanın iki yolu vardır:
+  
+1. RStudio'da "Veri Kümesini İçe Aktar" menü seçeneğini kullanarak
+2. Belirli bir R komutunu kullanarak
+
+<br/>
+
+---
+## Yöntem 1: RStudio'yu Kullanma
+
+  ![R studio](figs/importmenu.png)
+
+---
+### Excel dosylarını içe aktarma
+
+* İçe aktarmak istediğiniz dosyaya göz atın.
+
+* Veri seti için bir isim verin. 
+
+* İçe aktarılacak sayfayı seçin.
+
+* Değişken isimleri dosyanın ilk satırındaysa "First Row as Names".
+
+![Excel dosylarını içe aktarma](figs/excel1.png)
+
+---
+### SPSS dosylarını içe aktarma
+
+* İçe aktarmak istediğiniz dosyaya göz atın.
+
+* Veri seti için bir isim verin. 
+
+![SPSS dosylarını içe aktarma](figs/spss1.png)
+
+<br/>
+  
+---
+### Komutlarla veri aktarma
+  
+- Temel pakette "read.csv" ve "read.table" gibi bazı fonksiyonlar bulunmaktadır.
+
+- Ayrıca, belirli  formatlarını içe aktarmak için R paketleri bulunmaktadır
+
+- Örneğin, SPSS dosyaları için "foreign" ve Excel dosyaları için "xlsx" gibi
+  ### Importing Excel files
+  
+```{r  eval=FALSE}
+# yükle ve aktive et 
+install.packages("xlsx")
+library("xlsx")
+
+# read.xlsx fonksiyonunun kullanımı
+my_excel_file <- read.xlsx("path to the file/filename.xlsx", sheetName = "sheetname")
+```    
+
+---
+### SPSS dosyası aktarma
+  
+```{r eval=FALSE}
+# yükle ve aktive et 
+install.packages("foreign")
+library("foreign")
+
+# read.spss fonksiyonunun kullanımı
+my_spss_file <- read.spss("path to the file/filename.sav", to.data.frame = TRUE)
+```
+
+
+---
+### text dosyası aktarma
+
+- text dosyaları okumak için paket yüklemeye gerek yoktur.  
+```{r  eval=FALSE}
+# A comma-separated-values file with a .csv extension
+csv_dosya <- read.csv("path to the file/filename.csv", header = TRUE)
+
+# A tab delimited text file with .txt extension
+txt_dosya <- read.table("path to the file/filename.txt", header = TRUE, sep = "\t")
+```
+
+-Dikkat
+  
+- `header = TRUE` 
+- `sep="\t"` 
+- `sep=","` for comma-separated files
+
+
+
+
+

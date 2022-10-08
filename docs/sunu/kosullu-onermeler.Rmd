@@ -1,0 +1,334 @@
+---
+title: "R Kosullu Onermeler"
+author: "Dr. Kubra Atalay Kabasakal"
+date: "Aralık 2021"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2 
+    toc_float: 
+      collapsed: true
+      smooth_scroll: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Koşullu Önermeler
+
+R'da fonksiyon yazarken sıklıkla kullanılan koşullu önermeler, mantıksal (Boolean) operatörler (`TRUE` ve `FALSE`), `if()`, `else()`, `else if()`, `ifelse()`, `while()`, `switch()` fonksiyonlarından oluşur.
+
+# if() durum cümlesi
+
+Hemen hemen bütün programlama dillerinde ortak olarak kullanılan `if()`durum cümlesi, koşullu bir ifadeyi bir ölçüt ile karşılaştırarak test eder ve koşullu ifadenin gerçekleşmesi (TRUE) durumunda elde edilecek çıktıları belirlemede kullanılır.
+
+`if()` durum cümlesinin genel kullanımı aşağıdaki gibidir.
+
+``` {.r}
+if(koşul){
+
+print(durum cümlesi)
+
+}
+```
+
+{ } parantez kullanimini dikkat etmek gerekir.
+
+`if()` ifade `kosul ()` parantez icine yazilir.
+
+`if(kosul){}` kosul yazildiktan sonra mutlaka `{}` eklenmeli
+
+Ölçme açısından bakılacak olursa **koşul** bir **ölçütü**, **durum** cümlesi ise **değerlendirmeyi** gösterilebilir.
+
+Örneğin, yapılan bir sınavda geçme notu 60 olarak belirlendiğinde, 75 alan bir öğrencinin durumu aşağıdaki **if()** durum cümlesiyle belirlenebilmektedir.
+
+```{r}
+x <- 75
+
+if(x>=65){
+
+print("Başarılı") 
+  }
+```
+
+## if() durum cümlesi
+
+Ancak kontrol durumu çoğunlukla tek önermeye bağlı değildir.
+
+``` {.r}
+bu kod cikti vermeyecektir
+```
+
+```{r}
+x <- 60
+
+if(x>=65){
+
+print("Başarılı") 
+  }
+```
+
+## else() durum cümlesi
+
+`else()` durum cümlesi `if()` durum cümlesindeki koşullar sağlanmadığı durumda ortaya çıkacak alternatifi belirlemek için kullanılır.
+
+``` {.r}
+if(koşul1){
+
+print(durum cümlesi)
+
+}else{
+
+print(durum cümlesi)
+
+}
+```
+
+```{r}
+x <- 75 # Başarılı Durum
+if(x>=65){
+print("Başarılı")
+}else{
+print("Başarısız")
+}
+```
+
+## else if () durum cümlesi
+
+Koşul her zaman iki kategori ile tanımlanamayabilir. Bu durumda kullanımı `else if()` ile destekleyebiliriz.
+
+``` {.r}
+if(koşul1){
+
+print(durum cümlesi)
+
+}else if(koşul2)
+
+print(durum cümlesi)
+
+}else{
+
+print(durum cümlesi)
+
+}
+```
+
+```{r}
+x <- 75 # Başarılı Durum
+
+if(x>=90){
+  
+print("AA")
+  
+}else if(x>=80){
+  
+print("BA")
+  
+}else if(x>=70){
+  
+print("BB")
+  
+}else if(x>=65){
+  
+print("CB")
+  
+}else if(x>=60){
+  
+print("CC")
+  
+}else if(x>=50){
+  
+print("DD")
+  
+}else if(x>=30){
+  
+print("FD")
+  
+}else{
+  
+print("FF")
+  
+}
+```
+
+## ORNEKLER
+
+a sayinin carpmaya gore tersi 1/a'dir. Ancak bu durum 0 icin tanimsizdir. `if()` durum cümlesi kullanarak bu durumu kodlayınız.
+
+`x <- 5` için test ediniz.
+
+```{r echo=FALSE}
+x <- 5
+if(x!=0){
+  paste(x,"'in carpmaya gore tersi 1/",x, sep="")
+}
+
+```
+
+`x <- 0`için test ediniz.
+
+```{r echo=FALSE}
+x <- 0
+if(x!=0){
+  paste(x,"'in carpmaya gore tersi 1/",x)
+}else{ paste("1/",x," tanımsızdır.", sep="")
+       }
+```
+
+## ORNEKLER
+
+a sayinin carpmaya gore tersi 1/a'dir. ancak bu durum 0 icin tanimsizdir. `if()` durum cümlesi kullanarak bu durumu `x <- c(1,2,3,0,-4)` için deneyiniz.
+
+```{r echo=FALSE}
+x <- c(1,2,3,0,-4)
+ifelse(x!=0,
+  paste(x,"'in carpmaya gore tersi 1/",x ,sep=""),
+  paste("1/",x," tanımsızdır.", sep=""))
+```
+
+## ORNEKLER
+
+-2 ile 2 arasinda sayilar üretip, bunu x değişkenine atayalım.
+
+```{r}
+x <- rnorm(1)
+x
+```
+
+Random olarak üretilen sayının 1'den büyük olması durumunda çıktı "1'den büyük" -1 ile 1 arasında olması durumunda "-1 ile +1 arasında" -1'den küçük olması durumunda ise "-1'den küçük" çıktısı versin.
+
+```{r echo=FALSE}
+x <- rnorm(1)
+x
+if(x>1){
+  print("sayi 1'den büyüktür.")
+}else if(x<=1 & x>=-1){
+ print ("sayi -1 ile +1 arasında")
+}else{
+   print ("sayi -1'den küçük")
+}
+```
+
+## if() & all()
+
+Her ne kadar `if()` önermesi bir elemanlı vektorlerde çıktı verirken `if()` önermesi içinde kullanılabilen `all` fonkisyonu ile vektorun tüm elemanları icin kosul test edilebilir.
+
+```{r}
+x <- c(1,2,-3,4)
+if(all(x>0)){
+  
+  print("tum sayilar 0'dan buyuktur")
+  
+} else{
+  
+  print("tum sayilar 0'dan buyuk degildir")
+}
+```
+
+## if() & any()
+
+Bir vektorde icinde yer alan her hangi bir elemana dair test ise `if()` fonksiyonu içinde `any()` fonksiyonu ile sağlanabilir.
+
+```{r}
+x <- c(1,2,-3,4)
+if(any(x<0)){
+  
+  print("nesne en az bir negatif sayi icerir")
+  
+} else{
+  
+  print("nesne negatif sayi icermez")
+}
+```
+
+## if() coklu islem
+
+```{r}
+x <- 2
+if(x == 2) {
+  
+  goster3 <- "Dogru"  
+  goster3b <- c(1,2,3)
+  goster3c <- sample(1:1000,4)
+} else  {
+  
+  goster3 <- "Yanlis"  
+  goster3b <- c(3,2,1)
+  goster3c <- 10000 + sample(1:1000,4)
+  
+}
+
+goster3
+goster3b
+goster3c
+```
+
+# ifelse()
+
+`ifelse()` durum cümlesi, `if()` durum cümlelerinde vektörlerin kullanımından kaynaklı sıkıntılara çözüm sunar. Bu bakımdan `ifelse()`, `if()` durum cümlelerinin vektörler için kullanılabilir halidir.
+
+`ifelse()` durum cümlesinin genel kullanımı aşağıdaki gibidir.
+
+**`ifelse(koşul, Doğru İfade, Yanlış İfade)`**
+
+```{r}
+x <- 20
+ifelse(x>=65, "Başarılı", "Başarısız")
+```
+
+## ifelse()
+
+Eksik verinin 99 ile gosterildiği bir vektorde eksik veri yerine NA atama
+
+```{r}
+(x <- c(1,2,3,4,99,5))
+ifelse(x==99, NA, x)
+
+```
+
+## ifelse()
+
+Elimizdeki bir nesnede yer alan sayıların tek ya da çift olduğunu yazdırma
+
+```{r}
+set.seed(41)
+sayilar <- sample(50:90,27)
+sayilar
+```
+
+Çıktıyı sağlamaya çalışın
+
+```{r echo=FALSE}
+ifelse(sayilar %% 2 == 0, "Cift Sayi", "Tek Sayi")
+
+```
+
+## ifelse()
+
+Elimizdeki bir nesnede yer alan sayıların 0, pozitif ya negatif oldugu belirleme
+
+```{r}
+set.seed(987)
+sayilar <- sample(-10:10,27,replace=TRUE)
+sayilar
+```
+
+Çıktıyı sağlamaya çalışın
+
+```{r echo=FALSE}
+ifelse(sayilar == 0, "Sıfır", ifelse( sayilar <0, "Negatif", "Pozitif"))
+
+```
+
+## ORNEKLER
+
+finalden 50 ve uzeri alan ve en az 11 derse devam edem ogrencilerin gecme notlari finalin %60 ve vizenin %40 alinarak hesaplansin, 11'den az derse devam eden ogrencilerin gecme notu final notunun %60' olarak alinsin
+
+```{r}
+vize <- c(60,70,80,90,55)
+final <- c(45,65,70,50,80)
+devam <- c(14,10,13,12,11)
+```
+
+\
