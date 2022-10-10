@@ -180,6 +180,8 @@ $\sqrt{\frac{X}{Y}}$
 
 ]
 
+[Mathematics in R Markdown](https://rpruim.github.io/s341/S19/from-class/MathinRmd.html)
+
 ---
 ## Bağlantı Verme
 
@@ -490,18 +492,10 @@ YAML - Yet Another Mark up Language - Bir Başka Biçimleme Dili
 
 ## blogdown
 
-Amaç: Web sitesi oluşturmak
-
-<hr>
-
-Kaynak: [blogdown kitabı](https://bookdown.org/yihui/blogdown/)
-
-<hr>
-
-Örnek: [https://amber.rbind.io/](https://amber.rbind.io/)
-<hr>
-
-Kaynak kodu: https://github.com/ProQuestionAsker/websiteSource
+**Amaç:** Web sitesi oluşturmak
+**Kaynak:** [blogdown kitabı](https://bookdown.org/yihui/blogdown/)
+**Örnek:** [https://amber.rbind.io/](https://amber.rbind.io/)
+**Kaynak kodu:** https://github.com/ProQuestionAsker/websiteSource
 
 
 
@@ -510,26 +504,17 @@ Kaynak kodu: https://github.com/ProQuestionAsker/websiteSource
 
 ## bookdown
 
-Amaç: Kitap yazmak
-
-<hr>
-
-Kaynak: [bookdown kitabı](https://bookdown.org/yihui/bookdown/)
-
-<hr>
-
-Örnek ve kaynak kodu: [Bookdown örnekleri](https://bookdown.org/)
+**Amaç:** Kitap yazmak
+**Kaynak:** [bookdown kitabı](https://bookdown.org/yihui/bookdown/)
+**Örnek ve kaynak kodu:** [Bookdown örnekleri](https://bookdown.org/)
 <hr>
 
 ---
 
 ## xaringan
 
-Amaç: Daha farklı sunumlar yapma
-
-<hr>
-
-Kaynak: [R Markdown kitabı 7. bölüm](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+**Amaç:** Daha farklı sunumlar yapma
+**Kaynak:** [R Markdown kitabı 7. bölüm](https://bookdown.org/yihui/rmarkdown/xaringan.html)
 
 <hr>
 
