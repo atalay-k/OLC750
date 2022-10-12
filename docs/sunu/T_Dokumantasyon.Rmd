@@ -492,10 +492,10 @@ YAML - Yet Another Mark up Language - Bir Başka Biçimleme Dili
 
 ## blogdown
 
-**Amaç:** Web sitesi oluşturmak
-**Kaynak:** [blogdown kitabı](https://bookdown.org/yihui/blogdown/)
-**Örnek:** [https://amber.rbind.io/](https://amber.rbind.io/)
-**Kaynak kodu:** https://github.com/ProQuestionAsker/websiteSource
+**Amaç:** Web sitesi oluşturmak  
+**Kaynak:** [blogdown kitabı](https://bookdown.org/yihui/blogdown/)  
+**Örnek:** [https://amber.rbind.io/](https://amber.rbind.io/)  
+**Kaynak kodu:** https://github.com/ProQuestionAsker/websiteSource  
 
 
 
@@ -504,25 +504,24 @@ YAML - Yet Another Mark up Language - Bir Başka Biçimleme Dili
 
 ## bookdown
 
-**Amaç:** Kitap yazmak
-**Kaynak:** [bookdown kitabı](https://bookdown.org/yihui/bookdown/)
-**Örnek ve kaynak kodu:** [Bookdown örnekleri](https://bookdown.org/)
-<hr>
+**Amaç:** Kitap yazmak  
+**Kaynak:** [bookdown kitabı](https://bookdown.org/yihui/bookdown/)  
+**Örnek ve kaynak kodu:** [Bookdown örnekleri](https://bookdown.org/)  
 
 ---
 
 ## xaringan
 
-**Amaç:** Daha farklı sunumlar yapma
-**Kaynak:** [R Markdown kitabı 7. bölüm](https://bookdown.org/yihui/rmarkdown/xaringan.html)
+**Amaç:** Daha farklı sunumlar yapma  
+**Kaynak:** [R Markdown kitabı 7.   bölüm](https://bookdown.org/yihui/rmarkdown/xaringan.html)  
 
-<hr>
 
 ---
 
 ## Öneri
 
 - R Ladies Ankara için Dr. Mine Dogucu'nın yaptığı [minedogucu.com](minedogucu.com) workshopun [örneklerini](https://github.com/mdogucu/rmd-tr/tree/master/ornekler) ve [sunumunu](https://mdogucu.github.io/rmd-tr/sunum/sunum.html#1) bulabilirsiniz.
+
 Sunumu [YouTube](https://www.youtube.com/watch?v=ykmoy3AO_qI&feature=youtu.be)'dan izleyebilirsiniz.
 
 

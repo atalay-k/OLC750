@@ -28,7 +28,7 @@ knitr::write_bib(x = c(.packages(), "ggplot2"), file = "packages.bib")
 |---|---|
 |**Konu I: ** [R nedir](sunu\T_Temeller.html) | ![](figures/r_and_rstudio.jfif) |
 |**Konu II: **   [R ile Raporlama](sunu\T_Dokumantasyon.html) |    ![](figures/markdown.png) |
-| **Konu III: **   [Vektorler](sunu\T_Nesneler.html) | ![](figures/vectors.png) |
+| **Konu III: **   [Vektörler](sunu\T_Nesneler.html) | ![](figures/vectors.png) |
 | **Konu IV: **   [Veri Setleri](sunu\T_Veri_Setleri.html) | ![](figures/dataframe.png) |
 | **Konu V: **   [Faktörler](sunu\T_Faktorler.html) | ![](figures/factors.png) |
 | **Konu VI: **   [Veri Aktarma](sunu\T_Veri_Aktarim.html) | ![](figures/import.jfif) |
