@@ -1,5 +1,5 @@
 ---
-title: "`r emo::ji('muscle')` R ile Veri Analizi"
+title: "R ile Veri Analizi"
 subtitle: " <br> `r emo::ji('graph')` R Nesneler"
 author: "<br> <br> `r emo::ji('woman_teacher')`  Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
 date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
@@ -648,7 +648,7 @@ ad[10]
 ---
 ## Vektör Elemanlarını Seçme - II
 .pull-left[
-- birden fazla eleman secimi
+- birden fazla eleman seçimi
 
 - Vektörün sadece 1. elemanının hariç tutulması
 
@@ -852,7 +852,7 @@ rep(0:9, times = 3)
 
 ```
 
-*Çıktıyı elde edecek kodlar hazirlayiniz.*
+- Çıktıyı elde edecek kodlar hazirlayiniz.
 
 ```{r echo=FALSE}
 
@@ -864,7 +864,7 @@ rep(a, each = 3)
 ---
 ## rep()
 
-*Çıktıyı elde edecek kodlar hazırlayınız. *
+- Çıktıyı elde edecek kodlar hazırlayınız. 
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
@@ -872,7 +872,7 @@ rep(a, each = 3, times = 3)
 
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
@@ -880,7 +880,7 @@ rep(1:4, c(2,2,2,2))
 
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
@@ -891,14 +891,14 @@ rep(1:3, 1:3)
 ---
 ## paste()
 
-`paste()`fonksiyonu çıktısı her zaman için karakterdir.
+-  `paste()`fonksiyonu çıktısı her zaman için karakterdir.
 
 ```{r}
 paste(1:4) # çıktısı karakterdir
 class(paste(1:4)) 
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
@@ -908,21 +908,21 @@ paste("test",1:10)
 ---
 ## paste()
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
 paste("test",1:10,sep = "")
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
 paste("test",1:10,"puan",sep = "_")
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 # Çıktıyı elde edecek kodlar hazırlayınız.
@@ -933,22 +933,22 @@ paste("test", c("A","B","C","D",1,2,3))
 ---
 ## Rasgele Veri Oluşturma
 
-Farklı fonksiyonlarla rastgele veri üretilebilir. Örneğin 0-100 arasında 20 farklı değer elde edilmek istenilsin. Bunu yapmak için `sample()`,`runif()` ya da `rnorm()` fonksiyonlarından yararlanılabilir.
+- Farklı fonksiyonlarla rastgele veri üretilebilir. Örneğin 0-100 arasında 20 farklı değer elde edilmek istenilsin. Bunu yapmak için `sample()`,`runif()` ya da `rnorm()` fonksiyonlarından yararlanılabilir.
 
 ```{r}
-sample(0:100,20)
+sample(0:100,5)
 
 ```
 
 ```{r}
-runif(20,  0, 100)
+runif(20,  0, 5)
 ```
 
 ```{r}
-rnorm(20,50,10)
+rnorm(20,50,5)
 ```
 
-Kullanılan uc fonksiyonun da yardım sayfalarını ve kullanım amaçlarını inceleyiniz.
+- Kullanılan üç fonksiyonun da yardım sayfalarını ve kullanım amaçlarını inceleyiniz.
 
 ---
 ## İşlemler

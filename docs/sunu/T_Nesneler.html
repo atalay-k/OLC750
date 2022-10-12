@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>💪 R ile Veri Analizi</title>
+    <title>R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
     <script src="libs/header-attrs-2.16/header-attrs.js"></script>
@@ -13,10 +13,10 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# 💪 R ile Veri Analizi
+# R ile Veri Analizi
 ]
 .subtitle[
-## <br> 💹 R Nesneler
+## <br> 📈 R Nesneler
 ]
 .author[
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -568,11 +568,11 @@ length(harf52)
 
 
 ```
-##  [1] "1. maddenin guclugu: 0.19"  "2. maddenin guclugu: 0.13" 
-##  [3] "3. maddenin guclugu: 0.17"  "4. maddenin guclugu: 0.85" 
-##  [5] "5. maddenin guclugu: 0.14"  "6. maddenin guclugu: 0.86" 
-##  [7] "7. maddenin guclugu: 0.46"  "8. maddenin guclugu: 0.86" 
-##  [9] "9. maddenin guclugu: 0.48"  "10. maddenin guclugu: 0.17"
+##  [1] "1. maddenin guclugu: 0.09"  "2. maddenin guclugu: 0.23" 
+##  [3] "3. maddenin guclugu: 0.1"   "4. maddenin guclugu: 0.63" 
+##  [5] "5. maddenin guclugu: 0.58"  "6. maddenin guclugu: 0.49" 
+##  [7] "7. maddenin guclugu: 0.82"  "8. maddenin guclugu: 0.72" 
+##  [9] "9. maddenin guclugu: 0.12"  "10. maddenin guclugu: 0.65"
 ```
 
 ---
@@ -1179,7 +1179,7 @@ ad[10]
 ---
 ## Vektör Elemanlarını Seçme - II
 .pull-left[
-- birden fazla eleman secimi
+- birden fazla eleman seçimi
 
 - Vektörün sadece 1. elemanının hariç tutulması
 
@@ -1497,7 +1497,7 @@ rep(0:9, times = 3)
 ##  [1] 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9
 ```
 
-*Çıktıyı elde edecek kodlar hazirlayiniz.*
+- Çıktıyı elde edecek kodlar hazirlayiniz.
 
 
 ```
@@ -1507,21 +1507,21 @@ rep(0:9, times = 3)
 ---
 ## rep()
 
-*Çıktıyı elde edecek kodlar hazırlayınız. *
+- Çıktıyı elde edecek kodlar hazırlayınız. 
 
 
 ```
 ##  [1] 3 3 3 5 5 5 7 7 7 3 3 3 5 5 5 7 7 7 3 3 3 5 5 5 7 7 7
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
 ## [1] 1 1 2 2 3 3 4 4
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
@@ -1531,7 +1531,7 @@ rep(0:9, times = 3)
 ---
 ## paste()
 
-`paste()`fonksiyonu çıktısı her zaman için karakterdir.
+-  `paste()`fonksiyonu çıktısı her zaman için karakterdir.
 
 
 ```r
@@ -1550,7 +1550,7 @@ class(paste(1:4))
 ## [1] "character"
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
@@ -1561,7 +1561,7 @@ class(paste(1:4))
 ---
 ## paste()
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
@@ -1569,7 +1569,7 @@ class(paste(1:4))
 ##  [9] "test9"  "test10"
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
@@ -1577,7 +1577,7 @@ class(paste(1:4))
 ##  [6] "test_6_puan"  "test_7_puan"  "test_8_puan"  "test_9_puan"  "test_10_puan"
 ```
 
-*Çıktıyı elde edecek kodlar hazırlayınız.*
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 
 ```
@@ -1587,41 +1587,40 @@ class(paste(1:4))
 ---
 ## Rasgele Veri Oluşturma
 
-Farklı fonksiyonlarla rastgele veri üretilebilir. Örneğin 0-100 arasında 20 farklı değer elde edilmek istenilsin. Bunu yapmak için `sample()`,`runif()` ya da `rnorm()` fonksiyonlarından yararlanılabilir.
+- Farklı fonksiyonlarla rastgele veri üretilebilir. Örneğin 0-100 arasında 20 farklı değer elde edilmek istenilsin. Bunu yapmak için `sample()`,`runif()` ya da `rnorm()` fonksiyonlarından yararlanılabilir.
 
 
 ```r
-sample(0:100,20)
+sample(0:100,5)
 ```
 
 ```
-##  [1]  84  60  58  69  68  62  15  29  43  31  42  21  34   7   5 100  45  83  76
-## [20]  98
-```
-
-
-```r
-runif(20,  0, 100)
-```
-
-```
-##  [1] 43.851048 48.093859 56.781233 18.702014 65.641616 45.897056 23.450986
-##  [8] 65.190094 53.813668 30.681849 14.304349  6.592364 80.369258 17.776062
-## [15] 60.841165 98.917813 36.220613 34.770428 53.725952 24.380070
+## [1] 83 13  8 46 78
 ```
 
 
 ```r
-rnorm(20,50,10)
+runif(20,  0, 5)
 ```
 
 ```
-##  [1] 79.17956 39.06972 47.12069 41.17316 47.03220 53.46742 59.06839 56.26230
-##  [9] 57.80564 47.88422 52.48384 35.33381 43.05744 42.98290 50.89722 59.00601
-## [17] 65.98457 41.04998 44.65742 54.82447
+##  [1] 4.2765229 1.6654631 4.7221078 1.3992581 4.1235597 3.3980579 3.2113476
+##  [8] 2.6294052 0.4928618 0.4627760 4.7914252 4.8594648 2.0070806 1.6726808
+## [15] 1.2119263 2.9049917 1.3340270 3.7508264 1.1124218 3.1625379
 ```
 
-Kullanılan uc fonksiyonun da yardım sayfalarını ve kullanım amaçlarını inceleyiniz.
+
+```r
+rnorm(20,50,5)
+```
+
+```
+##  [1] 51.19018 57.44659 48.19539 53.80920 49.18023 50.53723 60.21204 43.08860
+##  [9] 47.01548 48.74237 36.97579 49.92789 52.19166 44.22760 51.92369 50.20251
+## [17] 55.30397 52.57078 44.44722 57.66607
+```
+
+- Kullanılan üç fonksiyonun da yardım sayfalarını ve kullanım amaçlarını inceleyiniz.
 
 ---
 ## İşlemler

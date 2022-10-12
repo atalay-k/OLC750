@@ -94,7 +94,7 @@ output:
 -   SPSS, SAS gibi veri analizi programları ücretlidir, ayrıca bazı özel psikometri analizleri için yeterli değildir.
 
 --
--   R, açk kaynak kodlu olduğu için program kodlarına istenildiği zaman erişilebilir.
+-   R, açık kaynak kodlu olduğu için program kodlarına istenildiği zaman erişilebilir.
 
 --
 -   Diğer istatistiksel yazılımlar ile karşılaştırıldığında R "komut satırı" ara yüzünü kullanmaktadır.
@@ -760,5 +760,6 @@ Atar, B., Atalay Kabasakal, K, Ünsal Özberk, E. B., Özberk, E. H. Ve Kıbrıs
 
 ---
 
-Teşekkürler
+.large[.hand[Teşekkürler]]
+
 ---
