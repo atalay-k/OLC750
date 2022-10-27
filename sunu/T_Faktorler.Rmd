@@ -149,7 +149,7 @@ cinsiyet
 ```
 
 ---
-## Duzey Isimlendirme - I
+## Düzey Isimlendirme - I
 
 - Faktör nesnelerin (grup düzeyine sahip nesnelerin) grup düzeyleri `levels()` fonksiyonu ile belirlenebilir.
 
@@ -170,7 +170,7 @@ levels(cinsiyet2)
 ```
 
 ---
-## Duzey Isimlendirme - I
+## Düzey Isimlendirme - I
 
 - Sayısal değere sahip olan faktör nesnesine düzey isimleri `levels()` fonksiyonu ile atanabilir.
 
