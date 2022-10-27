@@ -221,7 +221,7 @@ head(CTTdata)
 ---
 ## Veri Setleri
 
-`r emo::ji("link")`[sik kullanılan veri setleri ile ilgili bir yazi:](http://r-tutorials.com/famous-useful-pre-installed-exercise-datasets-r/)
+`r emo::ji("link")`[sık kullanılan veri setleri ile ilgili bir yazı:](http://r-tutorials.com/famous-useful-pre-installed-exercise-datasets-r/)
 
 `r emo::ji("link")`[tüm veri setlerine ulaşabilmek için ise:](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
 
@@ -242,7 +242,7 @@ View(df)
 ---
 ## Veri setlerinde eleman secme
 
-Veri setlerinde eleman secme matrislerdeki gibidir.
+Veri setlerinde eleman seçme matrislerdeki gibidir.
 
 `df[satirindeks, sutunindeks]`
 
@@ -290,7 +290,7 @@ is.data.frame(df[,1])
 --
 
 .pull-left[
-- Sütun secimi veri seti (`data.frame`) olarak yapılmak istenirse, `drop` argümanı FALSE değeri ile kullanılır.
+- Sütun seçimi veri seti (`data.frame`) olarak yapılmak istenirse, `drop` argümanı FALSE değeri ile kullanılır.
 
 ```{r}
 df[,1,drop=FALSE]
@@ -472,7 +472,7 @@ dim(df4)
 ```
 
 ---
-## Veri yapisi
+## Veri yapısı
 
 - Veri setlerinin yapısını incelemek icin `str()` fonksiyonundan yararlanılmaktadır.
 
@@ -618,16 +618,19 @@ df
 
 Sırayla değişken adları TamSayi, OndalikSayi, Karakter, Mantıksal, Faktör olan 5 değişkenli hiçbir gözlemi olmayan bir data.frame oluşturmanızı ve bu data.framenin yapısını yazdırmanızı bekliyorum. Beklenen çıktı aşağıdaki gibi olmalıdır.
 
-
-Show in New Window
+```{r eval=FALSE, include=TRUE, error =TRUE}
 [1] "Bos data.framenin yapısı:"
-'data.frame':	0 obs. of  5 variables:
- $ TamSayi    : int 
- $ OndalikSayi: num 
- $ Karakter   : chr 
- $ Mantiksal  : logi 
- $ Faktor     : Factor w/ 0 levels: 
+'data.frame':	0 obs. of  5 variables:  
+ $ TamSayi    : int   
+ $ OndalikSayi: num  
+ $ Karakter   : chr  
+ $ Mantiksal  : logi  
+ $ Faktor     : Factor w/ 0 levels:  
 NULL
+
+```
+
+
 
 ---
 ## Günün sorusu

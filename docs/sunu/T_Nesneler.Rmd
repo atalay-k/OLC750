@@ -852,7 +852,7 @@ rep(0:9, times = 3)
 
 ```
 
-- Çıktıyı elde edecek kodlar hazirlayiniz.
+- Çıktıyı elde edecek kodlar hazırlayınız.
 
 ```{r echo=FALSE}
 
@@ -994,7 +994,7 @@ summary(Gecmenot)
 
  **S3** 
  
- - Birden n'e kadar olan sayların toplamını hesaplayan fonksiyon yazımı `toplam()` tek argümanlaı fonksiyon oluşturunuz. Argüman değeri 5 olduğunda 1+2+3+4+5=15 değerini versin. 
+ - Birden n'e kadar olan sayların toplamını hesaplayan fonksiyon yazımı `toplam()` tek argümanlı fonksiyon oluşturunuz. Argüman değeri 5 olduğunda 1+2+3+4+5=15 değerini versin. 
 
  - birden n'e kadar olan sayların toplamı: (n*(n+1))/2
 

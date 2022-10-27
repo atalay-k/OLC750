@@ -1,5 +1,5 @@
 ---
-title: "`r emo::ji('muscle')` R ile Veri Analizi"
+title: "`r emo::ji('chart')` R ile Veri Analizi"
 subtitle: " <br> `r emo::ji('graph')` R Faktörler"
 author: "<br> <br> `r emo::ji('woman_teacher')` Doç. Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
 date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
@@ -20,34 +20,37 @@ output:
 
 
 ---
-## Faktorler
+## Faktörler
 
-- Faktorler bir veri setindeki **kesikli/sureksiz** degiskeni gostermektedir. 
+- Faktörler bir veri setindeki **kesikli/sureksiz** değişkeni göstermektedir. 
 
-- Faktorler analizlerde grupları belirtir. 
+- Faktörler analizlerde grupları belirtir. 
 
-- Faktörler hem karakter veri türünden hem de sayısal veri turunden olusturulabilmektedir.
+- Faktörler hem karakter veri türünden hem de sayısal veri türünden oluşturulabilmektedir.
+
+Veri seti `r emo::ji('link')`[hsb2.rda](hsb2.rds)
 ```{r}
 load("data/hsb2.rda")
 str(hsb2)
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 - **table()** fonksiyonu ile frekans tabloları oluşturulur.
+
 ```{r message=FALSE, warning=FALSE}
 table(hsb2$ses)
 ```
 
-- Faktor nesnelerinin aldığı değerlere düzey (level) denir.
+- Faktör nesnelerinin aldığı değerlere düzey (level) denir.
 
 ```{r}
 levels(hsb2$ses)
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 - **prop.table()** fonksiyonu ile oran tabloları oluşturulur.
 
@@ -63,7 +66,7 @@ table(hsb2$write>50)
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 - **table()** fonksiyonu içinde birden fazla değişken kullanılarak çapraz tablolar oluşturulabilir.
 ```{r}
@@ -75,7 +78,7 @@ prop.table(table(hsb2$ses,hsb2$gender))
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 - Özellikle verinin bir alt kümesi ile ilgilendiğinde faktör düzeyleri kullanılabilir.
 
@@ -87,14 +90,14 @@ head(devletokulu)
 
 
 ---
-## Faktorler
+## Faktörler
 
 - Alt küme seçme işlemi veri düzenlemede en sık kullanılan paketlerden biri olan `dplyr` paketinin **filter()** 
 fonksiyonu ile de yapılabilir.
 
-- `dplyr` paketindeki tüm fonksiyonlar daha az değişken olusturmak amacıyla pipe operatoru `%>%` ile kullanilabilir. `%>%` operator sık kullanılan bir operatordur, kısa yolu: **Ctrl+Shift+M**
+- `dplyr` paketindeki tüm fonksiyonlar daha az değişken olusturmak amacıyla pipe operatoru `%>%` ile kullanılabilir. `%>%` operator sık kullanılan bir operatordur, kısa yolu: **Ctrl+Shift+M**
 
-Operator kullanimi
+Operator kullanımı
 
 ```{r eval=FALSE, error=TRUE}
 veri seti %>% filter(degisken adi, degisken adi,..)
@@ -108,7 +111,7 @@ hsb2_1 <- hsb2 %>%   filter(schtyp == "public")
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 - Veride alt grup seçme işlemi yapılsa bile, önceki faktör düzeyleri kalabilir. Faktör düzeyleri kaldırmak için **droplevels()** fonksiyonu kullanılabilir.
 
@@ -120,7 +123,7 @@ table(devletokulu$schtyp)
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 ```{r fig.height=6, fig.width=6}
 library(ggplot2)
@@ -128,7 +131,7 @@ ggplot(data = hsb2, aes(x = science, y = math, color = prog)) +    geom_point()
 ```
 
 ---
-## Faktorler
+## Faktörler
 
 ```{r}
 # cinsiyet nesnesi olusturulması
@@ -138,7 +141,7 @@ cinsiyet <-c("erkek","kadin","kadin","kadin","erkek","erkek","erkek","kadin","er
 
 ```
 
-- cinsiyet nesnesinin faktore/sureksiz degiskene donusturulmesi `as.factor()` ya da `factor()` fonksiyonlari ile saglanir.
+- cinsiyet nesnesinin faktöre/süreksiz değişkene dönüştürülmesi `as.factor()` ya da `factor()` fonksiyonları ile sağlanır.
 
 ```{r}
 cinsiyet <- factor(cinsiyet)
@@ -146,15 +149,17 @@ cinsiyet
 ```
 
 ---
-## Duzey Isimlendirme - I
+## Düzey Isimlendirme - I
 
-- Faktor nesnelerin (grup duzeyine sahip nesnelerin) grup duzeyleri `levels()` fonksiyonu ile belirlenebilir.
+- Faktör nesnelerin (grup düzeyine sahip nesnelerin) grup düzeyleri `levels()` fonksiyonu ile belirlenebilir.
 
 ```{r}
 levels(cinsiyet) # faktor duzeyleri alfabetik siralanir.
 ```
 
-- Faktor nesneler grup adlari ile olusturulabilecegi gibi, sayisal nesnelerde faktor olarak tanimlanabilir. Olusan nesnenin grup isimleri/duzeyleri `levels()` fonksiyonu ile olusturulabilir. cinsiyet2 nesnesi olusturmanin diger bir yolu ise asagidaki gibidir.
+--
+
+- Faktör nesneler grup adları ile oluşturulabileceği gibi, sayısal nesnelerde faktör olarak tanımlanabilir. Oluşan nesnenin grup isimleri/düzeyleri `levels()` fonksiyonu ile oluşturulabilir. cinsiyet2 nesnesi oluşturmanın diğer bir yolu ise aşağıdaki gibidir.
 
 ```{r}
 # 1 erkek, 2 kadin olmak uzere yeni nesne olusturulmustur.
@@ -165,9 +170,9 @@ levels(cinsiyet2)
 ```
 
 ---
-## Duzey Isimlendirme - I
+## Düzey Isimlendirme - I
 
-- Sayisal degere sahip olan faktor nesnesine duzey isimleri `levels()` fonksiyonu ile atanabilir.
+- Sayısal değere sahip olan faktör nesnesine düzey isimleri `levels()` fonksiyonu ile atanabilir.
 
 ```{r}
 levels(cinsiyet2) <- c("erkek","kadin")
@@ -175,44 +180,47 @@ cinsiyet2
 ```
 
 ---
-## Duzey Siralamasi - I
+## Düzey Sıralaması - I
 
-- Faktor duzeylerinin siralanmasi ozellikle dogrusal modellerde onemlidir. Eger duzeylerin sirasi onemli ise, `order()` fonksiyonunu kullanarak siralama yapabilmektedir.
+- Faktör düzeylerinin sıralanması özellikle doğrusal modellerde önemlidir. Eğer düzeylerin sırası önemli ise, `order()` fonksiyonunu kullanarak sıralama yapabilmektedir.
 
 ```{r message=FALSE, warning=FALSE}
 attach(diamonds)
 levels(cut)
 ```
 
-- Sıralandırılmıs bir faktor
+- Sıralandırılmıs bir faktör
 ---
-## Duzey Siralamasi - II
+## Düzey Sıralaması - II
 
-- 10 kisiye alinacak olan basketbol formalarinin beden vektoru asagidaki gibi olusturulmustur.
+- 10 kişiye alınacak olan basketbol formalarının beden vektörü aşağıdaki gibi oluşturulmuştur.
+
 ```{r}
 
 beden <- c("S","M","S","M","S","L","M","L","S","S")
 (beden <- factor(beden))
 ```
-- `beden` nesnesi siralanmak istediginde bu siralama alfabetik siralama ile yapilir. Ancak bu siralama farkli sekilde yapilmak istendiginde, `ordered()` fonksiyonu kullanılarak faktorlerde duzey siralamasi yapilabilir.
+
+- `beden` nesnesi sıralanmak istediğinde bu sıralama alfabetik sıralama ile yapılır. Ancak bu sıralama farklı şekilde yapılmak istendiğinde, `ordered()` fonksiyonu kullanılarak faktörlerde düzey sıralaması yapılabilir.
+
 ```{r}
 # Duzeylerin siralamasinin kucuten buyuge yapilmasi
 (beden<- ordered(beden, levels=c("S","M","L")))
 ```
 
 ---
-## Duzey Siralamasi - III
+## Düzey Sıralaması - III
 
-- Faktor nesnelerinin karakter degerleri sayisal degerlere donusturulebilir.
+- Faktör nesnelerinin karakter değerleri sayısal değerlere dönüştürülebilir.
 
 ```{r}
 beden.sayisal <- as.numeric(beden)
 beden.sayisal
 ```
 
-- Sayisal veride olsa matematiksel islem yapilamaz. Sayisal degerler sadece duzeyler icindir. Duzeyleri `levels()` fonksiyonu ile isimlendirilebilir.
+- Sayısal veride olsa matematiksel işlem yapılamaz. Sayısal değerler sadece düzeyler içindir. Düzeyleri `levels()` fonksiyonu ile isimlendirilebilir.
 
-Bu sekilde daha onceden sayisal olarak kayitli olan faktor nesnelere de duzey atanabilir.
+Bu şekilde daha önceden sayısal olarak kayıtlı olan faktör nesnelere de düzey atanabilir.
 
 ```{r}
 levels(beden.sayisal) <-c("S","M","L")
@@ -222,17 +230,17 @@ beden.sayisal
 ---
 ## Faktör oluşturma
 
-- Duzeyleri belirli bir oruntude olan faktorler olusturmak icin, `gl()` fonksiyonu kullanilabilir.
+- Düzeyleri belirli bir örüntüde olan faktörler oluşturmak icin, `gl()` fonksiyonu kullanılabilir.
 
-- Fonksiyona duzey sayisi *(n)*,
-- her bir duzeyin kac kere tekrar edecegi *(k)*,
-- faktor uzunlugu (length),
-- istenirse duzeylerin etiketleri ve duzeylerin siralanma durumu (ordered) girilebilir.
+- Fonksiyona düzey sayısı *(n)*,
+- her bir düzeyin kaç kere tekrar edeceği *(k)*,
+- faktör uzunluğu (length),
+- istenirse düzeylerin etiketleri ve düzeylerin sıralanma durumu (ordered) girilebilir.
+
 
 ---
 ## Faktör oluşturma
 
-cikti nasil olusturulur?
 
 ```{r echo=FALSE}
 
@@ -240,8 +248,7 @@ gl(4, 2,10, labels = c("0", "A","B","AB"))
 
 ```
 
-cikti nasil olusturulur?
-
+- Çıktı nasıl oluşturulur?
 ```{r echo=FALSE}
 
 gl(8, 2,20, labels = c("A", "B","C","D","E","F1","F2","F3"),ordered=TRUE )
@@ -258,12 +265,12 @@ gl(8, 2,20, labels = c("A", "B","C","D","E","F1","F2","F3"),ordered=TRUE )
 ---
 ## **ODEV**
 
-  -   Kitap Bölüm 2 1. Soruyu tamamlayiniz.
+  -   Kitap Bölüm 2 1. Soruyu tamamlayınız.
 
--   swirl package - learn R in R (Programming ilk 6 modul)
+-   swirl package - learn R in R (Programming ilk 6 modül)
 
 
--   *NOT: Ders2_uygulama dosyasi uzerinde calisiniz.*
+
 
 
 <!-- https://irene.vrbik.ok.ubc.ca/slides/NHSRxaringan.html?panelset1=tab-12#13 -->
