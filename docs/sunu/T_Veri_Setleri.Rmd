@@ -666,3 +666,13 @@ Lütfen aşağıdaki bölümleri haftaya kadar okuyunuz.
 -   <http://adv-r.had.co.nz/Subsetting.html>
 
 Veri düzenleme konusunda iki paket: **DataEditR** , **editData** inceleyiniz.
+
+---
+.center[
+
+.large[.hand[Teşekkürler..]]
+
+
+
+`r emo::ji('coffee')` 
+]

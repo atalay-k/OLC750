@@ -5,20 +5,20 @@ author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br>
 date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
 output:
   xaringan::moon_reader:
-  lib_dir: libs
-css: ["xaringan-themer.css", "slides-style.css"]
-nature:
-  highlightStyle: solarized-light
-highlightLines: true
-countIncrementalSlides: false
-ratio: "16:9"
-slideNumberFormat: |
-  <div class="progress-bar-container">
-  <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-  </div>
-  </div>
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
 ---
- 
+
 ## Veri Okuma
 
 
@@ -151,7 +151,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 
 --
 
--   Değişken adi boşluklu yazılmışsa ne olur?
+-   Değişken adı boşluklu yazılmışsa ne olur?
 
 ---
 ## Veri Okuma
@@ -159,7 +159,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Eksik veri boyunca ayni şekilde girilmelidir.
+-   Eksik veri boyunca aynı şekilde girilmelidir.
 
 --
 
@@ -169,14 +169,14 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Tercihimiz .csv uzantılı veriler ama büyük veri setleri az yer kalması icin .txt,.prn formatında karsımıza çıkabilmektedir.
+-   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karşımıza çıkabilmektedir.
 
 ---
 ### Komutlarla veri aktarma
   
 - Temel pakette **read.csv** ve **read.table** gibi bazı fonksiyonlar bulunmaktadır.
 
-- Ayrıca, belirli  formatlarını içe aktarmak için R paketleri bulunmaktadır
+- Ayrıca, belirli  formatlarını içe aktarmak için R paketleri bulunmaktadır.
 
 - Örneğin, SPSS dosyaları için **foreign** ve Excel dosyaları için **xlsx** gibi
 
@@ -203,7 +203,7 @@ install.packages("xlsx")
 library("xlsx")
 
 # read.xlsx fonksiyonunun kullanımı
-my_excel_file <- read.xlsx("path to the file/filename.xlsx",
+my_excel_file <- read.xlsx("dizin/dosyaadi.xlsx",
                  sheetName = "sheetname")
 ```    
 
@@ -216,7 +216,7 @@ install.packages("foreign")
 library("foreign")
 
 # read.spss fonksiyonunun kullanımı
-my_spss_file <- read.spss("path to the file/filename.sav",
+my_spss_file <- read.spss("dizin/dosyaadi.sav",
                 to.data.frame = TRUE)
 ```
 
@@ -227,15 +227,15 @@ my_spss_file <- read.spss("path to the file/filename.sav",
 - text dosyaları okumak için paket yüklemeye gerek yoktur.  
 ```{r  eval=FALSE}
 # , ile ayrılmış csv dosyaları
-csv_dosya <- read.csv("path to the file/filename.csv", 
+csv_dosya <- read.csv("dizin/dosyaadi.csv", 
                       header = TRUE)
 
 # tab ile ayrılmış txt dosyaları
-txt_dosya <- read.table("path to the file/filename.txt", h
-                        eader = TRUE, sep = "\t")
+txt_dosya <- read.table("dizin/dosyaadi.txt", h
+                        header = TRUE, sep = "\t")
 ```
 
--Dikkat
+- Dikkat
   
 - `header = TRUE` 
 - `sep="\t"` 
@@ -246,10 +246,55 @@ txt_dosya <- read.table("path to the file/filename.txt", h
 
 - `r emo::ji('link')`[veri1.txt](import/veri1.txt)
 - `r emo::ji('link')`[veri1.csv](import/veri1.csv)
-- `r emo::ji('link')`[verifwf.txt](import/verifwf.txt)
+- `r emo::ji('link')`[verifwf.txt](import/fwf.txt)
 - `r emo::ji('link')`[factor.sav](import/factor.sav)
 - `r emo::ji('link')`
 [https://www.statmodel.com/usersguide/chap3/ex3.1.dat](https://www.statmodel.com/usersguide/chap3/ex3.1.dat)
+
+---
+## Uygulama
+
+```{r eval=FALSE, include=FALSE}
+veritxt <- read.table("veri1.txt", header=TRUE, sep=";", dec=",")
+veritxt
+
+vericsv <- read.csv("veri1.csv",dec=",")
+vericsv
+
+vericsv_1<- read.csv("veri1.csv", 
+row.names=c("001", "002", "003", "004"),
+col.names=c("No", "M1", "M2", "M3", "M4", "M5"))
+vericsv_1
+
+vericsv_2 <- read.csv("veri1.csv",  
+          row.names=c("001", "002", "003","004"),       
+          col.names=c("No", "M1", "M2", "M3", "M4", "M5"))[,-1]
+vericsv_2
+
+
+verifwf <- read.fwf("import/fwf.txt", 
+   widths=c(1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1))
+head(verifwf,3)
+
+verifwf <- read.fwf("fwf.txt", 
+widths=c(1, 3, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), 
+col.names=c("sira", "no", "kitapcik", 
+            "m1", "m2", "m3", "m4", "m5",  
+            "m6", "m7", "m8", "m9", "m10"))
+head(verifwf,3)
+
+ex3_1 <- scan("https://www.statmodel.com/usersguide/chap3/ex3.1.dat", 
+              what=list(y1=0, x1=0, x3=0))
+# y1 değişkeni için ilk 10 bireye ilişkin verinin head() fonksiyonu ile 
+# göterilmesi
+head(ex3_1$y1, n = 10)
+sonuc <- readLines("https://www.statmodel.com/usersguide/chap5/ex5.1.html ")
+sonuc[1:10]
+
+factor <- haven::read_sav("factor.sav")
+str(factor)
+```
+
 ---
 ## Veri Yazma
 
@@ -311,7 +356,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 
 ## write.csv
 
-**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "i" ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise "," ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
+**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "," ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise ";" ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
 
 --
 
@@ -325,9 +370,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 **cat()** fonksiyonu
 
 - Döngülerde sıklıkla ekrana bilgi yazdırmak amacıyla kullanılır, ancak dosya yazdırmak amacıyla da kullanabilmektedir. 
-
 - fonksiyonlarla yapılan hesaplama çıktısı da yazabilmektedir. 
-
 - Bu nedenle bir R oturumu sırasında not alınmak istenilen bilgileri bir dosyaya yazdırmak için kullanılabilir.
 
 ```{r eval=FALSE}
@@ -352,10 +395,8 @@ writeLines("ogrencilerin boy ortalamasi: 163 cm\n",
 ## sink() fonksiyonu
 
 - **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için 
-ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asil amacı komutların çalışmasını hızlandırmaktadır.
-
+ve belirli hesaplamaların bir dökumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asıl amacı komutların çalışmasını hızlandırmaktadır.
 - Çalışma alanını temizleyerek aşağıdaki kod satırlarını çalıştıralım.
-
 
 ```{r eval=FALSE}
  # Baglanti kurulmasi
@@ -374,7 +415,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 ## dump() fonksiyonu
 - **dump()** fonksiyonu ile bir R oturumu sırasında kullanmak istenmeyen nesneler bir dosyaya yazdırabilir. 
 - Bu sayede çalışma alanında yer kaplamazlar ve tekrar kullanılmak istenildiğinde **source()** fonksiyonu ile kullanılabilirler.
- 
 ```{r}
  # x ve y nesnelerinin olusturulmasi
  x<-matrix(rnorm(16),4,4)
@@ -384,7 +424,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
  dump(c("x","y"), file="dumptest.txt")
 ```
 - çalışma alanının temizlenmeyerek, **source()** fonksiyonu ile dosya çalıştırıldığında nesneler tekrar çalışma alanına gelir.
---
 
 ```{r}
  source("dumptest.txt")
@@ -397,15 +436,11 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 
 - **dput()** fonksiyonunu ile saklanan nesneler  **dget()** fonksiyonu ile tekrar çalışma alanına getirilebilir ve yeni bir nesneye atanabilir. 
 
---
 
-- **dump()** fonksiyonu nesneyi ayni işlemle çalışma alanına getirirken,
+- **dump()** fonksiyonu nesneyi aynı işlemle çalışma alanına getirirken,
 
---
 
 - **dget()** fonksiyonu ise nesnenin içeriğini yazdırır
-
---
 
 - nesneyi  çalışma alanına kaydetmek için nesneye yeni bir ad vermek gerekmektedir.
 
@@ -452,6 +487,14 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 ```
  
 
- 
+---
+.center[
+
+.large[.hand[Teşekkürler..]]
+
+
+
+`r emo::ji('coffee')` 
+]
 
 

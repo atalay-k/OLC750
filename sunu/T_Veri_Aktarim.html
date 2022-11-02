@@ -4,9 +4,7 @@
     <title>R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
-    <script src="T_Veri_Aktarim_files/header-attrs-2.17/header-attrs.js"></script>
-    <link href="T_Veri_Aktarim_files/remark-css-0.0.1/default.css" rel="stylesheet" />
-    <link href="T_Veri_Aktarim_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -18,7 +16,7 @@ class: center, middle, inverse, title-slide
 # R ile Veri Analizi
 ]
 .subtitle[
-## <br> 📈 Veri Aktarımı
+## <br> 📉 Veri Aktarımı
 ]
 .author[
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -29,7 +27,7 @@ class: center, middle, inverse, title-slide
 
 ---
 
- 
+
 ## Veri Okuma
 
 
@@ -162,7 +160,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 
 --
 
--   Değişken adi boşluklu yazılmışsa ne olur?
+-   Değişken adı boşluklu yazılmışsa ne olur?
 
 ---
 ## Veri Okuma
@@ -170,7 +168,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Eksik veri boyunca ayni şekilde girilmelidir.
+-   Eksik veri boyunca aynı şekilde girilmelidir.
 
 --
 
@@ -180,14 +178,14 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Tercihimiz .csv uzantılı veriler ama büyük veri setleri az yer kalması icin .txt,.prn formatında karsımıza çıkabilmektedir.
+-   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karşımıza çıkabilmektedir.
 
 ---
 ### Komutlarla veri aktarma
   
 - Temel pakette **read.csv** ve **read.table** gibi bazı fonksiyonlar bulunmaktadır.
 
-- Ayrıca, belirli  formatlarını içe aktarmak için R paketleri bulunmaktadır
+- Ayrıca, belirli  formatlarını içe aktarmak için R paketleri bulunmaktadır.
 
 - Örneğin, SPSS dosyaları için **foreign** ve Excel dosyaları için **xlsx** gibi
 
@@ -215,7 +213,7 @@ install.packages("xlsx")
 library("xlsx")
 
 # read.xlsx fonksiyonunun kullanımı
-my_excel_file &lt;- read.xlsx("path to the file/filename.xlsx",
+my_excel_file &lt;- read.xlsx("dizin/dosyaadi.xlsx",
                  sheetName = "sheetname")
 ```
 
@@ -229,7 +227,7 @@ install.packages("foreign")
 library("foreign")
 
 # read.spss fonksiyonunun kullanımı
-my_spss_file &lt;- read.spss("path to the file/filename.sav",
+my_spss_file &lt;- read.spss("dizin/dosyaadi.sav",
                 to.data.frame = TRUE)
 ```
 
@@ -241,15 +239,15 @@ my_spss_file &lt;- read.spss("path to the file/filename.sav",
 
 ```r
 # , ile ayrılmış csv dosyaları
-csv_dosya &lt;- read.csv("path to the file/filename.csv", 
+csv_dosya &lt;- read.csv("dizin/dosyaadi.csv", 
                       header = TRUE)
 
 # tab ile ayrılmış txt dosyaları
-txt_dosya &lt;- read.table("path to the file/filename.txt", h
-                        eader = TRUE, sep = "\t")
+txt_dosya &lt;- read.table("dizin/dosyaadi.txt", h
+                        header = TRUE, sep = "\t")
 ```
 
--Dikkat
+- Dikkat
   
 - `header = TRUE` 
 - `sep="\t"` 
@@ -260,10 +258,16 @@ txt_dosya &lt;- read.table("path to the file/filename.txt", h
 
 - 🔗[veri1.txt](import/veri1.txt)
 - 🔗[veri1.csv](import/veri1.csv)
-- 🔗[verifwf.txt](import/verifwf.txt)
+- 🔗[verifwf.txt](import/fwf.txt)
 - 🔗[factor.sav](import/factor.sav)
 - 🔗
 [https://www.statmodel.com/usersguide/chap3/ex3.1.dat](https://www.statmodel.com/usersguide/chap3/ex3.1.dat)
+
+---
+## Uygulama
+
+
+
 ---
 ## Veri Yazma
 
@@ -342,7 +346,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 
 ## write.csv
 
-**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "i" ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise "," ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
+**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "," ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise ";" ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
 
 --
 
@@ -356,9 +360,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 **cat()** fonksiyonu
 
 - Döngülerde sıklıkla ekrana bilgi yazdırmak amacıyla kullanılır, ancak dosya yazdırmak amacıyla da kullanabilmektedir. 
-
 - fonksiyonlarla yapılan hesaplama çıktısı da yazabilmektedir. 
-
 - Bu nedenle bir R oturumu sırasında not alınmak istenilen bilgileri bir dosyaya yazdırmak için kullanılabilir.
 
 
@@ -385,9 +387,7 @@ writeLines("ogrencilerin boy ortalamasi: 163 cm\n",
 
 - **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için 
 ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asil amacı komutların çalışmasını hızlandırmaktadır.
-
 - Çalışma alanını temizleyerek aşağıdaki kod satırlarını çalıştıralım.
-
 
 
 ```r
@@ -407,7 +407,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 ## dump() fonksiyonu
 - **dump()** fonksiyonu ile bir R oturumu sırasında kullanmak istenmeyen nesneler bir dosyaya yazdırabilir. 
 - Bu sayede çalışma alanında yer kaplamazlar ve tekrar kullanılmak istenildiğinde **source()** fonksiyonu ile kullanılabilirler.
- 
 
 ```r
  # x ve y nesnelerinin olusturulmasi
@@ -418,7 +417,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
  dump(c("x","y"), file="dumptest.txt")
 ```
 - çalışma alanının temizlenmeyerek, **source()** fonksiyonu ile dosya çalıştırıldığında nesneler tekrar çalışma alanına gelir.
---
 
 
 ```r
@@ -432,15 +430,11 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 
 - **dput()** fonksiyonunu ile saklanan nesneler  **dget()** fonksiyonu ile tekrar çalışma alanına getirilebilir ve yeni bir nesneye atanabilir. 
 
---
 
-- **dump()** fonksiyonu nesneyi ayni işlemle çalışma alanına getirirken,
+- **dump()** fonksiyonu nesneyi aynı işlemle çalışma alanına getirirken,
 
---
 
 - **dget()** fonksiyonu ise nesnenin içeriğini yazdırır
-
---
 
 - nesneyi  çalışma alanına kaydetmek için nesneye yeni bir ad vermek gerekmektedir.
 
@@ -508,7 +502,13 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>"
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
@@ -586,7 +586,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {
