@@ -5,20 +5,20 @@ author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br>
 date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
 output:
   xaringan::moon_reader:
-  lib_dir: libs
-css: ["xaringan-themer.css", "slides-style.css"]
-nature:
-  highlightStyle: solarized-light
-highlightLines: true
-countIncrementalSlides: false
-ratio: "16:9"
-slideNumberFormat: |
-  <div class="progress-bar-container">
-  <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-  </div>
-  </div>
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
 ---
- 
+
 ## Veri Okuma
 
 
@@ -151,7 +151,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 
 --
 
--   Değişken adi boşluklu yazılmışsa ne olur?
+-   Değişken adı boşluklu yazılmışsa ne olur?
 
 ---
 ## Veri Okuma
@@ -159,7 +159,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Eksik veri boyunca ayni şekilde girilmelidir.
+-   Eksik veri boyunca aynı şekilde girilmelidir.
 
 --
 
@@ -169,7 +169,7 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
--   Tercihimiz .csv uzantılı veriler ama büyük veri setleri az yer kalması icin .txt,.prn formatında karsımıza çıkabilmektedir.
+-   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karsımıza çıkabilmektedir.
 
 ---
 ### Komutlarla veri aktarma
@@ -311,7 +311,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 
 ## write.csv
 
-**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "i" ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise "," ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
+**write.csv()** fonksiyonu kullanılarak yazılan veri dosyaları "," ile,   **write.csv2()**  fonksiyonu kullanılarak yazılan veri dosyaları ise ";" ile ayrılır  iki fonksiyonun bir diğer farkı ise ondalık sayı ayıracıdır.
 
 --
 
@@ -325,9 +325,7 @@ write.table(ek, "df.txt",row.names=FALSE,
 **cat()** fonksiyonu
 
 - Döngülerde sıklıkla ekrana bilgi yazdırmak amacıyla kullanılır, ancak dosya yazdırmak amacıyla da kullanabilmektedir. 
-
 - fonksiyonlarla yapılan hesaplama çıktısı da yazabilmektedir. 
-
 - Bu nedenle bir R oturumu sırasında not alınmak istenilen bilgileri bir dosyaya yazdırmak için kullanılabilir.
 
 ```{r eval=FALSE}
@@ -353,9 +351,7 @@ writeLines("ogrencilerin boy ortalamasi: 163 cm\n",
 
 - **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için 
 ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asil amacı komutların çalışmasını hızlandırmaktadır.
-
 - Çalışma alanını temizleyerek aşağıdaki kod satırlarını çalıştıralım.
-
 
 ```{r eval=FALSE}
  # Baglanti kurulmasi
@@ -374,7 +370,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 ## dump() fonksiyonu
 - **dump()** fonksiyonu ile bir R oturumu sırasında kullanmak istenmeyen nesneler bir dosyaya yazdırabilir. 
 - Bu sayede çalışma alanında yer kaplamazlar ve tekrar kullanılmak istenildiğinde **source()** fonksiyonu ile kullanılabilirler.
- 
 ```{r}
  # x ve y nesnelerinin olusturulmasi
  x<-matrix(rnorm(16),4,4)
@@ -384,7 +379,6 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
  dump(c("x","y"), file="dumptest.txt")
 ```
 - çalışma alanının temizlenmeyerek, **source()** fonksiyonu ile dosya çalıştırıldığında nesneler tekrar çalışma alanına gelir.
---
 
 ```{r}
  source("dumptest.txt")
@@ -397,15 +391,11 @@ ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir
 
 - **dput()** fonksiyonunu ile saklanan nesneler  **dget()** fonksiyonu ile tekrar çalışma alanına getirilebilir ve yeni bir nesneye atanabilir. 
 
---
 
-- **dump()** fonksiyonu nesneyi ayni işlemle çalışma alanına getirirken,
+- **dump()** fonksiyonu nesneyi aynı işlemle çalışma alanına getirirken,
 
---
 
 - **dget()** fonksiyonu ise nesnenin içeriğini yazdırır
-
---
 
 - nesneyi  çalışma alanına kaydetmek için nesneye yeni bir ad vermek gerekmektedir.
 
