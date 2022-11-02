@@ -1,0 +1,5 @@
+structure(list(ad = c("Ali", "Elif", "Su", "Deniz", "Aras", "Berk", 
+"Can", "Ece", "Efe", "Arda"), boy = c(160, 165, 170, 155, 167, 
+162, 169, 158, 160, 164), kilo = c(50, 55, 57, 50, 48, 65, 58, 
+62, 45, 47), beden = c("S", "M", "S", "M", "S", "L", "M", "L", 
+"S", "S")), class = "data.frame", row.names = c(NA, -10L))

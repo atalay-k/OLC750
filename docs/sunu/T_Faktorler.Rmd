@@ -28,7 +28,7 @@ output:
 
 - Faktörler hem karakter veri türünden hem de sayısal veri türünden oluşturulabilmektedir.
 
-Veri seti `r emo::ji('link')`[hsb2.rda](hsb2.rds)
+Veri seti `r emo::ji('link')`[hsb2.rda](data/hsb2.rda)
 ```{r}
 load("data/hsb2.rda")
 str(hsb2)
@@ -189,7 +189,7 @@ attach(diamonds)
 levels(cut)
 ```
 
-- Sıralandırılmıs bir faktör
+- Sıralandırılmış bir faktör
 ---
 ## Düzey Sıralaması - II
 
@@ -220,7 +220,7 @@ beden.sayisal
 
 - Sayısal veride olsa matematiksel işlem yapılamaz. Sayısal değerler sadece düzeyler içindir. Düzeyleri `levels()` fonksiyonu ile isimlendirilebilir.
 
-Bu şekilde daha önceden sayısal olarak kayıtlı olan faktör nesnelere de düzey atanabilir.
+- Bu şekilde daha önceden sayısal olarak kayıtlı olan faktör nesnelere de düzey atanabilir.
 
 ```{r}
 levels(beden.sayisal) <-c("S","M","L")
@@ -233,9 +233,9 @@ beden.sayisal
 - Düzeyleri belirli bir örüntüde olan faktörler oluşturmak icin, `gl()` fonksiyonu kullanılabilir.
 
 - Fonksiyona düzey sayısı *(n)*,
-- her bir düzeyin kaç kere tekrar edeceği *(k)*,
-- faktör uzunluğu (length),
-- istenirse düzeylerin etiketleri ve düzeylerin sıralanma durumu (ordered) girilebilir.
+  - her bir düzeyin kaç kere tekrar edeceği *(k)*,
+  - faktör uzunluğu (length),
+  - istenirse düzeylerin etiketleri ve düzeylerin sıralanma durumu (ordered) girilebilir.
 
 
 ---

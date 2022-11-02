@@ -648,7 +648,7 @@ bonus = c(1,0,1, 0, 0, 1, 1, 0,0, 1)
 
 ```
 
-"Deneme sütunundaki NA sayisi:"
+"Deneme sütunundaki NA sayısı:"
 [1] 4
 
 ---
