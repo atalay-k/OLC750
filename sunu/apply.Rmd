@@ -1,0 +1,383 @@
+---
+title: "OLC R YAZILIMINA GIRIS"
+subtitle: "apply ailesi"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "20/12/2021 <br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---
+
+```{r set-theme, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color      = "#0F4C81", # pantone classic blue
+  secondary_color    = "#B6CADA", # pantone baby blue
+  header_font_google = google_font("Raleway"),
+  text_font_google   = google_font("Raleway", "300", "300i"),
+  code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "30px"
+)
+```
+
+
+```{r load-packages, include=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dplyr)
+library(tuev)
+library(magrittr)
+library(emo)
+
+
+```
+
+# apply ailesi .huge[`r emo::ji("stats")`]
+
+.hand[İçerik...]
+
+-  apply()
+-  lapply()
+-  sapply()
+-  vapply()
+-  mapply()
+-  rapply()
+-  tapply() 
+---
+
+## apply() Fonksiyonu
+
+- **apply()** fonksiyonu matris ve dizilerde satır ve sütundaki değerlerin 
+belirlenen fonksiyona göre değerlerini özetlemek için kullanılır. 
+
+- **apply()** fonksiyonunun genel kullanımı
+
+```{r eval=FALSE}
+apply(x, margin, FUN, …)
+
+```
+
+- margin argümanı satır (**1**), sütun (**2**) veya her ikisini (**c(1,2)**)
+FUN argümanı ise uygulanacak fonksiyonu belirtmektedir.
+
+---
+
+## apply() Fonksiyonu 
+
+```{r}
+X = matrix(c(1:9), nr= 3, byrow = T)
+X
+```
+
+--
+
+```{r}
+#1 satirlar icin, 
+apply(X, 1, mean) # satir ortalamaları
+```
+
+--
+```{r}
+#2 sutunlar icin
+apply(X, 2, mean) # sutun ortalamaları
+```
+
+---
+
+## apply() Fonksiyonu 
+
+- Ortalaması 50, standart sapması 5 olan normal dağılıma sahip 100 elemanlı
+"S1" vektöründen 20 satırlı ve 5 sütunlu matrisin oluşturulması
+
+```{r }
+set.seed(12)
+S1 <- sample(rnorm(10000, 50, 5), 100, replace=TRUE)
+Matris1 <- matrix(S1, nrow=20, ncol=5)
+```
+
+--
+- `mean()` fonksiyonunun "Matris1" nesnesinin her bir sütununa uygulanarak  sütunların ortalamasının alınması
+
+```{r }
+apply(Matris1, 2, mean) # Fonksiyonun ikinci girdisi olan 2  sütun elamanlarını temsil etmektedir.
+```
+
+---
+## apply() Fonksiyonu 
+
+- `summary()` fonksiyonunun "Matris1" nesnesinin her bir sütununa uygulanması
+
+```{r }
+apply(Matris1, 2, summary)
+```
+
+---
+## apply() Fonksiyonu 
+
+- `summary()` fonksiyonunun "Matris1" nesnesinin her bir satırına uygulanması
+
+```{r }
+apply(Matris1, 1, summary)
+```
+
+---
+## apply() Fonksiyonu
+
+- kisisel tanımlı fonksiyon ile kullanılması
+
+- Kullanıcı tanımlı fonksiyonların **apply()** fonksiyonuna uygulanması
+
+- Yazılan **bagil_degiskenlik()** fonksiyonunun "Matris1" nesnesinin 
+her bir sütununa uygulanarak her bir değişkenin bağıl değişkenlik 
+katsayısının hesaplanması
+
+```{r}
+
+bagil_degiskenlik <- function(x){
+(sd(x)/mean(x))*100
+}
+apply(Matris1, 2, bagil_degiskenlik)
+
+```
+
+---
+## apply() Fonksiyonu 
+
+
+Adsız (anonymous) fonksiyonlar  ile kullanılması
+
+```{r}
+
+apply(Matris1, 2, function(x){(sd(x)/mean(x))*100})
+
+
+```
+
+---
+
+## lapply() Fonksiyonu
+
+
+- **lapply()** fonksiyonu **apply()** fonksiyonunun listeler (list-apply), 
+vektörler ve veri setleri için özelleşmiş halidir. 
+
+- Liste yapısında olduğu için satır veya sütuna ilişkin bir argüman kullanılmaz. 
+
+- **lappy()** fonksiyonu veri setlerinde kullanıldığında, sütundaki her bir değişkeni listenin elemanı olarak alır.
+
+---
+
+## lapply() Fonksiyonu
+
+
+`lappy()` fonksiyonuyla elde edilen çıktılar da liste şeklindedir. 
+`lapply()` fonksiyonunun genel kullanımı 
+
+```{r eval=FALSE}
+lapply(x, FUN, …)
+```
+
+
+```{r}
+# liste olusturma
+(mylist <- list(a=(1:10), b=(45:77)))
+
+
+```
+
+---
+## lapply() Fonksiyonu
+
+
+```{r}
+# liste elemalarını toplama
+(resultlapply <- lapply(mylist, sum))
+
+liste <- list(a=c(1,2,3),b=c(4,5,6))
+lapply(liste, function(x){x^(3/2)})
+
+```
+
+---
+## sapply() Fonksiyonu
+
+- **sapply()** fonksiyonu **lapply()** fonksiyonu gibi liste, 
+listelerin özelleşmiş hali olan veri setleri ve vektörler
+üzerinde çalışır. 
+
+- **sapply()** fonksiyonunun temel amacı çıktıları basitleştirmektir.
+
+- **lapply()** fonksiyonuyla elde edilen çıktılar liste biçimindeyken **sapply()** fonksiyonuyla elde edilen çıktılar daha çok vektör şeklindedir.
+
+---
+## sapply() Fonksiyonu
+
+- **sapply()** fonksiyonu **apply()** fonksiyonuyla benzer çıktılar verir ancak **sapply()** fonksiyonunda margin değerleri bulunmaz. 
+- `sapply()` fonksiyonunun genel kullanımı
+
+```{r}
+
+mylist <- list(a=(1:10), b=(45:77))
+
+resultsapply <- sapply(mylist, sum)
+resultsapply
+```
+
+---
+## lapply() Fonksiyonu
+
+```{r}
+
+# lapply() fonksiyonunun liste veri türüne uygulanması
+lapply(list(a=c(1,2,3)), mean) # Liste çıktısı vermektedir.
+
+
+```
+
+---
+## lapply() Fonksiyonu
+
+```{r}
+
+# lapply() fonksiyonunun çıktısının vektöre dönüştürülmesi
+unlist(lapply(list(a=c(1,2,3)), mean))
+
+
+```
+
+---
+## sapply() Fonksiyonu
+
+```{r }
+
+# sapply() fonksiyonunun liste veri türüne uygulanması
+sapply(list(a=c(1,2,3)), mean) # Çıktı adlandırılmış vektör şeklindedir.
+
+
+```
+
+---
+## tapply() Fonksiyonu
+
+
+- **tapply()**  fonksiyonun temel görevi verileri belirlenen grup veya faktör değişkenine göre özetlemektir. 
+
+- Fonksiyonda bulunan x argümanı vektör, veri seti ve liste şeklindeki nesneleri, index argümanı "x" nesnesinin altboyut, grup veya faktör değişkenini, FUN argümanı ise uygulanacak fonksiyonu belirtir. 
+
+- $tapply(x, Index, FUN, …)$
+
+---
+## tapply() Fonksiyonu
+
+- **tapply()** liste ve veri seti yapısındaki nesnelere uygulandığında, grup veya faktör değişkenine ilişkin fonksiyon değerlerini fonksiyon türüne gore vektör ya da liste şeklinde verir. 
+
+- Eğer **tapply()** içinde kullanılan fonksiyon tek bir değer veriyorsa, çıktı vektör; birden fazla değer veriyorsa, çıktı liste yapısındadır.
+
+---
+
+## tapply() Fonksiyonu
+
+
+```{r}
+
+isim <- c("Ali","Elif","Su","Deniz","Aras","Berk","Can","Ece","Efe","Arda")
+boy <- c(160,165,170,155,167,162,169,158,160,164)
+kilo <- c(55,55,57,50,48,65,58,62,45,47)
+cinsiyet <- c("erkek","kadin","kadin","kadin","erkek",
+"erkek","erkek","kadin","erkek","erkek")
+cinsiyet <- factor(cinsiyet)
+beden <- c("S","M","S","M","S","L","M","L","S","S")
+beden <- factor(beden)
+# tapply() fonksiyonunun liste veri yapısına uygulanması
+Liste <- list(isim=isim,boy=boy,cinsiyet=cinsiyet,beden=beden,kilo=kilo)
+
+tapply(Liste$boy, Liste$cinsiyet, sort)
+```
+
+
+---
+## tapply() Fonksiyonu
+
+```{r}
+
+tapply(Liste$boy, Liste$cinsiyet, sort, decreasing=TRUE)
+```
+
+---
+
+## tapply() Fonksiyonu
+
+```{r }
+
+isim <- c("Ali","Elif","Su","Deniz","Aras","Berk","Can","Ece","Efe","Arda")
+boy <- c(160,165,170,155,167,162,169,158,160,164)
+kilo <- c(55,55,57,50,48,65,58,62,45,47)
+cinsiyet <- c("erkek","kadin","kadin","kadin","erkek",
+"erkek","erkek","kadin","erkek","erkek")
+cinsiyet <- factor(cinsiyet)
+beden <- c("S","M","S","M","S","L","M","L","S","S")
+beden <- factor(beden)
+#Once veri seti olusturalım
+df <- data.frame(isim,boy,kilo,cinsiyet, beden)
+```
+
+---
+
+## tapply() Fonksiyonu
+
+
+```{r }
+
+tapply(df$boy, Liste$cinsiyet, sort)
+
+tapply(df$boy, Liste$cinsiyet, sort, decreasing=TRUE)
+```
+
+---
+
+## tapply() Fonksiyonu
+
+```{r }
+
+tapply(df$boy, Liste$cinsiyet, mean)
+
+tapply(df$boy, Liste$cinsiyet, mean)
+```
+
+---
+
+## by() Fonksiyonu
+
+```{r }
+
+
+by(df$boy, Liste$cinsiyet, sort)
+
+by(df$boy, Liste$cinsiyet, sort, decreasing=TRUE)
+
+by(df$boy, Liste$cinsiyet, mean)
+
+by(df$boy, Liste$cinsiyet, mean)
+```
+
+
+---
+
+## by() Fonksiyonu
+
+```{r }
+
+by(df$boy, Liste$cinsiyet, mean)
+
+by(df$boy, Liste$cinsiyet, mean)
+```

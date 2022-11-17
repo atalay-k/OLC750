@@ -1,0 +1,668 @@
+---
+title: "`r emo::ji('chart')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` R Veri Setleri"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+
+
+---
+
+## R Veri Setleri .huge[`r emo::ji("stats")`]
+
+.hand[İçerik...]
+ 
+   - Veri Seti Oluşturma
+   
+   - Alt Küme Seçimi
+   
+   - Veri Betimleme
+
+ 
+   
+---
+
+## Veri Setleri
+
+- Veri setleri iki boyutludur.
+
+- R'da bir çok fonksiyonun veri setleri ile çalışmaktadır. 
+
+- Veri setleri R ortamında `data.frame()` fonksiyonu ile oluşturulabilir.
+
+- `data.frame()` fonksiyonu ile aynı uzunluktaki vektörlerden bir veri seti oluşturulabilir.
+
+---
+## R Nesneler
+
+.pull-left[
+```{r}
+ad  <-  c("Ali","Elif","Su","Deniz","Aras",
+          "Berk","Can","Ece","Efe","Arda")
+boy <- c(160,165,170,155,167,162,
+         169,158,160,164)
+kilo <- c(55,55,57,50,48,65,
+          58,62,45,47)
+beden <- c("S","M","S","M","S",
+           "L","M","L","S","S")
+beden <- factor(beden)
+
+
+df <- data.frame(ad,boy, kilo, beden) 
+```
+]
+
+.pull-right[
+```{r}
+df # 4 sütunlu df 3 farklı yapı içerir
+```
+]
+
+---
+## R Nesneler
+
+
+- Eğer uzunlukları farklı olan vektörlerle veri setleri oluşturulmaya çalışılırsa kısa vektör, uzun vektör uzunluğunda tekrar eder.
+
+```{r}
+# 4 farklı uzunlukta vektör oluşturulması
+x <- 11:14; y <- 10; M <- c(10,35); N <- 2:4
+```
+
+.pull-left[
+```{r error=TRUE}
+data.frame(x, y) # (4,1)
+```
+]
+
+--
+
+.pull-right[
+```{r error=TRUE}
+data.frame(x, M) # (4,2)
+```
+]
+
+---
+## data.frame()
+
+
+.pull-left[
+```{r error=TRUE}
+data.frame(x,N)  #(4,3) hata
+```
+]
+
+--
+
+.pull-right[
+```{r error=TRUE}
+data.frame(y, M) #(1,2)
+```
+]
+
+---
+## data.frame()
+
+
+.pull-left[
+```{r error=TRUE}
+data.frame(y, N) #(1,3)
+```
+]
+
+--
+
+.pull-right[
+```{r error=TRUE}
+data.frame(M, N) #(2,3)
+
+```
+]
+
+
+
+---
+## Veri Setleri
+
+- Temel pakette yer alan veri setlerinin bir listesi
+
+```{r eval=FALSE, include=TRUE}
+data() # yeni bir pencerede açılır.
+```
+
+- Veri setlerinin yer aldığı paketlerde bulunmaktadır.
+
+```{r}
+# install.packages("datasets")
+library (datasets)
+# install.packages("dslabs")
+library (dslabs)
+```
+
+---
+## Veri Setleri
+- Hazır veri setleri çalışma ortamına `data()` fonksiyonu ile aktarılabilir.
+
+```{r}
+data(WorldPhones) # environmete kontrol ediniz. 
+```
+
+- hazır veri setlerini inceleme
+
+```{r}
+data(cars) # enviromente ekler
+iris      # enviromente eklemez!
+```
+
+---
+## Veri Setleri
+
+- Boyut sorgulamamak için farklı fonksiyonlar kullanılabilir.
+
+```{r}
+dim(cars) # satir Sutun
+nrow(cars)
+ncol(cars)
+```
+
+---
+## Veri Setleri
+
+
+- Veri setlerin ilk satirlar `head()`, son satırları ise `tail()` fonksiyonu ile incelenebilir. `head()` fonksiyonu olağan olarak ilk 6 satırı yazdırır.
+```{r}
+head(WorldPhones)
+```
+
+- Yazdırılacak satır sayısı `n` argümanı ile ayarlanır.
+```{r}
+head(WorldPhones,n=2)
+```
+
+---
+## Veri Setleri
+
+- `datasets` paketinde yer alan veri setlerinde `examples()` bölümünde çeşitli örneklere yer verilmiştir. Örneğin `example(WorldPhones)`
+
+```{r fig.height=3.5, fig.width=3.5}
+
+matplot(rownames(WorldPhones), WorldPhones, type = "b", log = "y",
+        xlab = "Year", ylab = "Number of telephones (1000's)")
+legend("bottomright", colnames(WorldPhones), col = 1:6, lty = 1:5,
+       pch = rep(21, 7))
+title(main = "World phones data: log scale for response")
+```
+
+
+---
+## Veri Setleri
+
+-  Temel paket hariç diğer paketlerdeki veri setlerine `data(veriseti, package="packagename")` şeklinde ulaşılabilir.
+
+```{r}
+data(CTTdata, package="CTT") 
+head(CTTdata)
+```
+
+---
+## Veri Setleri
+
+`r emo::ji("link")`[sık kullanılan veri setleri ile ilgili bir yazı:](http://r-tutorials.com/famous-useful-pre-installed-exercise-datasets-r/)
+
+`r emo::ji("link")`[tüm veri setlerine ulaşabilmek için ise:](https://vincentarelbundock.github.io/Rdatasets/datasets.html)
+
+---
+## Veri Setleri
+
+- Kullanışlı olmasa da excel, spps gibi veri girişi sağlayan bir arayüz bulunmaktadır.
+
+```{r eval=FALSE, include=TRUE}
+df1<- data.frame() 
+df1 <- edit(df1)
+# duzenlemek icin
+fix(df)
+# gozatmak icin 
+View(df)
+```
+
+---
+## Veri setlerinde eleman secme
+
+Veri setlerinde eleman seçme matrislerdeki gibidir.
+
+`df[satirindeks, sutunindeks]`
+
+```{r}
+# df'nin birinci satir elemanlarının seçilmesi
+
+# df'nin birinci sütun elemanlarının seçilmesi
+ 
+# df'nin ikinci satir elemanlarının seçilmesi
+
+# df'nin ikinci sütun elemanlarının seçilmesi
+
+# df'nin birinci satir üçüncü sütun elemanlarının seçilmesi
+
+# Ali, Elif ve Su isimli öğrencilerin boylarının seçilmesi
+#
+# Ali, Su ve Ece'nin boylarının ve kilolarının seçilmesi
+
+```
+
+```{r eval=FALSE, include=FALSE}
+df[1,]
+df[,1] #df[,"ad"]
+df[2,]
+df[,2]    # df[,"kilo"]
+df[1,3]   # df[1,"kilo"]
+df[1:3,2] #df[1:3,"boy"]
+df[c(1,3,8),c(2,3)] #df[c(1,3,8),c("boy","kilo")]
+```
+
+---
+## Veri setlerinde eleman seçme
+
+.pull-left[
+- Veri setlerinde satır elemanları yazdırıldığında veri seti (`data.frame)`, sütun elemanları yazdırıldığında ise vektör (`vector)` oluşmaktadır.
+
+```{r}
+# satir secimi
+is.data.frame(df[1,])
+# sutun secimi
+is.data.frame(df[,1])
+```
+]
+
+--
+
+.pull-left[
+- Sütun seçimi veri seti (`data.frame`) olarak yapılmak istenirse, `drop` argümanı FALSE değeri ile kullanılır.
+
+```{r}
+df[,1,drop=FALSE]
+```
+
+]
+
+---
+## Veri setlerinde eleman seçme
+
+- Veri seçim işlemi icin `subset()` fonksiyonu kullanılabilir.
+
+- `?subset` bir fonksiyonu ilk daha kullanıyorsanız, mutlaka yardım sayfasını inceleyin. 
+
+`subset(veriseti, kosul/Kosullar)`
+
+
+
+.pull-left[
+```{r}
+# Boyu 165cm den uzun öğrencilerin 
+# bilgilerinin seçilmesi
+subset(df, boy >165)
+```
+]
+
+--
+.pull-right[
+```{r}
+# Boyu 165cm den uzun öğrencilerin 
+# bilgilerinin seçilmesi
+subset(df, boy >165)
+```
+]
+
+---
+## subset()
+
+- Fonksiyonun yardım sayfasındaki örnekleri inceleyebilirsiniz.
+
+.pull-left[
+```{r}
+subset(airquality, Temp > 90, 
+select = c(Ozone, Temp))
+
+```
+]
+
+--
+.pull-right[
+```{r}
+subset(airquality, Day == 1, select = -Temp)
+```
+]
+
+---
+## subset()
+
+.pull-left[
+```{r}
+## df verisi sadece "S" beden 
+subset(df,beden =="S")
+
+```
+]
+
+--
+.pull-right[
+```{r}
+# 50 kilo alti ve belilri sutunlar
+subset(df,kilo <50,select = ad:boy)
+
+```
+]
+
+---
+## Eleman ekleme işlemi
+
+- Veri setine yeni sütun ekleme isleme `$` operatörü ile `[[]]` operatörü ile `cbind()` fonksiyonları ile yapılabilmektedir.
+
+.pull-left[
+```{r}
+df2 <- data.frame(
+      S1 = sample(0:100,20),
+      S2 = runif(n=20 ,min= 50 , max=70)
+)
+
+head(df2)
+df2 <- round(df2,2)
+```
+
+]
+
+--
+.pull-right[
+
+
+`$` operatörü ile sütun ekleme
+
+```{r}
+df2$S3 <- sample(60:80,20,replace = TRUE)
+head(df2)
+
+```
+
+]
+
+---
+## Eleman ekleme işlemi
+
+.pull-left[
+
+- `[[]]` operatörü ile sütun ekleme
+
+- df2 veri setinin ilk üç sütunun `rowMeans()` fonksiyonu ile ortalamasının alınarak ort isimi ile veri setine eklenmesi
+
+```{r}
+df2[["ort"]] <- round(rowMeans(df2),2)
+head(df2)
+```
+
+]
+
+--
+
+.pull-right[
+
+- `cbind()` fonksiyonu ile sütun ekleme
+
+```{r}
+cbind( df2, S4 = 10)
+```
+
+]
+
+---
+## Eleman çıkarma işlemi
+
+- Veri setinden istenilen sütunun çıkarılabilir. Bu işlemi yapmak için iki farklı yol kullanılabilir. 
+
+.pull-left[
+
+`-` operatörü
+
+```{r}
+head(df2,3)
+df2 <- df2[,-4] 
+head(df2,3)
+```
+]
+
+--
+
+.pull-right[
+
+`NULL` operatörü
+
+```{r}
+df2$S3 <- NULL
+head(df2,3)
+
+```
+
+]
+
+---
+## Eleman ekleme işlemi
+
+- Veri setlerine değişken ekleyip, çıkarabileceğiniz gibi gözlem de ekleyip, çıkarabilirsiniz. Veri setine iki satır ekleme
+
+```{r}
+dim(df2)
+# eklenecek iki satırlık veri seti oluşturma
+df3 <- data.frame(S1=c(50,60),S2=c(55.3,65.5))
+# yeni veri seti
+df4 <- rbind (df2,df3)
+dim(df4)
+
+```
+
+---
+## Veri yapısı
+
+- Veri setlerinin yapısını incelemek icin `str()` fonksiyonundan yararlanılmaktadır.
+
+```{r}
+str(df)
+```
+
+- "df" veri seti 10 gözlemden, 4 değişken. Her bir değişkenin önünde `$` operatörü olduğuna dikkat ediniz.
+
+
+---
+## Veri yapısı
+
+- veri setinin incelenmek için kullanılabilecek diğer fonksiyon ise `attributes()`
+
+```{r}
+attributes(df)
+```
+
+---
+## Isimlendirme
+
+- Veri setleri vektör birleştirme üzerinden yapılırsa, vektör adları sütun ismi olarak kullanılır. Ancak bu isimler değiştirilebilir. Bu işlem `data.frame()` fonksiyonu içinde yapılabilir.
+
+```{r}
+df <- data.frame(isim = ad,
+                 boyolcum = boy,
+                 kiloolcum= kilo, 
+                 bedenolcum=beden)
+df
+```
+
+---
+## İsimlendirme
+
+- Veri seti isimlendirme de diğer bir yol ise `names()` ya da `colnames()` fonksiyonlarıdır.
+
+```{r}
+df <- data.frame(ad,boy,kilo,beden)
+names(df) <- c("isim","boyolcum ","kiloolcum","bedenolcum")
+df
+```
+
+---
+## Betimsel istatistikler
+
+- Veri setinin tümüne ilişkin betimsel istatistikler
+
+```{r}
+summary(cars)
+```
+
+--
+
+- Veri setinin tek değişkenine ilişkin betimsel istatistikler
+
+```{r}
+summary(cars$speed)
+```
+
+---
+## attach() fonksiyonu
+
+`attach()` fonksiyonu ile bir veri setinin sütunları sütun isimi ile enviromente eklenir. Aynı işlem `detach()` fonksiyonu ile tersine alınabilir.
+
+```{r}
+summary(women$height)   
+attach(women)
+summary(height)   # Ayni nesne isimi ile çağırılır.
+height <- height*2.54   # Bunu yapmamaya calisin!!
+find("height")
+
+```
+
+
+
+---
+## attach() fonksiyonu
+
+```{r}
+summary(height)         # Yeni değişken
+rm(height)
+detach("women")
+summary(women$height)   # unchanged
+```
+
+---
+## Veri setlerini düzenleme
+
+
+- BKI vektörünün üç farklı yollar farklı isimler ile veri setine eklenmesi 
+.pull-left-narrow[
+```{r}
+df <-data.frame(ad,boy,kilo)
+df
+
+```
+]
+
+--
+.pull-right-wide[
+
+
+```{r}
+
+df$BKI <- df$kilo/ (df$boy/100 * df$boy/100)
+df[["BKI2"]] <- df$kilo/ (df$boy/100 * df$boy/100)
+df <- cbind(df, BKI3 = df$kilo/ (df$boy/100 * df$boy/100))
+
+
+```
+]
+
+
+---
+## Veri setlerini düzenleme
+
+- Eklenen değişkenlerin çıkarılması
+
+.pull-left-wide[
+```{r}
+df 
+
+```
+]
+
+--
+.pull-right-narrow[
+```{r}
+df$BKI3 <- NULL
+
+df$BKI2 <- NULL
+df
+
+```
+]
+
+
+---
+## Günün sorusu
+
+**S5:** 
+
+Sırayla değişken adları TamSayi, OndalikSayi, Karakter, Mantıksal, Faktör olan 5 değişkenli hiçbir gözlemi olmayan bir data.frame oluşturmanızı ve bu data.framenin yapısını yazdırmanızı bekliyorum. Beklenen çıktı aşağıdaki gibi olmalıdır.
+
+```{r eval=FALSE, include=TRUE, error =TRUE}
+[1] "Bos data.framenin yapısı:"
+'data.frame':	0 obs. of  5 variables:  
+ $ TamSayi    : int   
+ $ OndalikSayi: num  
+ $ Karakter   : chr  
+ $ Mantiksal  : logi  
+ $ Faktor     : Factor w/ 0 levels:  
+NULL
+
+```
+
+
+
+---
+## Günün sorusu
+
+**S6:** 
+
+Aşağıda size verilen dört vektörden bir veri seti oluşturunuz. Oluşturduğunuz veri setinin deneme sütunundaki eksik veri sayısını hesaplayan komut yazınız.
+
+```{r}
+ad = c('Su', 'Pera', 'Sule', 'Can', 'Cem', 'Name', 'Aras', 'Mete', 'Kaan', 'Pelin')
+puan = c(12.5, 9, 16.5, 12, 9, 20, 14.5, 13.5, 8, 19)
+deneme = c(1, NA, 2, NA, 2, NA, 1, NA, 2, 1)
+bonus = c(1,0,1, 0, 0, 1, 1, 0,0, 1)
+
+
+```
+
+"Deneme sütunundaki NA sayısı:"
+[1] 4
+
+---
+## KAYNAKCA
+
+Atar, B., Atalay Kabasakal, K, Ünsal Özberk, E. B., Özberk, E. H. Ve Kıbrıslıoğlu Uysal, N. (2020).  R ile Veri Analizi ve Psikometri Uygulamaları, Editör, Pegem Akademi, Ankara.
+
+---
+## Odev
+
+Lütfen aşağıdaki bölümleri haftaya kadar okuyunuz.
+
+-   <http://adv-r.had.co.nz/Data-structures.html>
+
+-   <http://adv-r.had.co.nz/Subsetting.html>
+
+Veri düzenleme konusunda iki paket: **DataEditR** , **editData** inceleyiniz.
