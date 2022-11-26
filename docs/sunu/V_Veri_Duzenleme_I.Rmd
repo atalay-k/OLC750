@@ -425,6 +425,8 @@ data(PISA_SCH_2018) # okul verisi
 
 - **%>%** operatorü sık kullanılan bir operatördür.
 - kısa yolu: **Ctrl+Shift+M**
+- kısa yolu(mac) :**Cmd + Shift + M**
+
 
 - **%>%** operatorün yer aldığı paket ise **magrittr** 
 
@@ -571,7 +573,7 @@ PISA_STU_2018 %>% select(CNTSTUID,ST001D01T,ST004D01T,ESCS)
 ---
 ## **arrange()** fonksiyonu
 
-- **arrange()** veri setini satırlara gore tekrar sıralar. 
+- **arrange()** veri setini satırlara göre tekrar sıralar. 
 - Bu sıralamayı alfabetik yapar. 
 
 - **arrange()** fonksiyonu kullanımı

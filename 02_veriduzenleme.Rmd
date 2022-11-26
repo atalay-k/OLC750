@@ -60,7 +60,7 @@ TIMSS 2019 Grade4 Bu verilerin toplandığı anketler
    - [T19_StuQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_StuQ_4.pdf)
 
 
-TIMSS 2019 Grade8 Bu verilerin toplandığı ankterler
+TIMSS 2019 Grade8 Bu verilerin toplandığı anketler
 
    - [T19_G8_CurriculumQ](Kaynaklar/TIMSS_anketler/questionnaires_8/T19_G8_CurriculumQ.pdf)
    - [T19_SchQ_8](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_SchQ_8.pdf)

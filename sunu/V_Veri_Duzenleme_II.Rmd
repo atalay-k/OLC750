@@ -127,10 +127,10 @@ siz de  SINIF ve CINSIYET e göre dağılımı bulunuz?
 ---
 ## count() fonksiyonu
 
-- Gruplandırılmış veride bellirli bir değişkene ilişkin toplam almak istiyorsanız **count()** fonksiyonunun **wt()** argümanını kullanabilirsiniz.
+- Gruplandırılmış veride bellirli bir değişkene ilişkin toplam almak istiyorsanız **count()** fonksiyonunun **wt** argümanını kullanabilirsiniz.
 
 ```{r}
-PISA_OGR_2018 %>% count(OKUL_TUR, wt=SES, sort=TRUE)
+PISA_OGR_2018 %>% count(CINSIYET, wt=KITAPSAYISI, sort=TRUE)
 ```
 
 
@@ -233,7 +233,8 @@ siz de bu işlemi göçmenlik statüsüne göre  yapınız.
 ```{r message=FALSE}
 betimsel  <- PISA_OGR_2018 %>%
   group_by(CINSIYET,SINIF) %>%
-  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %>%        arrange(desc(ortalama)) 
+  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %>%  
+  arrange(desc(ortalama)) 
 
 betimsel
 ```
@@ -257,7 +258,8 @@ gruplandırılmış veri **Groups**  çıktısı ile alınır.
 ```{r message=FALSE}
 PISA_OGR_2018 %>%
   group_by(CINSIYET,SINIF) %>%
-  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %>%        arrange(desc(ortalama)) %>% 
+  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %>%
+  arrange(desc(ortalama)) %>% 
   ungroup()
 
 ```
@@ -287,7 +289,7 @@ PISA_OGR_2018 %>%
 ---
 ## summarize_all() ve summarize_if()
 
-- Elinizde tüm sütunları sayısal (numeric) olan bir veriseti olsun. Tum sütunların ortalamasını **summarize_all()** fonksiyonu ile hesaplayabilirsiniz.
+- Elinizde tüm sütunları sayısal (numeric) olan bir veri seti olsun. Tüm sütunların ortalamasını **summarize_all()** fonksiyonu ile hesaplayabilirsiniz.
 
 ```{r eval=FALSE}
 veriseti %>% summarize_all(funs(mean, sd))
@@ -314,7 +316,7 @@ df %>% top_n(2)
 ---
 ## top_n()
 
-- Okuma puanı **en yuksek** olan beş kız ve beş erkek öğrencinin bilgileri
+- Okuma puanı **en yüksek** olan beş kız ve beş erkek öğrencinin bilgileri
 ```{r}
 PISA_OGR_2018 %>%
   select(CINSIYET,ODOKUMA1)%>% 
@@ -323,7 +325,7 @@ PISA_OGR_2018 %>%
   top_n(5,ODOKUMA1)
 ```
 
----
+
 
 
 ---
@@ -343,7 +345,7 @@ PISA_OGR_2018 %>%
 ---
 ## DataEditR paketi
 
-Bu paketi paketin [github sayfasindan](https://github.com/DillonHammill/DataEditR) inceleyelim.
+Bu paketi paketin [github sayfasından](https://github.com/DillonHammill/DataEditR) inceleyelim.
 
 ---
 

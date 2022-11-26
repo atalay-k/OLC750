@@ -4,7 +4,7 @@
     <title>💪 R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Doç. Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
-    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 # 💪 R ile Veri Analizi
 ]
 .subtitle[
-## <br> 📈 Veri Düzenleme - II
+## <br> 📊 Veri Düzenleme - II
 ]
 .author[
 ### <br> <br> 👩‍🏫 Doç. Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -168,28 +168,19 @@ siz de  SINIF ve CINSIYET e göre dağılımı bulunuz?
 ---
 ## count() fonksiyonu
 
-- Gruplandırılmış veride bellirli bir değişkene ilişkin toplam almak istiyorsanız **count()** fonksiyonunun **wt()** argümanını kullanabilirsiniz.
+- Gruplandırılmış veride bellirli bir değişkene ilişkin toplam almak istiyorsanız **count()** fonksiyonunun **wt** argümanını kullanabilirsiniz.
 
 
 ```r
-PISA_OGR_2018 %&gt;% count(OKUL_TUR, wt=SES, sort=TRUE)
+PISA_OGR_2018 %&gt;% count(CINSIYET, wt=KITAPSAYISI, sort=TRUE)
 ```
 
 ```
-## # A tibble: 39 × 2
-##    OKUL_TUR                                      n
-##    &lt;chr+lbl&gt;                                 &lt;dbl&gt;
-##  1 TUR0318 [Anadolu Imam Hatip Lisesi - A]   8.71 
-##  2 TUR0108 [Anadolu Lisesi - A]             -0.522
-##  3 TUR0305 [Sosyal Bilimler Lisesi - A]    -15.9  
-##  4 TUR0302 [Fen Lisesi - A]                -16.4  
-##  5 TUR0303 [Fen Lisesi - B]                -34.0  
-##  6 TUR0304 [Fen Lisesi - C]                -34.2  
-##  7 TUR0326 [Anadolu Guzel Sanatlar Lisesi] -38.2  
-##  8 TUR0301 [Ortaokul]                      -49.4  
-##  9 TUR0306 [Sosyal Bilimler Lisesi - B]    -65.7  
-## 10 TUR0307 [Sosyal Bilimler Lisesi - C]    -77.0  
-## # … with 29 more rows
+## # A tibble: 2 × 2
+##   CINSIYET      n
+##   &lt;dbl+lbl&gt; &lt;dbl&gt;
+## 1 1 [Kiz]    9929
+## 2 2 [Erkek]  9392
 ```
 
 
@@ -326,7 +317,8 @@ siz de bu işlemi göçmenlik statüsüne göre  yapınız.
 ```r
 betimsel  &lt;- PISA_OGR_2018 %&gt;%
   group_by(CINSIYET,SINIF) %&gt;%
-  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %&gt;%        arrange(desc(ortalama)) 
+  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %&gt;%  
+  arrange(desc(ortalama)) 
 
 betimsel
 ```
@@ -371,7 +363,8 @@ gruplandırılmış veri **Groups**  çıktısı ile alınır.
 ```r
 PISA_OGR_2018 %&gt;%
   group_by(CINSIYET,SINIF) %&gt;%
-  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %&gt;%        arrange(desc(ortalama)) %&gt;% 
+  summarise(n = n(),ortalama=mean(ODOKUMA1),sd=sd(ODOKUMA1)) %&gt;%
+  arrange(desc(ortalama)) %&gt;% 
   ungroup()
 ```
 
@@ -425,7 +418,7 @@ PISA_OGR_2018 %&gt;%
 ---
 ## summarize_all() ve summarize_if()
 
-- Elinizde tüm sütunları sayısal (numeric) olan bir veriseti olsun. Tum sütunların ortalamasını **summarize_all()** fonksiyonu ile hesaplayabilirsiniz.
+- Elinizde tüm sütunları sayısal (numeric) olan bir veri seti olsun. Tüm sütunların ortalamasını **summarize_all()** fonksiyonu ile hesaplayabilirsiniz.
 
 
 ```r
@@ -478,7 +471,7 @@ df %&gt;% top_n(2)
 ---
 ## top_n()
 
-- Okuma puanı **en yuksek** olan beş kız ve beş erkek öğrencinin bilgileri
+- Okuma puanı **en yüksek** olan beş kız ve beş erkek öğrencinin bilgileri
 
 ```r
 PISA_OGR_2018 %&gt;%
@@ -505,7 +498,7 @@ PISA_OGR_2018 %&gt;%
 ## 10 2 [Erkek]     707.
 ```
 
----
+
 
 
 ---
@@ -543,7 +536,7 @@ PISA_OGR_2018 %&gt;%
 ---
 ## DataEditR paketi
 
-Bu paketi paketin [github sayfasindan](https://github.com/DillonHammill/DataEditR) inceleyelim.
+Bu paketi paketin [github sayfasından](https://github.com/DillonHammill/DataEditR) inceleyelim.
 
 ---
 

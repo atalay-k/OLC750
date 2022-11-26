@@ -35,7 +35,7 @@
   --code-font-family: 'Source Code Pro';
   --code-font-is-google: 1;
   --base-font-size: 20px;
-  --text-font-size: 45px;
+  --text-font-size: 30px;
   --code-font-size: 0.9rem;
   --code-inline-font-size: 1em;
   --header-h1-font-size: 2.75rem;
@@ -128,7 +128,7 @@ a, a > code {
 .inverse {
   background-color: var(--inverse-background-color);
   color: var(--inverse-text-color);
-
+  
 }
 .inverse h1, .inverse h2, .inverse h3 {
   color: var(--inverse-header-color);

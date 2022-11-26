@@ -23,7 +23,7 @@ output:
 
 
 
-- Veri girişi istatistiksel analiz surecinin ilk adımıdır.
+- Veri girişi istatistiksel analiz sürecinin ilk adımıdır.
 
 --
 
@@ -97,7 +97,7 @@ Bir veri setini R'ye aktarmanın iki yolu vardır:
 ---
 ## Veri Okuma
 
--   En temel veri okuma/aktarma fonksiyonlari
+-   En temel veri okuma/aktarma fonksiyonları
 
 --
 
@@ -169,11 +169,9 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 --
 
 
-<<<<<<< HEAD
 -   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karşımıza çıkabilmektedir.
-=======
--   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karsımıza çıkabilmektedir.
->>>>>>> 51ce5bc0f5f52752b4aacbbff73bf8e2c947c98f
+
+
 
 ---
 ### Komutlarla veri aktarma
@@ -255,8 +253,7 @@ txt_dosya <- read.table("dizin/dosyaadi.txt", h
 - `r emo::ji('link')`
 [https://www.statmodel.com/usersguide/chap3/ex3.1.dat](https://www.statmodel.com/usersguide/chap3/ex3.1.dat)
 
----
-## Uygulama
+
 
 ```{r eval=FALSE, include=FALSE}
 veritxt <- read.table("veri1.txt", header=TRUE, sep=";", dec=",")
@@ -400,10 +397,8 @@ writeLines("ogrencilerin boy ortalamasi: 163 cm\n",
 
 - **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için 
 <<<<<<< HEAD
-ve belirli hesaplamaların bir dökumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asıl amacı komutların çalışmasını hızlandırmaktadır.
-=======
-ve belirli hesaplamaların bir dokumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asil amacı komutların çalışmasını hızlandırmaktadır.
->>>>>>> 51ce5bc0f5f52752b4aacbbff73bf8e2c947c98f
+ve belirli hesaplamaların bir dökümana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asıl amacı komutların çalışmasını hızlandırmaktadır.
+
 - Çalışma alanını temizleyerek aşağıdaki kod satırlarını çalıştıralım.
 
 ```{r eval=FALSE}

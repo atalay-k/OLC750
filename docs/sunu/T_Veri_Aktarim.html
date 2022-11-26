@@ -32,7 +32,7 @@ class: center, middle, inverse, title-slide
 
 
 
-- Veri girişi istatistiksel analiz surecinin ilk adımıdır.
+- Veri girişi istatistiksel analiz sürecinin ilk adımıdır.
 
 --
 
@@ -106,7 +106,7 @@ Bir veri setini R'ye aktarmanın iki yolu vardır:
 ---
 ## Veri Okuma
 
--   En temel veri okuma/aktarma fonksiyonlari
+-   En temel veri okuma/aktarma fonksiyonları
 
 --
 
@@ -177,7 +177,10 @@ sayısal değerler arasında boşluk bırakmaktan kaçınmak gerekmektedir.
 
 --
 
+
 -   Tercihimiz **.csv** uzantılı veriler ama büyük veri setleri az yer kalması icin **.txt,.prn** formatında karşımıza çıkabilmektedir.
+
+
 
 ---
 ### Komutlarla veri aktarma
@@ -257,13 +260,12 @@ txt_dosya &lt;- read.table("dizin/dosyaadi.txt", h
 
 - 🔗[veri1.txt](import/veri1.txt)
 - 🔗[veri1.csv](import/veri1.csv)
-- 🔗[fwf.txt](import/fwf.txt)
+- 🔗[verifwf.txt](import/fwf.txt)
 - 🔗[factor.sav](import/factor.sav)
 - 🔗
 [https://www.statmodel.com/usersguide/chap3/ex3.1.dat](https://www.statmodel.com/usersguide/chap3/ex3.1.dat)
 
----
-## Uygulama
+
 
 
 
@@ -384,7 +386,9 @@ writeLines("ogrencilerin boy ortalamasi: 163 cm\n",
  
 ## sink() fonksiyonu
 
-- **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için  ve belirli hesaplamaların bir dökumana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asıl amacı komutların çalışmasını hızlandırmaktadır.
+- **sink()**  fonksiyonu yapılan işlemlerin çıktısını R konsola değil belirtilen dosyaya yazmaktadır. Bu fonksiyon özellikle uzun komut dosyalarında hata ayıklamak için 
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+ve belirli hesaplamaların bir dökümana yazılmak istediğinde bu işlemleri bir nesneye atamadan yapabilmektedir. Asıl amacı komutların çalışmasını hızlandırmaktadır.
 
 - Çalışma alanını temizleyerek aşağıdaki kod satırlarını çalıştıralım.
 
