@@ -128,7 +128,7 @@ class: middle
 **group_by():**  veride grup bazinda işlem yapma
 <br>
 --
-**summarise():** veriden ozet istatisikleri elde etme
+**summarise():** veriden özet istatisikleri elde etme
 <br>
 --
 **baglama (pipe)** **%>%** - işlemleri bağlama
@@ -262,7 +262,7 @@ Komutların çalısması uzun zaman alabilir. Büyük dosyaların okunması sır
 library(EdSurvey)
 ```
 
-- Ornek olarak aşağıda yer alan kod 2012 yılı PISA veri setini, bilgisayarınızda istediğiniz yere indirecektir.
+- Örnek olarak aşağıda yer alan kod 2012 yılı PISA veri setini, bilgisayarınızda istediğiniz yere indirecektir.
 
 ```{r  eval=FALSE}
 downloadPISA(years = 2012, database = c("INT"), root=getwd())
@@ -457,9 +457,9 @@ gapminder %>%
   head(2)
 ```
 
-  - bizi fazla yazmaktan kurtarır
-  - kodu okunabilir kılar
-  - zincirlemeye/bağlamaya izin verir
+  - bizi fazla yazmaktan kurtarır.
+  - kodu okunabilir kılar.
+  - zincirlemeye/bağlamaya izin verir.
   - Veri düzenleme işlerinde her zaman kullanışlıdır.
 ]
 
@@ -502,8 +502,8 @@ veri %>% lm(degisken1 ~ degisken2, data= .)
 
 ## **%>%** pipe kullanımı
 
-pipe kullanımı ile oluşan çıktıdan yeni bir nesne oluşturmak istiyorsanız, atama operatoru **<-**
-kullanmalısınız `r emo::ji("note")`.
+pipe kullanımı ile oluşan çıktıdan yeni bir nesne oluşturmak istiyorsanız, atama operatorü **<-**
+kullanmalısınız `r emo::ji("here")`.
 
 ```{r eval=FALSE}
 

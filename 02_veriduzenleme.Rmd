@@ -28,8 +28,8 @@ knitr::write_bib(x = c(.packages(), "ggplot2"), file = "packages.bib")
 |   |   |
 |---|---|
 |**Konu I: ** [dplyr paket tanıtımı](sunu\V_Veri_Duzenleme_I.html) | ![](figures/dplyr.png) |
-|**Konu II: ** [Veriyi ust duzeyde toplama](sunu\V_Veri_Duzenleme_II.html) | ![](figures/groupby.png) |
-|**Konu III: ** [Seçme ve Dönuşturme](sunu\V_Veri_Duzenleme_III.html) | ![](figures/select.jfif) |
+|**Konu II: ** [Veriyi üst düzeyde toplama](sunu\V_Veri_Duzenleme_II.html) | ![](figures/groupby.png) |
+|**Konu III: ** [Seçme ve Dönüşturme](sunu\V_Veri_Duzenleme_III.html) | ![](figures/select.jfif) |
 |**Konu IV: ** [Veri Setlerini Birleştirme](sunu\V_Veri_Duzenleme_IV.html) | ![](figures/join.jfif) |
 |**Konu V: ** [Veri Formatı Degiştirme](sunu\V_Veri_Duzenleme_V.html) | ![](figures/reshape.png) |
 

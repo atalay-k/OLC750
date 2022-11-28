@@ -2,7 +2,7 @@
 title: "`r emo::ji('muscle')` R ile Veri Analizi"
 subtitle: " <br> `r emo::ji('graph')` Veri Manipulasyonu_05"
 author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
-date: "20/12/2021 <br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
 output:
   xaringan::moon_reader:
     lib_dir: libs
@@ -201,7 +201,7 @@ uzun %>% tail(3)
 ```
 
 
-- Gördüğünüz gibi, şimdi iki sütunumuz var: Biri *Sure* için, diğeri **Zaman** için. Her katılımcı icin üc farkli süre degeri olduğu için her bir ID değeri üç kere tekrarlamaktadır.
+- Gördüğünüz gibi, şimdi iki sütunumuz var: Biri *Sure* için, diğeri **Zaman** için. Her katılımcı icin üç farklı süre değeri olduğu için her bir ID değeri üç kere tekrarlamaktadır.
 
 ---
 ## **separate()**
@@ -235,7 +235,7 @@ uzun_birles %>% head(3)
 ---
 ## **spread()** fonksiyonu
 
-- **spread():**  **gather*()** fonksiyonun tam tersini yaparak uzun veriden genis veri olusturmaya yarar.
+- **spread():**  **gather*()** fonksiyonun tam tersini yaparak uzun veriden geniş veri oluşturmaya yarar.
 
 ```{r}
 tekrar_genis <- uzun_birles %>% spread(SURE, Zaman)

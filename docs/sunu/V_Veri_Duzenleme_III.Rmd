@@ -69,7 +69,7 @@ library(tuev)
 dim(PISA_OGR_2018)
 ```
 
-- 673 sütunla çalişmayacaksanız, problem durumunuza uygun sütunları seçebilirsiniz. Fonksiyon içinde degişkenler tek tek virgül `,` ile ayrılarak seçim yapılabilir.
+- 673 sütunla çalışmayacaksanız, problem durumunuza uygun sütunları seçebilirsiniz. Fonksiyon içinde degişkenler tek tek virgül `,` ile ayrılarak seçim yapılabilir.
 
 ``` {.r}
 select(veri seti, degisken adi, degisken adi,..)
@@ -80,10 +80,10 @@ veri seti %>% select(degisken adi, degisken adi,..)
 ---
 ## select() fonksiyonu
 
-- OKULID, OGRENCIID, CINSIYET ,SES değikenlerinin seçimi
+- OKULID, OGRENCIID, CINSIYET ,SES değişkenlerinin seçimi
 
 ```{r}
-select(PISA_OGR_2018, OKULID, OGRENCIID, CINSIYET ,SES) %>% head(3)
+select(PISA_OGR_2018, OKULID, OGRENCIID, CINSIYET ,SES)
 ```
 
 Aynı işlem `c()` fonksiyonu içinde de yapılabilir.
@@ -107,7 +107,7 @@ PISA_OGR_2018 %>% select(OKULID, OGRENCIID, CINSIYET ,SES)
 
 - **select()** fonksiyonu belirli bir aralıktaki değişkenler iki nokta `:` opertorü ile seçilebilir. 
 
-- örnegin okumadan alınan zevke ilişkin maddeler aşağıdaki şekilde seçilebilir.
+- örneğin okumadan alınan zevke ilişkin maddeler aşağıdaki şekilde seçilebilir.
 
 ```{r}
 PISA_OGR_2018 %>% select(ST097Q01TA:ST097Q05TA)
@@ -116,10 +116,10 @@ PISA_OGR_2018 %>% select(ST097Q01TA:ST097Q05TA)
 ---
 ## select() fonksiyonu   **-**
 
-- **select()**  fonksiyonu belirli bir aralıkta yer alan değişkenler iki nokta **:** opertorü ile seçilirken, bu aralıkta dahil edilmek istenmeyen degişkenler kisa cizgi **-** operatorü ile hariç tutulabilir.
+- **select()**  fonksiyonu belirli bir aralıkta yer alan değişkenler iki nokta **:** opertorü ile seçilirken, bu aralıkta dahil edilmek istenmeyen degişkenler kısa çizgi **-** operatorü ile hariç tutulabilir.
 
 ```{r}
-PISA_OGR_2018 %>% select(OKULID:SINIF,-KITAPCIK) %>% head(5)
+PISA_OGR_2018 %>% select(OKULID:SINIF,-KITAPCIK) 
 
 ```
 
@@ -131,7 +131,7 @@ PISA_OGR_2018 %>% select(OKULID:SINIF,-KITAPCIK) %>% head(5)
 - **ST097** ile başlayan degişkenlerin seçilmesi
 
 ```{r}
-select(PISA_OGR_2018, starts_with("ST097")) %>% head(5)
+select(PISA_OGR_2018, starts_with("ST097"))
 ```
 
 ---
@@ -140,7 +140,7 @@ select(PISA_OGR_2018, starts_with("ST097")) %>% head(5)
 - **NA** ile **biten** degişkenlerin seçilmesi
 
 ```{r}
-select(PISA_OGR_2018, ends_with("NA"))  %>% head(5)
+select(PISA_OGR_2018, ends_with("NA"))  
 
 ```
 
@@ -160,7 +160,7 @@ select(PISA_OGR_2018,contains("OKUMA"))
 - içinde **02** geçen değişkenlerin seçilmesi
 
 ```{r}
-select(PISA_OGR_2018,matches("02"))  %>% head(5)
+select(PISA_OGR_2018,matches("02"))  
 ```
 
 ---
@@ -169,7 +169,7 @@ select(PISA_OGR_2018,matches("02"))  %>% head(5)
 -  ardışık ilerleyen değişkenlerin seçilmesi
 
 ```{r}
-select(PISA_OGR_2018,num_range("AGIRLIKLANDIRMA",1:5))  %>% head(5)
+select(PISA_OGR_2018,num_range("AGIRLIKLANDIRMA",1:5))  
 
 ```
 
@@ -181,7 +181,7 @@ select(PISA_OGR_2018,num_range("AGIRLIKLANDIRMA",1:5))  %>% head(5)
 - veya **|** operatorünün kullanılması
 
 ```{r}
-select(PISA_OGR_2018,contains("OKUMA") | matches("2"))  %>% head(5)
+select(PISA_OGR_2018,contains("OKUMA") | matches("2"))  
 ```
 
 ---
@@ -233,7 +233,7 @@ head(2)
 
 - **mutate()** fonksiyonu ile veri setine yeni değişken ekleyebilirsiniz.
 
-- **transmutate()** fonksiyonu ile veri setine yeni değişken eklenirken, eski değişken/ler veri setiden çıkarılır.
+- **transmute()** fonksiyonu ile veri setine yeni değişken eklenirken, eski değişken/ler veri setiden çıkarılır.
 
 - Okumadan zevk alma maddelerinden bir veri seti oluşturup, bu veri setine toplam puan ekleme
 
@@ -247,7 +247,7 @@ mutate(toplam =ST097Q01TA+ST097Q02TA+ST097Q03TA+ST097Q04TA+ ST097Q05TA) %>% head
 ---
 ## mutate() fonksiyonu
 
-- Değişken değerleri bir önceki örnekteki gibi tek tek **+** ile toplanacağı gibi **rowSums()** fonkşsyonu ile de aşağıdaki gibi toplanabilir 
+- Değişken değerleri bir önceki örnekteki gibi tek tek **+** ile toplanacağı gibi **rowSums()** fonksiyonu ile de aşağıdaki gibi toplanabilir 
 ```{r }
 zevk %>% 
 mutate(toplam=rowSums(select(., ST097Q01TA:ST097Q05TA))) %>% 
@@ -280,7 +280,7 @@ head(2)
 
 - Fonksiyonda üretilen ilk değişken kullanılarak da yeni değişken üretilebilir.
  
-- Ilk olarak ozyeterliği ölçen maddelerden yeni bir veri oluşturulmuş, daha sonra bu puanların önce toplam puanları daha sonra toplam puanların kareleri alınmıştır.
+- Ilk olarak özyeterliği ölçen maddelerden yeni bir veri oluşturulmuş, daha sonra bu puanların önce toplam puanları daha sonra toplam puanların kareleri alınmıştır.
 
 ```{r }
 ozyeterlik <- PISA_OGR_2018 %>% 
@@ -300,7 +300,7 @@ ozyeterlik%>%
 - **ifelse()** programlama dillerinde sıklıkla kullanılan koşullu önermelerden biridir.
 
 ```{r eval=FALSE}
-ifelse(test = x==y, evet = ilkdeger , hayır = ikincideger)
+ifelse(test = x<0, evet = ilkdeger , hayır = ikincideger)
 
 ```
 

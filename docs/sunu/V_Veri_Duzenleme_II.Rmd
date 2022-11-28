@@ -66,7 +66,7 @@ library(emo)
 
 ## count() fonksiyonu
 
-- **count()** fonkisyonu frekans tablosu oluşturmak için kullanılabilir.
+- **count()** fonksiyonu frekans tablosu oluşturmak için kullanılabilir.
 
 - **count()** fonksiyonunun pipe ile kullanımıı
 ```{r eval=FALSE}
@@ -299,7 +299,9 @@ veriseti %>% summarize_all(funs(mean, sd))
 - Elinizdeki bir veri setinin sayısal (numeric) olan sütunlarının ortalamasını **summarize_if()** fonksiyonu ile hesaplayabilirsiniz.
 
 ```{r message=FALSE, warning=FALSE}
-PISA_OGR_2018 %>% summarize_if(is.numeric, funs(mean, sd))
+PISA_OGR_2018 %>% 
+    select(CINSIYET,Gocmenlik,ODOKUMA1) %>% 
+    summarize_if(is.numeric, funs(mean, sd))
 ```
 
 ---

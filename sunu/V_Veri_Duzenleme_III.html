@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
 ]
 .date[
-### 20/12/2021 <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
+### <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
 ]
 
 ---
@@ -67,7 +67,7 @@ dim(PISA_OGR_2018)
 ## [1] 6890  673
 ```
 
-- 673 sütunla çalişmayacaksanız, problem durumunuza uygun sütunları seçebilirsiniz. Fonksiyon içinde degişkenler tek tek virgül `,` ile ayrılarak seçim yapılabilir.
+- 673 sütunla çalışmayacaksanız, problem durumunuza uygun sütunları seçebilirsiniz. Fonksiyon içinde degişkenler tek tek virgül `,` ile ayrılarak seçim yapılabilir.
 
 ``` {.r}
 select(veri seti, degisken adi, degisken adi,..)
@@ -78,7 +78,7 @@ veri seti %&gt;% select(degisken adi, degisken adi,..)
 ---
 ## select() fonksiyonu
 
-- OKULID, OGRENCIID, CINSIYET ,SES değikenlerinin seçimi
+- OKULID, OGRENCIID, CINSIYET ,SES değişkenlerinin seçimi
 
 
 ```r
@@ -161,22 +161,28 @@ PISA_OGR_2018 %&gt;% select(ST097Q01TA:ST097Q05TA)
 ---
 ## select() fonksiyonu   **-**
 
-- **select()**  fonksiyonu belirli bir aralıkta yer alan değişkenler iki nokta **:** opertorü ile seçilirken, bu aralıkta dahil edilmek istenmeyen degişkenler kisa cizgi **-** operatorü ile hariç tutulabilir.
+- **select()**  fonksiyonu belirli bir aralıkta yer alan değişkenler iki nokta **:** opertorü ile seçilirken, bu aralıkta dahil edilmek istenmeyen degişkenler kısa çizgi **-** operatorü ile hariç tutulabilir.
 
 
 ```r
-PISA_OGR_2018 %&gt;% select(OKULID:SINIF,-KITAPCIK) %&gt;% head(5)
+PISA_OGR_2018 %&gt;% select(OKULID:SINIF,-KITAPCIK) 
 ```
 
 ```
-## # A tibble: 5 × 4
-##     OKULID OGRENCIID OKUL_TUR                     SINIF        
-##      &lt;dbl&gt;     &lt;dbl&gt; &lt;chr+lbl&gt;                    &lt;dbl+lbl&gt;    
-## 1 79200001  79200768 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
-## 2 79200001  79201064 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
-## 3 79200001  79201118 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
-## 4 79200001  79201275 TUR0112 [Anadolu Lisesi - E]  9 [SINIF 9] 
-## 5 79200001  79201481 TUR0112 [Anadolu Lisesi - E]  9 [SINIF 9]
+## # A tibble: 6,890 × 4
+##      OKULID OGRENCIID OKUL_TUR                     SINIF        
+##       &lt;dbl&gt;     &lt;dbl&gt; &lt;chr+lbl&gt;                    &lt;dbl+lbl&gt;    
+##  1 79200001  79200768 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  2 79200001  79201064 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  3 79200001  79201118 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  4 79200001  79201275 TUR0112 [Anadolu Lisesi - E]  9 [SINIF 9] 
+##  5 79200001  79201481 TUR0112 [Anadolu Lisesi - E]  9 [SINIF 9] 
+##  6 79200001  79201556 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  7 79200001  79201652 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  8 79200001  79202033 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+##  9 79200001  79202179 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+## 10 79200001  79202278 TUR0112 [Anadolu Lisesi - E] 10 [SINIF 10]
+## # … with 6,880 more rows
 ```
 
 ---
