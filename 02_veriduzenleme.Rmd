@@ -48,26 +48,26 @@ veri setleri kullanılacaktır.
  
 PISA 2018 Bu verilerin toplandığı ankterler
 
-   - [Ogrenci Anketi](Kaynaklar/PISA_anketler/Turkish  Student_Questionnaire_Booklet_2018.pdf)
-   - [Okul Anketi](Kaynaklar/PISA_anketler/Turkish  School_Questionnaire_2018.pdf)
+   - [Ogrenci Anketi](PISA_anketler/OgrenciAnketi.pdf)
+   - [Okul Anketi](PISA_anketler/Okulanketi.pdf)
 
 TIMSS 2019 Grade4 Bu verilerin toplandığı ankterler
 
-   - [T19_G4_CurriculumQ](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_G4_CurriculumQ.pdf)
-   - [T19_SchQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_SchQ_4.pdf)
-   - [T19_TQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_TQ_4.pdf)
-   - [eT19_StuQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/eT19_StuQ_4.pdf)
-   - [T19_HQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_HQ_4.pdf)
-   - [T19_StuQ_4](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_StuQ_4.pdf)
+   - [T19_G4_CurriculumQ](TIMSS_anketler/questionnaires_4/T19_G4_CurriculumQ.pdf)
+   - [T19_SchQ_4](TIMSS_anketler/questionnaires_4/T19_SchQ_4.pdf)
+   - [T19_TQ_4](TIMSS_anketler/questionnaires_4/T19_TQ_4.pdf)
+   - [eT19_StuQ_4](TIMSS_anketler/questionnaires_4/eT19_StuQ_4.pdf)
+   - [T19_HQ_4](TIMSS_anketler/questionnaires_4/T19_HQ_4.pdf)
+   - [T19_StuQ_4](TIMSS_anketler/questionnaires_4/T19_StuQ_4.pdf)
 
 
 TIMSS 2019 Grade8 Bu verilerin toplandığı ankterler
 
-   - [T19_G8_CurriculumQ](Kaynaklar/TIMSS_anketler/questionnaires_8/T19_G8_CurriculumQ.pdf)
-   - [T19_SchQ_8](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_SchQ_8.pdf)
-   - [T19_TQS_8](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_TQS_8.pdf)
-   - [T19_TQM_8](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_TQM_8.pdf)
-   - [eT19_StuQ_8](Kaynaklar/TIMSS_anketler/questionnaires_4/eT19_StuQ_8.pdf)
-   - [T19_StuQ_SepSc_8](Kaynaklar/TIMSS_anketler/questionnaires_4/T19_StuQ_SepSc_8.pdf)
-   - [T19_StuQ_IntSc_8](Kaynaklar/TIMSS_aketler/questionnaires_4/T19_StuQ_IntSc_8.pdf)
+   - [T19_G8_CurriculumQ](TIMSS_anketler/questionnaires_8/T19_G8_CurriculumQ.pdf)
+   - [T19_SchQ_8](TIMSS_anketler/questionnaires_4/T19_SchQ_8.pdf)
+   - [T19_TQS_8](TIMSS_anketler/questionnaires_4/T19_TQS_8.pdf)
+   - [T19_TQM_8](TIMSS_anketler/questionnaires_4/T19_TQM_8.pdf)
+   - [eT19_StuQ_8](TIMSS_anketler/questionnaires_4/eT19_StuQ_8.pdf)
+   - [T19_StuQ_SepSc_8](TIMSS_anketler/questionnaires_4/T19_StuQ_SepSc_8.pdf)
+   - [T19_StuQ_IntSc_8](TIMSS_aketler/questionnaires_4/T19_StuQ_IntSc_8.pdf)
 
