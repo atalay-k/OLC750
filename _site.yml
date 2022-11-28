@@ -12,13 +12,13 @@ navbar:
     - text: "Veri Düzenleme"
       icon: fa-table
       href: 02_veriduzenleme.html
-    - text: "Programalama"
+    - text: "Görselleştirme"
       icon: fa-repeat
-      href: 03_programlama.html
+      href: 03_Gorsellestirme.html
     - text: "Kaynaklar"
       icon: fa-gem
       href: 04_Kaynaklar.html
-  right: 
+  right:
     - icon: fa-github fa-lg
       href: https://github.com/atalay-k
 output:
@@ -26,4 +26,4 @@ output:
     theme: cerulean
     highlight: haddock
     css: styles.css
-  
+
