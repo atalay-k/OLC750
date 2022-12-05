@@ -22,7 +22,7 @@ class: center, middle, inverse, title-slide
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
 ]
 .date[
-### 20/12/2021 <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
+### <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
 ]
 
 ---
@@ -176,26 +176,26 @@ genisveri
 
 ```
 ##       ID Sure_1 Sure_2 Sure_3
-## 1  ID101     57     43     43
-## 2  ID102     57     51     46
-## 3  ID103     57     47     42
-## 4  ID104     58     51     39
-## 5  ID105     55     43     44
-## 6  ID106     50     48     42
-## 7  ID107     59     44     42
-## 8  ID108     54     51     42
-## 9  ID109     60     47     41
-## 10 ID110     57     46     50
-## 11 ID111     56     47     48
-## 12 ID112     54     41     47
-## 13 ID113     54     44     47
-## 14 ID114     53     52     36
-## 15 ID115     59     50     46
-## 16 ID116     54     51     38
-## 17 ID117     59     53     44
-## 18 ID118     54     53     37
-## 19 ID119     58     50     38
-## 20 ID120     52     45     43
+## 1  ID101     50     44     43
+## 2  ID102     59     45     38
+## 3  ID103     60     45     45
+## 4  ID104     50     50     38
+## 5  ID105     51     55     35
+## 6  ID106     56     54     45
+## 7  ID107     50     48     39
+## 8  ID108     58     46     44
+## 9  ID109     50     47     50
+## 10 ID110     55     46     36
+## 11 ID111     56     54     45
+## 12 ID112     53     46     37
+## 13 ID113     52     50     47
+## 14 ID114     51     45     47
+## 15 ID115     56     46     46
+## 16 ID116     59     45     46
+## 17 ID117     59     42     44
+## 18 ID118     58     48     42
+## 19 ID119     56     47     38
+## 20 ID120     59     55     44
 ```
 
 ---
@@ -220,9 +220,9 @@ uzun %&gt;% head(3)
 
 ```
 ##      ID   Sure Zaman
-## 1 ID101 Sure_1    57
-## 2 ID102 Sure_1    57
-## 3 ID103 Sure_1    57
+## 1 ID101 Sure_1    50
+## 2 ID102 Sure_1    59
+## 3 ID103 Sure_1    60
 ```
 
 ```r
@@ -231,13 +231,13 @@ uzun %&gt;% tail(3)
 
 ```
 ##       ID   Sure Zaman
-## 58 ID118 Sure_3    37
+## 58 ID118 Sure_3    42
 ## 59 ID119 Sure_3    38
-## 60 ID120 Sure_3    43
+## 60 ID120 Sure_3    44
 ```
 
 
-- Gördüğünüz gibi, şimdi iki sütunumuz var: Biri *Sure* için, diğeri **Zaman** için. Her katılımcı icin üc farkli süre degeri olduğu için her bir ID değeri üç kere tekrarlamaktadır.
+- Gördüğünüz gibi, şimdi iki sütunumuz var: Biri *Sure* için, diğeri **Zaman** için. Her katılımcı icin üç farklı süre değeri olduğu için her bir ID değeri üç kere tekrarlamaktadır.
 
 ---
 ## **separate()**
@@ -259,9 +259,9 @@ uzun_ayrı %&gt;% head(3)
 
 ```
 ##      ID Sure Sayı Zaman
-## 1 ID101 Sure    1    57
-## 2 ID102 Sure    1    57
-## 3 ID103 Sure    1    57
+## 1 ID101 Sure    1    50
+## 2 ID102 Sure    1    59
+## 3 ID103 Sure    1    60
 ```
 
 ---
@@ -278,15 +278,15 @@ uzun_birles %&gt;% head(3)
 
 ```
 ##      ID   SURE Zaman
-## 1 ID101 Sure.1    57
-## 2 ID102 Sure.1    57
-## 3 ID103 Sure.1    57
+## 1 ID101 Sure.1    50
+## 2 ID102 Sure.1    59
+## 3 ID103 Sure.1    60
 ```
 
 ---
 ## **spread()** fonksiyonu
 
-- **spread():**  **gather*()** fonksiyonun tam tersini yaparak uzun veriden genis veri olusturmaya yarar.
+- **spread():**  **gather*()** fonksiyonun tam tersini yaparak uzun veriden geniş veri oluşturmaya yarar.
 
 
 ```r
@@ -296,28 +296,33 @@ tekrar_genis
 
 ```
 ##       ID Sure.1 Sure.2 Sure.3
-## 1  ID101     57     43     43
-## 2  ID102     57     51     46
-## 3  ID103     57     47     42
-## 4  ID104     58     51     39
-## 5  ID105     55     43     44
-## 6  ID106     50     48     42
-## 7  ID107     59     44     42
-## 8  ID108     54     51     42
-## 9  ID109     60     47     41
-## 10 ID110     57     46     50
-## 11 ID111     56     47     48
-## 12 ID112     54     41     47
-## 13 ID113     54     44     47
-## 14 ID114     53     52     36
-## 15 ID115     59     50     46
-## 16 ID116     54     51     38
-## 17 ID117     59     53     44
-## 18 ID118     54     53     37
-## 19 ID119     58     50     38
-## 20 ID120     52     45     43
+## 1  ID101     50     44     43
+## 2  ID102     59     45     38
+## 3  ID103     60     45     45
+## 4  ID104     50     50     38
+## 5  ID105     51     55     35
+## 6  ID106     56     54     45
+## 7  ID107     50     48     39
+## 8  ID108     58     46     44
+## 9  ID109     50     47     50
+## 10 ID110     55     46     36
+## 11 ID111     56     54     45
+## 12 ID112     53     46     37
+## 13 ID113     52     50     47
+## 14 ID114     51     45     47
+## 15 ID115     56     46     46
+## 16 ID116     59     45     46
+## 17 ID117     59     42     44
+## 18 ID118     58     48     42
+## 19 ID119     56     47     38
+## 20 ID120     59     55     44
 ```
 
+---
+## Çalışma
+
+
+Veri [seti üzerinde](data/sunu2.csv) [soruları](dplyrsorular.pdf) cevaplayınız.
 
 ---
 

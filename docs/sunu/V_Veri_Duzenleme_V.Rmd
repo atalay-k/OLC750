@@ -224,7 +224,7 @@ uzun_ayrı %>% head(3)
 ## **unite()** fonksiyonu
 
 - **gather*()** fonksiyonun tam tersi olarak iki sütunu alıp
-tek sutunda birlestirir.
+tek sütunda birleştirir.
 
 ```{r}
 uzun_birles <- uzun_ayrı %>% unite(SURE, Sure, Sayı, sep = ".")
@@ -242,6 +242,11 @@ tekrar_genis <- uzun_birles %>% spread(SURE, Zaman)
 tekrar_genis
 ```
 
+---
+## Çalışma
+
+
+Veri [seti üzerinde](data/DATA2.csv) [soruları](dplyrsorular.pdf) cevaplayınız.
 
 ---
 
