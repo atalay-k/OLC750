@@ -1,0 +1,432 @@
+---
+title: "`r emo::ji('muscle')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` Veri Görselleştirme - I"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+
+
+---
+
+```{r set-theme, include=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color      = "#0F4C81", # pantone classic blue
+  secondary_color    = "#B6CADA", # pantone baby blue
+  header_font_google = google_font("Raleway"),
+  text_font_google   = google_font("Raleway", "300", "300i"),
+  code_font_google   = google_font("Source Code Pro"),
+  text_font_size     = "30px"
+)
+```
+
+
+```{r load-packages, include=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(dplyr)
+library(tuev)
+library(emo)
+
+# devtools::install_github("tuevpaket/tuev")
+library("tuev")
+```
+
+# Veri Görselleştirme Giriş .huge[`r emo::ji("stats")`]
+
+.hand[İçerik...]
+
+- Neden görşelleştirme
+<br>
+<br>
+
+--
+- 
+<br>
+<br>
+
+--
+- 
+<br>
+<br>
+
+--
+-
+<br>
+<br>
+
+--
+
+---
+## Görselleştirme
+
+
+- Grafikler bir **veri kümesini anlamamıza yardımcı olur.**
+
+- **Örüntüyü yorumlayabilmek** önemli bir güçtür.
+
+- Veriyi betimlemek amacıyla
+
+- Veriyi betimleyerek başkaları ile paylaşmak amacıyla veri görselleştirmeden yararlanırız.
+
+---
+## Veriyi Betimleme
+
+- Veri setini anlamaya yarar.
+
+- Olabildiğince ayrıntı içermesine 
+
+- Ne kadarına yorumlayabileceğinize odaklanın.
+
+---
+## Veriyi Betimleme
+
+```{r}
+plot(sleep)
+```
+
+---
+## Veriyi Betimleme
+
+.pull-left[
+```{r include=TRUE,eval=FALSE}
+attach(sleep)
+sleep.data<-rbind(extra[1:10], extra[11:20])
+barplot(sleep.data, beside = T,
+        names.arg = sleep$ID[1:10], 
+        xlab = 'ID', 
+        ylab = 'Uyku Değişiklik Zamanı', 
+        col = 3:4,
+        main = 'Uyku Verisi Sütun Grafiği')
+legend('bottomright', 
+       fill = 3:4, 
+       legend = c(1, 2)) 
+abline(h=0)
+
+```
+]
+.pull-right[
+```{r echo=FALSE}
+attach(sleep)
+sleep.data <- rbind(extra[1:10], extra[11:20])
+barplot(sleep.data, beside = T, names.arg = sleep$ID[1:10], 
+        xlab = 'ID', 
+        ylab = 'Uyku Değişiklik Zamanı', 
+        col = 3:4,
+        main = 'Uyku Verisi Sütun Grafiği')
+legend('bottomright', fill = 3:4, legend = c(1, 2)) 
+abline(h=0)
+
+```
+]
+---
+## Veriyi Betimleme
+
+.pull-left[
+
+```{r include=TRUE,eval=FALSE}
+library(ggplot2)
+ggplot(sleep,
+       aes(x = ID, y = extra, fill = group))+
+  geom_bar(stat = 'identity',
+           position = 'dodge')+
+  ggtitle('Uyku Verisi Sütun Grafiği')
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(sleep, aes(x = ID, y = extra, fill = group))+
+  geom_bar(stat = 'identity', position = 'dodge')+
+  ggtitle('Uyku Verisi Sütun Grafiği')
+```
+]
+
+---
+## Veriyi Betimleme
+
+```{r}
+plot(ChickWeight)
+```
+
+---
+## Veriyi Betimleme
+
+```{r}
+plot(ChickWeight$Diet)
+```
+
+---
+## Veriyi Betimleme
+
+```{r}
+coplot(weight ~ Time | Chick, data = ChickWeight,type = "b", show.given = FALSE)
+```
+
+---
+## Veriyi Betimleme
+.pull-left[
+```{r out.width="75%"}
+ggplot(ChickWeight, 
+       aes(x=Time, y=weight)) + geom_point()
+```
+]
+.pull-right[
+```{r message=FALSE, warning=FALSE, out.width="75%"}
+ggplot(ChickWeight, 
+       aes(x=Time, y=weight, color=Diet)) + 
+       geom_point() + geom_smooth()
+```
+]
+---
+## Veriyi Betimleme
+
+- Grafikleri sunarken editoryal kararlar gereklidir.
+
+- Vurgulamak istediğiniz temel özellikleri vurgulayın.
+
+- Gereksiz ayrıntıları ortadan kaldırın.
+
+---
+## 4 temel grafik sistemi
+
+- **Base:** öğrenmesi en kolay olan
+
+- **Grid:** diğer araçları geliştirmek için güçlü moduller
+
+- **lattice:** gridler üzerine kurulu genel amaçlı grafikler
+
+- **ggplot2:** grafiklerin grammeri
+
+
+---
+## Temel Grafikler
+
+```{r message=FALSE, warning=FALSE}
+library(MASS)
+plot(UScereal$sugars, UScereal$Calories)
+title("Seker ve Kalori İliskisi")
+```
+
+---
+## Gridler
+
+.pull-left[
+```{r include=TRUE,eval =FALSE}
+# Data için paket aktifleştirme
+library(MASS)
+x <- UScereal$sugars
+y <- UScereal$calories
+library(grid)
+# plot olusturma
+pushViewport(plotViewport())
+pushViewport(dataViewport(x, y))
+grid.rect()
+grid.xaxis()
+grid.yaxis()
+grid.points(x, y)
+grid.text("Kalori", x = unit(-3, "lines"), rot = 90)
+grid.text("Seker", y = unit(-3, "lines"), rot = 0)
+popViewport(2)
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+# Data için paket aktifleştirme
+library(MASS)
+x <- UScereal$sugars
+y <- UScereal$calories
+library(grid)
+# plot olusturma
+pushViewport(plotViewport())
+pushViewport(dataViewport(x, y))
+grid.rect()
+grid.xaxis()
+grid.yaxis()
+grid.points(x, y)
+grid.text("Kalori", x = unit(-3, "lines"), rot = 90)
+grid.text("Seker", y = unit(-3, "lines"), rot = 0)
+popViewport(2)
+```
+]
+---
+## lattice
+
+.pull-left[
+
+```{r include=TRUE,eval =FALSE}
+library(lattice)
+xyplot(sugars ~ calories | vitamins, 
+       data = UScereal)
+```
+]
+.pull-right[
+
+```{r echo=FALSE}
+library(lattice)
+xyplot(sugars ~ calories | vitamins, 
+       data = UScereal)
+```
+]
+---
+## ggplot2
+.pull-left[
+
+```{r  include=TRUE,eval =FALSE}
+library(ggplot2)
+title <-
+"ggplot2 plot of \n UScereal$calories vs. \n UScereal$sugars"
+basePlot <- ggplot(UScereal, aes(x = sugars, y = calories))
+basePlot +
+geom_point(shape = as.character(UScereal$shelf), size = 3) +
+annotate("text", label = title, x = 3, y = 400,
+colour = "red")
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE}
+library(ggplot2)
+title <-
+"ggplot2 plot of \n 
+UScereal$calories vs. 
+\n UScereal$sugars"
+basePlot <- 
+ggplot(UScereal, aes(x = sugars, y = calories))
+basePlot +
+geom_point(shape = 
+as.character(UScereal$shelf), size = 3) +
+annotate("text", label = title, x = 3, y = 400,
+colour = "red")
+```
+]
+
+---
+## Temel Paket Sacilim Grafikleri
+
+```{r}
+library(MASS)
+plot(Boston$crim ~ Boston$age,
+     log = 'xy',
+     col = 'steelblue')
+```
+
+
+---
+## Temel Paket Kutu Grafikleri
+
+```{r}
+library(MASS)
+boxplot(crim ~ rad, data = Boston, log = "y", las = 1,
+main = "Boxplot", xlab = "rad", ylab = "crim")
+```
+
+---
+## Temel Paket Mozaik Grafikleri
+
+```{r}
+mosaicplot(cyl ~ gear, data = mtcars, main = "Mosaicplot")
+```
+
+---
+## Temel Paket
+
+- en genel fonksiyon **plot()** 
+- nokta eklemek için **points()**
+- çizgi eklemek için **lines()**
+- metin eklemek için **text()**
+- etiket eklemek için **label()**
+
+---
+## point
+
+```{r}
+ggpubr::show_point_shapes()
+```
+
+--- 
+## point
+
+```{r}
+plot(x = mtcars$mpg, y = mtcars$disp, 
+     frame = FALSE,
+     xlab = "MPG", ylab = "DISP")
+```
+
+
+---
+## point
+
+```{r}
+plot(x = mtcars$mpg, y = mtcars$disp, 
+     frame = FALSE,
+     xlab = "MPG", ylab = "DISP" ,pch=8)
+```
+
+
+--- 
+## point-col
+
+```{r}
+plot(x = mtcars$mpg, 
+     y = mtcars$disp, frame = FALSE,
+     xlab = "MPG", ylab = "DISP" ,
+     pch="a",col="red")
+```
+
+--- 
+## normal dağılım
+
+```{r}
+normal <- rnorm(100,50,10)
+hist(normal)
+```
+
+
+
+---
+
+.hand-large[teşekkürler !]
+
+--
+
+
+.large[`r emo::ji('confused')`]
+--
+<br>
+.large[`r emo::ji('happy')`]
+
+
+---
+--- ## KAYNAKLAR
+
+- Caro, D. H. & Biecek, P. (2017). intsvy: An R Package for analyzing ınternational large-scale assessment data. Journal of Statistical Software, 81(7), 1-44. doi: 10.18637/jss.v081.i07 (URL:http://doi.org/10.18637/jss.v081.i07)
+
+- Martin, M. O., von Davier, M., & Mullis, I. V. S. (Eds.). (2020). Methods and Procedures: TIMSS 2019 Technical Report. Boston College, TIMSS & PIRLS International Study Center website:   https://timssandpirls.bc.edu/timss2019/methods adresinden erişildi.
+
+- Mullis, I. V. S., Martin, M. O., Foy, P., Kelly, D. L., & Fishbein, B. (2020). TIMSS 2019 International Results in Mathematics and Science. Boston College, TIMSS & PIRLS International Study Center website: https://timssandpirls.bc.edu/timss2019/international-results/ adresinden erişildi.
+
+---
+--- ## KAYNAKLAR
+
+-  "Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (2019). **R ile Veri Analizi ve Psikometri Uygulamaları**. PegemA Akademi
+- OECD (2019). PISA 2018 Assessment and Analytical Framework. PISA, OECD Publishing, Paris, https://doi.org/10.1787/b25efab8-en adresinden erişildi.
+
+- Wickham, H.  François, R., Henry L. & Müller, K. (2021). dplyr: A Grammar of Data   Manipulation. R package   version 1.0.7. https://CRAN.R-project.org/package=dplyr
+
+
