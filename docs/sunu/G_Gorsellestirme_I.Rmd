@@ -49,25 +49,13 @@ library("tuev")
 .hand[İçerik...]
 
 - Neden görşelleştirme
-<br>
-<br>
 
---
-- 
-<br>
-<br>
+- Grafik sistemleri
 
---
-- 
-<br>
-<br>
+- Temel Grafikler
 
---
--
-<br>
-<br>
+- İleri Grafikler
 
---
 
 ---
 ## Görselleştirme
@@ -131,6 +119,7 @@ abline(h=0)
 
 ```
 ]
+
 ---
 ## Veriyi Betimleme
 
@@ -191,6 +180,7 @@ ggplot(ChickWeight,
        geom_point() + geom_smooth()
 ```
 ]
+
 ---
 ## Veriyi Betimleme
 
@@ -215,7 +205,7 @@ ggplot(ChickWeight,
 ---
 ## Temel Grafikler
 
-```{r message=FALSE, warning=FALSE}
+```{r fig.height=6, fig.width=5, message=FALSE, warning=FALSE}
 library(MASS)
 plot(UScereal$sugars, UScereal$Calories)
 title("Seker ve Kalori İliskisi")
@@ -263,6 +253,7 @@ grid.text("Seker", y = unit(-3, "lines"), rot = 0)
 popViewport(2)
 ```
 ]
+
 ---
 ## lattice
 
@@ -282,17 +273,17 @@ xyplot(sugars ~ calories | vitamins,
        data = UScereal)
 ```
 ]
+
 ---
 ## ggplot2
 .pull-left[
 
 ```{r  include=TRUE,eval =FALSE}
 library(ggplot2)
-title <-
-"ggplot2 plot of \n UScereal$calories vs. \n UScereal$sugars"
-basePlot <- ggplot(UScereal, aes(x = sugars, y = calories))
-basePlot +
-geom_point(shape = as.character(UScereal$shelf), size = 3) +
+title <-"Örnek grafik"
+ggplot(UScereal, aes(x = sugars, y = calories))+
+geom_point(shape = as.character(UScereal$shelf), 
+           size = 3) +
 annotate("text", label = title, x = 3, y = 400,
 colour = "red")
 ```
@@ -302,16 +293,13 @@ colour = "red")
 
 ```{r echo=FALSE}
 library(ggplot2)
-title <-
-"ggplot2 plot of \n 
-UScereal$calories vs. 
-\n UScereal$sugars"
-basePlot <- 
-ggplot(UScereal, aes(x = sugars, y = calories))
-basePlot +
+title <-"Örnek grafik"
+ggplot(UScereal, aes(x = sugars, y = calories))+
 geom_point(shape = 
-as.character(UScereal$shelf), size = 3) +
-annotate("text", label = title, x = 3, y = 400,
+             as.character(UScereal$shelf), 
+           size = 3) +
+annotate("text", 
+label = title, x = 3, y = 400,
 colour = "red")
 ```
 ]
@@ -319,18 +307,16 @@ colour = "red")
 ---
 ## Temel Paket Sacilim Grafikleri
 
-```{r}
+```{r fig.height=6, fig.width=5,}
 library(MASS)
-plot(Boston$crim ~ Boston$age,
-     log = 'xy',
-     col = 'steelblue')
+plot(Boston$crim ~ Boston$age,log = 'xy',col = 'steelblue')
 ```
 
 
 ---
 ## Temel Paket Kutu Grafikleri
 
-```{r}
+```{r fig.height=6, fig.width=5}
 library(MASS)
 boxplot(crim ~ rad, data = Boston, log = "y", las = 1,
 main = "Boxplot", xlab = "rad", ylab = "crim")
@@ -355,11 +341,11 @@ mosaicplot(cyl ~ gear, data = mtcars, main = "Mosaicplot")
 ---
 ## point
 
-```{r}
+```{r message=FALSE, warning=FALSE, fig.height=6, fig.width=5}
 ggpubr::show_point_shapes()
 ```
 
---- 
+---
 ## point
 
 ```{r}
@@ -372,29 +358,24 @@ plot(x = mtcars$mpg, y = mtcars$disp,
 ---
 ## point
 
-```{r}
-plot(x = mtcars$mpg, y = mtcars$disp, 
-     frame = FALSE,
-     xlab = "MPG", ylab = "DISP" ,pch=8)
+```{r fig.height=6, fig.width=5}
+plot(x = mtcars$mpg, y = mtcars$disp,xlab = "MPG", ylab = "DISP" ,pch=8)
 ```
 
 
---- 
+---
 ## point-col
 
-```{r}
-plot(x = mtcars$mpg, 
-     y = mtcars$disp, frame = FALSE,
-     xlab = "MPG", ylab = "DISP" ,
-     pch="a",col="red")
+```{r fig.height=6, fig.width=5}
+plot(x = mtcars$mpg, y = mtcars$disp,xlab = "MPG", ylab = "DISP" , pch="a",col="red")
 ```
 
---- 
+---
 ## normal dağılım
 
-```{r}
+```{r message=FALSE, warning=FALSE, out.width="45%"}
 normal <- rnorm(100,50,10)
-hist(normal)
+hist(normal,frame=FALSE)
 ```
 
 
@@ -412,8 +393,9 @@ hist(normal)
 .large[`r emo::ji('happy')`]
 
 
+
 ---
---- ## KAYNAKLAR
+## KAYNAKLAR
 
 - Caro, D. H. & Biecek, P. (2017). intsvy: An R Package for analyzing ınternational large-scale assessment data. Journal of Statistical Software, 81(7), 1-44. doi: 10.18637/jss.v081.i07 (URL:http://doi.org/10.18637/jss.v081.i07)
 
@@ -422,9 +404,9 @@ hist(normal)
 - Mullis, I. V. S., Martin, M. O., Foy, P., Kelly, D. L., & Fishbein, B. (2020). TIMSS 2019 International Results in Mathematics and Science. Boston College, TIMSS & PIRLS International Study Center website: https://timssandpirls.bc.edu/timss2019/international-results/ adresinden erişildi.
 
 ---
---- ## KAYNAKLAR
+## KAYNAKLAR
 
--  "Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (2019). **R ile Veri Analizi ve Psikometri Uygulamaları**. PegemA Akademi
+-  Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (2019). **R ile Veri Analizi ve Psikometri Uygulamaları**. PegemA Akademi
 - OECD (2019). PISA 2018 Assessment and Analytical Framework. PISA, OECD Publishing, Paris, https://doi.org/10.1787/b25efab8-en adresinden erişildi.
 
 - Wickham, H.  François, R., Henry L. & Müller, K. (2021). dplyr: A Grammar of Data   Manipulation. R package   version 1.0.7. https://CRAN.R-project.org/package=dplyr

@@ -26,11 +26,11 @@ knitr::write_bib(x = c(.packages(), "ggplot2"), file = "packages.bib")
 
 |   |   |
 |---|---|
-|**Konu I: ** [Temel Grafikler](sunu\G_Gorsellestirme_I.html) | ![](figures/functions.png) |
-|**Konu II: **   [](sunu\) |    ![](figures/logic.png) |
-| **Konu III: **   [](sunu\) | ![](figures/conditions.PNG) |
-| **Konu IV: **   []() | ![](figures/loops.png) |
-| **Konu V: **   []() | ![](figures/apply.png) |
+|**Konu I: ** [Grafikler](sunu\G_Gorsellestirme_I.html) |![](figures/g1.png) |
+|**Konu II: **   [Temel Grafikler](sunu\G_Gorsellestirme_II.html) | ![](figures/g2.jfif) |
+| **Konu III: **   [Grafikler Türleri](sunu\G_Gorsellestirme_III.html) | |
+| **Konu IV: **   []() |  |
+| **Konu V: **   []() |  |
 
 
 

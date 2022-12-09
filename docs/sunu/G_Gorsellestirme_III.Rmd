@@ -1,0 +1,548 @@
+---
+title: "`r emo::ji('muscle')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` Veri Görselleştirme - III"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+
+
+---
+
+```{r setup, include=FALSE, fig.height=4, fig.width=6}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Veri Hazırlama
+
+- Grafiklerin kolay okunması adına veri sayısının azaltılması amacıyla sınıf düzeylerine ilişkin değişkenin her düzeyinden 15'şer kişilik örneklem seçilip toplam 60 gözlemle **df2** nesnesi oluşturulması
+
+
+
+```{r veri okuma, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+library(tuev)
+library(dplyr)
+library(expss)
+df1 <- PISA_OGR_2018 %>%
+dplyr::select(SINIF,CINSIYET,OK_YETERLIK,ODOKUMA1,starts_with("ST097"))  %>%  
+  na.omit()%>%
+ drop_var_labs() 
+```
+
+---
+## Veri Hazırlama
+```{r , message=FALSE, warning=FALSE, paged.print=TRUE}
+
+df2 <- df1 %>% 
+  drop_var_labs() %>% 
+  filter(SINIF %in%c(8,9,10,11))%>% 
+  group_by(SINIF)%>%
+  sample_n(15, replace=TRUE) %>%
+    ungroup()%>%  
+  mutate(SINIF=as.factor(SINIF), CINSIYET=as.factor(CINSIYET)) 
+                       
+```
+
+---
+- ** Başarı puanları ile yeterlik puanları arasındaki ilişkiyi gösteren grafiğin plot() fonksiyonu ile çizilmesi**
+
+```{r grafik cizme, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2)
+```
+
+
+---
+## Sütun (Çubuk) Grafiği
+
+- Sütun grafiği oluşturmak için ilk olarak frekans tablosu elde etmek gerekir. 
+
+- Frekans tablosu `table()` fonkisyonu ile oluşturulabilir.
+
+```{r ftablo, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+Madde1_ozet <- table(df2$ST097Q01TA)
+Madde1_ozet
+```
+
+---
+- **Dikey sütun grafiği oluşturmak için `barplot()` fonksiyonu kullanımı**
+
+```{r sütun-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+barplot(Madde1_ozet,
+        main="Madde 1 Cevap Dağılımı",
+        xlab="Cevap Kategorisi",
+        ylab="Frekans") 
+```
+
+---
+- **Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
+
+```{r sütun-2, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+# yatay cizilmesi
+barplot(Madde1_ozet,
+        main="Madde 1 Cevap Dağılımı",
+        xlab="Cevap Kategorisi",
+        ylab="Frekans",
+        horiz=TRUE)  
+```
+
+---
+- **Kategorik değişkenlerin her bir değeri için sütun grafiği oluşturulması**
+
+- İlk olarak frekans talosu oluşturulur. Grafiklerde kategorik değişkenlerin etiketleri görünmesi için kategorik degişkene etiket ataması yapılır.
+
+```{r sütun-3, message=FALSE, warning=FALSE, paged.print=TRUE}
+df2$ST097Q02TA
+(df2$CINSIYET <- factor(df2$CINSIYET , 
+                         labels = c("Kız", "Erkek")))
+```
+
+---
+- **Cinsiyete Göre Madde 2 Cevap Dağılımı**
+
+```{r sütun-4, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+# Cinsiyete Göre Madde 2 Cevap Dağılımı
+Madde2_ozet <- table(df2$CINSIYET,df2$ST097Q02TA)
+Madde2_ozet
+
+
+```
+
+---
+- **Kategorik değişken etiketleri `legend` argümanı ile eklenebilir.**
+
+```{r sütun-5, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+barplot(Madde2_ozet, 
+main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
+xlab="Cevap Kategorisi", 
+ylab="Frekans", 
+col=c("red","gray"), 
+legend=rownames(Madde2_ozet))
+
+```
+
+---
+- **Kategorik değişken gösterimi ayrı çubuklara da `beside` argümanı ile alınabilir.**
+
+```{r sütun-6, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+barplot(Madde2_ozet, 
+        main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
+        xlab="Cevap Kategorisi", 
+        ylab="Frekans", 
+        col=c("red","gray"), 
+        beside = TRUE,
+         legend=rownames(Madde2_ozet))
+```
+
+---
+- **`barplot()` fonksiyonu farklı kullanımları için `?barplot` ile incelemeler yapabilirsiniz.**
+
+```{r sütun-7, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+
+barplot(GNP ~ Year, data = longley)
+```
+
+---
+**`barplot()` fonksiyonu**
+
+```{r message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+
+barplot(cbind(Employed, Unemployed) ~ Year, data = longley,beside = TRUE)
+```
+
+
+
+---
+## Pasta grafiği
+
+- Pasta grafiklerinde genellikle gösterimler yüzdeler üzerinden hesaplanır.
+
+```{r pasta-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+# Cevap kategorilerinin frekans dağılımı
+Madde1_ozet
+
+# Cevap kategorilerinin yüzdelik dağılımı
+yuzde <- round(Madde1_ozet/sum(Madde1_ozet)*100)
+yuzde
+```
+
+---
+- **Pasta dilimlerinin adlandırılması** amacıyla karakter bir vektör oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+
+```{r pasta-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+likert_ifade=c("Kolaylıkla yaparım","Zorlanarak yaparım",  "Tek başıma çok zor yaparım","Yapamam")
+likert_ifade
+# likert ifadeler ile yuzdelerin birleştirilmesi
+metin <- paste(likert_ifade, " ", yuzde, "%", sep="")
+metin
+```
+
+---
+- Pasta dilimlerinin adlandırılması amacıyla karakter bir vektor oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+
+.center[
+```{r pasta-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+pie(Madde1_ozet, labels=metin, main="Madde 1 Yüzdelik Cevap Dağılımı", col=rainbow(4))
+```
+]
+
+---
+- Üç boyutlu pasta grafikleri oluşturmak amacıyla da farklı paketlerden de yararlanılabilir.
+
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+library(plotrix)
+
+pie3D(Madde1_ozet,radius=1.5,labels=metin,explode=0.2,main="Madde 1 Yüzdelik Cevap Dağılımı")
+
+```
+
+---
+## Histogram
+
+- En basit histogram grafiği `hist()` fonksiyonu ile çizilir.
+
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+attach(df2)
+hist(ODOKUMA1)
+```
+
+---
+- **İki uç değer eklenerek histogram grafiği çizilmesi**
+
+```{r hist-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+ODOKUMA_2 <- c(ODOKUMA1,900,1200)
+
+hist(ODOKUMA_2)
+```
+
+---
+## Kutu Grafiği
+
+- Uç deger incelemenin çok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
+
+```{r kutu-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+boxplot(ODOKUMA_2)
+```
+
+---
+- Bazen uç degerler incelemesini de grupların ayrı ayrı düzeylerine (kategorik) göre yapmak gerekir).
+
+```{r kutu-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+boxplot(ODOKUMA1) # uc deger gorunmuyor
+```
+
+---
+- Kategorik değişkenin her bir kategorisi için kutu grafiği çizilmek istediğinde ise **~** ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
+
+```{r kutu-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+boxplot(ODOKUMA1 ~ SINIF,
+        horizontol =TRUE,data=df2,
+        xlab= "Başarı Puanları",
+        ylab = "Sinif Düzeyleri",boxwex=0.5) 
+```
+
+`?boxplot` komutunu çalıştırarak değişebileceğiniz argümanları iceleyebilirsiniz.
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Nokta grafiği oluşturmak için `dotchart()` fonksiyonundan yararlanılır.
+
+```{r dot-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+dotchart(df2$OK_YETERLIK)
+```
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Nokta grafiği de bir değişkenin kategorilerine göre çizdirilebilir. Bu amaçla df2 veri setinden okuma yeterlik puanları küçükten büyüğe sıralanbilir.
+
+```{r dot-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+ df2 <- df2[order(df2$OK_YETERLIK),]
+ head(df2,15)
+```
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Oluşturulacak nokta grafiğinde noktaların hangi renkle gösterilmesi isteniyorsa bu tanımlanabilir. Bu tanılama veri setine renk isimli bir sütunla eklenmiştir.
+
+```{r dot-4, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+# Sınıf düzeylerine renk atanması
+
+df2 <- mutate(df2,
+ renk = ifelse(SINIF==8,"red",
+               ifelse(SINIF==9,"blue",
+                     ifelse( SINIF==10,"orange","black"))))
+```
+
+---
+## Nokta Grafiğinin Oluşturulması
+
+```{r dot-5, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+# Sınıf düzeylerine renk atanması
+attach(df2)
+dotchart(OK_YETERLIK, cex=.7, groups=SINIF, color=renk, pch=19,
+         main="Sınıflara Göre Puanları",
+         xlab="Puanları")
+```
+
+---
+## Yogunluk grafigi (Density Plot)
+
+Yogunluk grafiği çizebilmek için ilk olarak olasılık yoğunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
+
+```{r yogunluk-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+# 8. sınıflar için
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+#olusan d1 nesnesinin x ve y degerleri ile grafik cizilir.
+plot(d1, main=" Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+```
+
+---
+## Grafik Birleştirme
+
+Birde fazla grafiği tek bir alanda görmek için `mfrow` grafik parametresinden yararlanılır.
+
+Bölünmek istenilen alan satır ve sütunlara gore ayrılabilir.
+
+`par(mfrow = c( satır sayısı,sütun sayısı))`
+
+---
+## Grafik Birleştirme
+
+- Birinci satır birinci sütun
+
+```{r grafik birlestirme, message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+
+```
+
+---
+## Grafik Birleştirme
+
+- Birinci satır ikinci sütun
+
+.pull-left[
+```{r eval=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+
+```
+
+]
+
+.pull-right[
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+
+```
+
+]
+
+---
+## Grafik Birleştirme
+
+- İkinci satır birinci sütun
+
+.pull-left[
+
+```{r eval=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 <- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 <- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+
+```
+]
+
+---
+## Grafik Birleştirme
+
+- İkinci satır ikinci sütun
+
+.pull-left[
+
+```{r  eval=FALSE,message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 <- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+
+d4 <- density(df2$ODOKUMA1[SINIF==11])
+plot(d4,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 11. Sınıf")
+polygon(d4, col="yellow", border="black")
+
+```
+]
+.pull-right[
+
+```{r  echo=FALSE,message=FALSE, warning=FALSE, paged.print=TRUE}
+par(mfrow=c(2,2))
+
+d1 <- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 <- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 <- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+
+d4 <- density(df2$ODOKUMA1[SINIF==11])
+plot(d4,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 11. Sınıf")
+polygon(d4, col="yellow", border="black")
+
+```
+]
+---
+## Grafik Kaydetme
+
+- Grafik kaydetme işlemi grafik alanındaki export sekmesi ile yapılabilmektedir.
+
+- Bunun hariçinde `jpeg()`, `pdf()` gibi kaydedilecek dosya türüne özgü fonksiyonla da aynı işlem yapılabilir.
+
+- Grafikler spesifik bir fonksiyonla kaydedildiği zaman `dev.off()` fonksiyonu ile işlem sonlandırılmalıdır. Bu işlem grafik grafik alanında görüntülenmez.
+
+- Grafiği jpeg olarak kaydetmek
+
+```{r grafik kaydetme-1, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+# kaydetme
+
+jpeg("Ornek1.jpg")
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+dev.off()
+
+```
+
+---
+## Grafik Kaydetme
+
+Grafiği pdf olarak kaydetmek
+
+```{r grafik kaydetme-2, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+# kaydetme
+pdf("Ornek1.pdf") # Grafik boyutu kadar yer kaplar. 
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+
+dev.off()
+```
+
+---
+## Grafik Kaydetme
+
+Grafiği kaydetmek isleminde sayfa boyutu da değiştirilebilir.
+
+```{r grafik kaydetme-3, message=FALSE, warning=FALSE, paged.print=TRUE}
+
+pdf("Ornek2.pdf", paper="a4") # A4 Sayfa boyutunda grafiği kaydeder. 
+
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+
+
+dev.off()
+```
+
+---
+##
+
+- Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (Baskıda). R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi
