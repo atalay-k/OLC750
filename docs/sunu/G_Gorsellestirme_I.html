@@ -4,7 +4,7 @@
     <title>💪 R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
-    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 # 💪 R ile Veri Analizi
 ]
 .subtitle[
-## <br> 📉 Veri Görselleştirme - I
+## <br> 💹 Veri Görselleştirme - I
 ]
 .author[
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -38,25 +38,13 @@ class: center, middle, inverse, title-slide
 .hand[İçerik...]
 
 - Neden görşelleştirme
-&lt;br&gt;
-&lt;br&gt;
 
---
-- 
-&lt;br&gt;
-&lt;br&gt;
+- Grafik sistemleri
 
---
-- 
-&lt;br&gt;
-&lt;br&gt;
+- Temel Grafikler
 
---
--
-&lt;br&gt;
-&lt;br&gt;
+- İleri Grafikler
 
---
 
 ---
 ## Görselleştirme
@@ -112,6 +100,7 @@ abline(h=0)
 .pull-right[
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-3-1.png)&lt;!-- --&gt;
 ]
+
 ---
 ## Veriyi Betimleme
 
@@ -183,6 +172,7 @@ ggplot(ChickWeight,
 
 &lt;img src="G_Gorsellestirme_I_files/figure-html/unnamed-chunk-10-1.png" width="75%" /&gt;
 ]
+
 ---
 ## Veriyi Betimleme
 
@@ -243,6 +233,7 @@ popViewport(2)
 .pull-right[
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
 ]
+
 ---
 ## lattice
 
@@ -259,6 +250,7 @@ xyplot(sugars ~ calories | vitamins,
 
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ]
+
 ---
 ## ggplot2
 .pull-left[
@@ -266,11 +258,10 @@ xyplot(sugars ~ calories | vitamins,
 
 ```r
 library(ggplot2)
-title &lt;-
-"ggplot2 plot of \n UScereal$calories vs. \n UScereal$sugars"
-basePlot &lt;- ggplot(UScereal, aes(x = sugars, y = calories))
-basePlot +
-geom_point(shape = as.character(UScereal$shelf), size = 3) +
+title &lt;-"Örnek grafik"
+ggplot(UScereal, aes(x = sugars, y = calories))+
+geom_point(shape = as.character(UScereal$shelf), 
+           size = 3) +
 annotate("text", label = title, x = 3, y = 400,
 colour = "red")
 ```
@@ -287,9 +278,7 @@ colour = "red")
 
 ```r
 library(MASS)
-plot(Boston$crim ~ Boston$age,
-     log = 'xy',
-     col = 'steelblue')
+plot(Boston$crim ~ Boston$age,log = 'xy',col = 'steelblue')
 ```
 
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
@@ -334,14 +323,9 @@ mosaicplot(cyl ~ gear, data = mtcars, main = "Mosaicplot")
 ggpubr::show_point_shapes()
 ```
 
-```
-## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.
-```
-
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
 
---- 
+---
 ## point
 
 
@@ -359,37 +343,32 @@ plot(x = mtcars$mpg, y = mtcars$disp,
 
 
 ```r
-plot(x = mtcars$mpg, y = mtcars$disp, 
-     frame = FALSE,
-     xlab = "MPG", ylab = "DISP" ,pch=8)
+plot(x = mtcars$mpg, y = mtcars$disp,xlab = "MPG", ylab = "DISP" ,pch=8)
 ```
 
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
 
 
---- 
+---
 ## point-col
 
 
 ```r
-plot(x = mtcars$mpg, 
-     y = mtcars$disp, frame = FALSE,
-     xlab = "MPG", ylab = "DISP" ,
-     pch="a",col="red")
+plot(x = mtcars$mpg, y = mtcars$disp,xlab = "MPG", ylab = "DISP" , pch="a",col="red")
 ```
 
 ![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 
---- 
+---
 ## normal dağılım
 
 
 ```r
 normal &lt;- rnorm(100,50,10)
-hist(normal)
+hist(normal,frame=FALSE)
 ```
 
-![](G_Gorsellestirme_I_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+&lt;img src="G_Gorsellestirme_I_files/figure-html/unnamed-chunk-25-1.png" width="45%" /&gt;
 
 
 
@@ -403,11 +382,12 @@ hist(normal)
 .large[😕]
 --
 &lt;br&gt;
-.large[😄]
+.large[🙋]
+
 
 
 ---
---- ## KAYNAKLAR
+## KAYNAKLAR
 
 - Caro, D. H. &amp; Biecek, P. (2017). intsvy: An R Package for analyzing ınternational large-scale assessment data. Journal of Statistical Software, 81(7), 1-44. doi: 10.18637/jss.v081.i07 (URL:http://doi.org/10.18637/jss.v081.i07)
 
@@ -416,9 +396,9 @@ hist(normal)
 - Mullis, I. V. S., Martin, M. O., Foy, P., Kelly, D. L., &amp; Fishbein, B. (2020). TIMSS 2019 International Results in Mathematics and Science. Boston College, TIMSS &amp; PIRLS International Study Center website: https://timssandpirls.bc.edu/timss2019/international-results/ adresinden erişildi.
 
 ---
---- ## KAYNAKLAR
+## KAYNAKLAR
 
--  "Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (2019). **R ile Veri Analizi ve Psikometri Uygulamaları**. PegemA Akademi
+-  Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (2019). **R ile Veri Analizi ve Psikometri Uygulamaları**. PegemA Akademi
 - OECD (2019). PISA 2018 Assessment and Analytical Framework. PISA, OECD Publishing, Paris, https://doi.org/10.1787/b25efab8-en adresinden erişildi.
 
 - Wickham, H.  François, R., Henry L. &amp; Müller, K. (2021). dplyr: A Grammar of Data   Manipulation. R package   version 1.0.7. https://CRAN.R-project.org/package=dplyr

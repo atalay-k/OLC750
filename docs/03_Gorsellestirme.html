@@ -13,7 +13,7 @@
 
 <title>R ile Programlama</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
@@ -169,8 +169,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -178,16 +178,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -305,24 +298,26 @@ $(document).ready(function () {
 <tbody>
 <tr class="odd">
 <td><strong>Konu I: </strong> <a
-href="sunu\G_Gorsellestirme_I.html">Temel Grafikler</a></td>
-<td><img src="figures/functions.png" /></td>
+href="sunu\G_Gorsellestirme_I.html">Grafikler</a></td>
+<td><img src="figures/g1.png" /></td>
 </tr>
 <tr class="even">
-<td><strong>Konu II: </strong> [](sunu)</td>
-<td><img src="figures/logic.png" /></td>
+<td><strong>Konu II: </strong> <a
+href="sunu\G_Gorsellestirme_II.html">Temel Grafikler</a></td>
+<td><img src="figures/g2.jfif" /></td>
 </tr>
 <tr class="odd">
-<td><strong>Konu III: </strong> [](sunu)</td>
-<td><img src="figures/conditions.PNG" /></td>
+<td><strong>Konu III: </strong> <a
+href="sunu\G_Gorsellestirme_II.html">Grafikler Türleri</a></td>
+<td></td>
 </tr>
 <tr class="even">
 <td><strong>Konu IV: </strong> <a href=""></a></td>
-<td><img src="figures/loops.png" /></td>
+<td></td>
 </tr>
 <tr class="odd">
 <td><strong>Konu V: </strong> <a href=""></a></td>
-<td><img src="figures/apply.png" /></td>
+<td></td>
 </tr>
 </tbody>
 </table>

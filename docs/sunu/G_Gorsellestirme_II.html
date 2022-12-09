@@ -4,7 +4,7 @@
     <title>💪 R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
-    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 # 💪 R ile Veri Analizi
 ]
 .subtitle[
-## <br> 📉 Veri Görselleştirme - II
+## <br> 📊 Veri Görselleştirme - II
 ]
 .author[
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -33,542 +33,513 @@ class: center, middle, inverse, title-slide
 
 
 
-# Veri Görselleştirme gplot .huge[📊]
+# Veri Görselleştirme Giriş 
 
-.hand[İçerik...]
-
-- Neden görşelleştirme
-&lt;br&gt;
-&lt;br&gt;
-
---
-- 
-&lt;br&gt;
-&lt;br&gt;
-
---
-- 
-&lt;br&gt;
-&lt;br&gt;
-
---
--
-&lt;br&gt;
-&lt;br&gt;
-
---
+- `tidyverse` paketi veri düzenlemeleri, görselleştirmeleri, modellemeleri kolay bir şekilde yapabilmemizi sağlayan, R'ın birçok paketini içinde bulunduran pakettir. Bu paketin içeriğinde veri görselleştirme amacıyla `ggplot2` paketi de yer almaktadır.
 
 
-&lt;!-- https://rpubs.com/odenipinedo/introduction-to-data-visualization-with-ggplot2 --&gt;
-
+```r
+# install.packages("tidyverse", repos="https://cran.rstudio.com")
+library("tidyverse")
+library(expss)
+```
 
 ---
-## Görselleştirme
+## Basit Grafik Oluşturma
+
+- Grafikler oluşturulurken, genellikle birden fazla değişkene ilişkin gözlemlerin yer aldığı veri setleri kullanılır.
+
+- Grafiklerin kolay okunması adına veri sayısının azaltılması amacıyla sınıf düzeylerine ilişkin değişkenin her düzeyinden 15'şer kişilik örneklem seçilip toplam 60 gözlemle "df1" nesnesi oluşturulması
+
+- Grafik çizimlerinde grup değişkenlerine ihtiyaç duyulduğu için sınıf düzeylerine ve cinsiyete ilişkin değişkenler `as.factor()`fonksiyonuyla kategorik hale getirilmiştir.
+
+---
+##  Veri seti oluşturma
 
 
 ```r
 library(tuev)
-library(ggplot2)
+library(dplyr)
+
+df1 &lt;- PISA_OGR_2018 %&gt;%
+dplyr::select(SINIF,CINSIYET,OK_YETERLIK,ODOKUMA1,starts_with("ST097"))  %&gt;%  
+  na.omit()%&gt;%
+ drop_var_labs() 
 ```
-
-.pull-left[
-
-![](figs\v1.PNG)
-]
-
---
-.pull-right[
-
-![](figs\v2.PNG)
-]
-
----
-## ggplot
-
--   **ggplot2** paketi, **lattice** paketi gibi verilerdeki birden çok değişkeni aynı grafik üzerinde göstermek ve veriler arasındaki çok düzeyli ilişkileri özetlemek amacıyla geliştirilmiştir.
-
--   Açılımı grafiğin grameri (grammer of graphics) şeklindedir.
-
--   **lattice** grafiklerindeki gibi grafikler nesneler olarak kaydedilmekte ve birden çok grafiği tek bir grafiğin üzerinde gösterebilmektedir.
-
--   **lattice** paketine göre en önemli farkı **katman** mantığıyla çalışmasıdır.
-  -   Metin ekleme,
-  -   renklendirme,
-  -   açıklama kutucukları vb... özelleştirmeler toplama **(+)** işareti ile kodlara eklenebilmektedir.
-
----
-## Temel Fonksiyonların Kullanımı
--   **qplot()** ve **ggplot()** fonksiyonları
--   **qplot()**, hızlı grafik (quick plot) çizimi anlamına gelmektedir.
-
-  -   **qplot(x, y, data, geom)** veya
-
-  -   **ggplot(x, y, data, geom)** veya
-
-  -   **ggplot( data, aes(x, y)) + geom.grafikismi()**
-
----
-## Temel Fonksiyonların Kullanımı
-
--   **aes()** her bir değişkenin alacağı rolü belirlemede kullanılır.
-
--   **geom()** argümanı çizilecek grafiği türünü belirlemek için kullanılmaktadır. Geometrik nesneler (geometric objects) olarak adlandırılmaktadır.
-
-Örneğin yoğunluk grafiği çizilmek istendiğinde; 
-  - **ggplot(x, y, data, geom="density")** veya  
-  
-  - **ggplot( data, aes(x, y)) + geom.density()**
-
----
-# ggplot2 paketindeki grafikler
 
 
 ```r
-library(ggplot2)
-ls(pattern = '^geom_', env = as.environment('package:ggplot2'))
-```
-
-```
-##  [1] "geom_abline"            "geom_area"              "geom_bar"              
-##  [4] "geom_bin_2d"            "geom_bin2d"             "geom_blank"            
-##  [7] "geom_boxplot"           "geom_col"               "geom_contour"          
-## [10] "geom_contour_filled"    "geom_count"             "geom_crossbar"         
-## [13] "geom_curve"             "geom_density"           "geom_density_2d"       
-## [16] "geom_density_2d_filled" "geom_density2d"         "geom_density2d_filled" 
-## [19] "geom_dotplot"           "geom_errorbar"          "geom_errorbarh"        
-## [22] "geom_freqpoly"          "geom_function"          "geom_hex"              
-## [25] "geom_histogram"         "geom_hline"             "geom_jitter"           
-## [28] "geom_label"             "geom_line"              "geom_linerange"        
-## [31] "geom_map"               "geom_path"              "geom_point"            
-## [34] "geom_pointrange"        "geom_polygon"           "geom_qq"               
-## [37] "geom_qq_line"           "geom_quantile"          "geom_raster"           
-## [40] "geom_rect"              "geom_ribbon"            "geom_rug"              
-## [43] "geom_segment"           "geom_sf"                "geom_sf_label"         
-## [46] "geom_sf_text"           "geom_smooth"            "geom_spoke"            
-## [49] "geom_step"              "geom_text"              "geom_tile"             
-## [52] "geom_violin"            "geom_vline"
+df2 &lt;- df1 %&gt;% 
+  drop_var_labs() %&gt;% 
+  filter(SINIF %in%c(8,9,10,11))%&gt;% 
+  group_by(SINIF)%&gt;%
+  sample_n(15, replace=TRUE) %&gt;%
+    ungroup()%&gt;%  
+  mutate(SINIF=as.factor(SINIF), CINSIYET=as.factor(CINSIYET)) 
 ```
 
 ---
-## Saçılım Grafiği
-- Aşağıdaki kod sadece ilk katmanı oluşturur.
+##  Veri seti oluşturma
 
-.pull-left[
+- R'da grafiklerin çizilmesi için kullanılan en genel fonksiyon `plot()` fonksiyonudur. En basit haliyle `plot()` fonksiyonunun kullanıldığı aşağıda gösterilmiştir.
+
 
 ```r
-library(tuev)
-PISA_OGR_2018 &lt;- na.omit(PISA_OGR_2018)
-grafik_1 &lt;- ggplot(PISA_OGR_2018,
-            aes(x=ODOKUMA1,y=OK_YETERLIK))
+plot(df2$ST097Q01TA)
 ```
+
+&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-2-1.png" width="30%" /&gt;
+
+---
+##  Veri seti oluşturma
+
+- En basit haliyle `plot()` fonksiyonunun kullanıldığı aşağıda gösterilmiştir.
+
+
+```r
+plot(df2$CINSIYET)
+```
+
+&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-3-1.png" width="30%" /&gt;
+
+---
+- **En basit grafiklerde eksen isimlendirmenin gösterimi**
+
+
+```r
+plot(df2$CINSIYET, xaxt='n') 
+axis(1, at=1:2, lab=c("Kiz","Erkek"))
+```
+
+&lt;img src="G_Gorsellestirme_II_files/figure-html/plot kullanimi-2-1.png" width="30%" /&gt;
+
+---
+- **Her iki vektörün aynı grafikte gösterilmesi ancak sayısal iki vektör için `plot(x, y)` komutunun çalıştırılmasıyla gerçekleştirilebilir.**
+
+
+```r
+plot(df2$OK_YETERLIK, df2$ODOKUMA1)
+```
+
+&lt;img src="G_Gorsellestirme_II_files/figure-html/plot kullanimi-3-1.png" width="30%" /&gt;
+
+---
+**Okuma başarı puanları ile okuma yeterlik puanları arasindaki ilişkiyi gösteren grafiğin plot fonksiyonu ile çizilmesi**
+
+.pull-left[
+Eksen limitlerinin belirlenmesi
+
+```r
+df2 %&gt;% 
+  dplyr::select(OK_YETERLIK,ODOKUMA1) %&gt;%
+  summary()
+```
+
+```
+##   OK_YETERLIK          ODOKUMA1    
+##  Min.   :-2.44030   Min.   :262.6  
+##  1st Qu.:-0.82500   1st Qu.:362.3  
+##  Median : 0.12220   Median :451.5  
+##  Mean   :-0.06157   Mean   :446.6  
+##  3rd Qu.: 0.69940   3rd Qu.:516.6  
+##  Max.   : 1.88390   Max.   :662.7
+```
+
 ]
 
 .pull-right[
 
+
 ```r
-grafik_1 
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2)
 ```
 
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-4-1.png" width="80%" /&gt;
+&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-5-1.png" height="20%" /&gt;
+
 ]
----
-## Saçılım Grafiği
-
-- Katman eklenmesi
-
-
-```r
-grafik_1 + geom_point()
-```
-
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-5-1.png" width="30%" /&gt;
 
 ---
-## Saçılım Grafiği
-
-- Yüzey eklenmesi
-
+.center[**Eksen limitlerinin belirlenmesi `xlim` ve `ylim`**]
 .pull-left[
 
 ```r
-grafik_1 + 
-geom_point() +
-facet_wrap(~CINSIYET, nrow=2)
+plot(OK_YETERLIK ~ ODOKUMA1 , 
+     data=df2)
 ```
-]
 
-.pull-right[
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-7-1.png" width="40%" /&gt;
-]
----
-## Saçılım Grafiği
-
-.pull-left[
-
-- Yüzey eklenmesi
-
-
-```r
-grafik_1 + geom_point() +
-  facet_wrap(~SINIF, nrow=2)
-```
-]
-
-.pull-right[
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-9-1.png" width="40%" /&gt;
-]
----
-## Yüzeyler
-
-- **facet_grid** fonksiyonu ise hem tek hem de iki değişkenin panellerde gösterimi için 
-
-  - **facet_grid(satırdeğişkeni~sütundeğişkeni)** 
-  
-  - **facet_grid(satırdeğişkeni~.)** veya     
-  
-  - **facet_grid(.~sütundeğişkeni)**
-
----
-## Yüzeyler
-.pull-left[
-- Yüzeyde kategorik değişkenlerin düzeylerini görebilmek için **factor** değişken olarak tanımlamak gerekir.
-
-
-```r
-library(haven)
-PISA_OGR_2018 &lt;- 
-  PISA_OGR_2018 %&gt;% 
-  mutate_if(is.labelled, funs(as_factor(.)))
-```
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 
 ```r
-grafik_1 +
-  geom_point()+
-  facet_grid(SINIF~CINSIYET)
+plot(OK_YETERLIK ~ ODOKUMA1 ,
+     data=df2, xlim=c(0,1000), ylim=c(-7,7))
 ```
 
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-11-1.png" width="80%" /&gt;
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
 ]
 
 ---
-## Yüzeyler
-.pull-left[
-- Yüzeylerin sütunda oluşturulması
+
+- `xlab` ve `ylab` argümanlarıyla eksenlere farklı adlar vermek mümkündür.
 
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
-  geom_histogram()+
-  facet_grid(.~CINSIYET)
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlab="Okuma Başarı Puanları", ylab="Okuma  Yeterliği")
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+&lt;img src="G_Gorsellestirme_II_files/figure-html/grafik parametreleri-2-1.png" height="30%" /&gt;
+
+---
+##  Veri Sembolleri 
+
+- **pch** argümanının değeri degiştirerek çeşitli garfikler çizelebilir.[🔗](http://www.sthda.com/english/wiki/r-plot-pch-symbols-the-different-point-shapes-available-in-r)
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi",     pch=16)
 ```
 
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-12-1.png" width="40%" /&gt;
+![](G_Gorsellestirme_II_files/figure-html/grafik parametreleri-3-1.png)&lt;!-- --&gt;
+
+
+---
+##  Veri Sembolleri 
+
+```r
+generateRPointShapes&lt;-function(){
+  oldPar&lt;-par()
+  par(font=2, mar=c(0.5,0,0,0))
+  y=rev(c(rep(1,6),rep(2,5), rep(3,5), rep(4,5), rep(5,5)))
+  x=c(rep(1:5,5),6)
+  plot(x, y, pch = 0:25, cex=1.5, ylim=c(1,5.5), xlim=c(1,6.5), 
+       axes=FALSE, xlab="", ylab="", bg="blue")
+  text(x, y, labels=0:25, pos=3)
+  par(mar=oldPar$mar,font=oldPar$font )
+}
+generateRPointShapes()
+```
+
+![](G_Gorsellestirme_II_files/figure-html/veri sembolleri-1.png)&lt;!-- --&gt;
+
+---
+.pull-left[
+**Spesifik veri sembolü belirleme**
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 ,
+     data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari",
+     ylab="Okuma  Yeterligi", 
+     pch="*")
+```
+
+![](G_Gorsellestirme_II_files/figure-html/grafik parametreleri-4-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+**Veri sembolü boyutu değiştirme**
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 ,
+     data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari", 
+     ylab="Okuma  Yeterligi", 
+     pch="*",cex=2)
+```
+
+![](G_Gorsellestirme_II_files/figure-html/grafik parametreleri-5-1.png)&lt;!-- --&gt;
+]
+
+---
+**Veri sembolünün kategorik değişken değeri olarak gösterme**
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, xlim=c(0,1000), ylim=c(-7,7),
+xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi", 
+     pch=as.character(SINIF))
+```
+
+![](G_Gorsellestirme_II_files/figure-html/grafik parametreleri-6-1.png)&lt;!-- --&gt;
+
+---
+**Veri sembolünü kategorik değişken değeri olarak gösterme**
+
+
+```r
+df2 &lt;- mutate(df2,
+ SEKIL = ifelse(SINIF==8,3,
+               ifelse(SINIF==9,8,
+                     ifelse( SINIF==10,13,18))))
+
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi",pch=SEKIL)
+```
+
+![](G_Gorsellestirme_II_files/figure-html/grafik parametreleri-7-1.png)&lt;!-- --&gt;
+
+---
+## Renkler
+.pull-left[
+
+```r
+n &lt;- 7
+barplot(rep(1,n), col=rainbow(n))	
+```
+
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
-- Yüzeylerin satırlarda olusturlması
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
-  geom_histogram()+
-  facet_grid(CINSIYET~.)
+n &lt;- 7
+barplot(rep(1,n), col=heat.colors(n))	
 ```
 
-```
-## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
-```
-
-&lt;img src="G_Gorsellestirme_II_files/figure-html/unnamed-chunk-13-1.png" width="40%" /&gt;
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 ---
-## Yüzeyler
+## Renkler
+.pull-left[
+
+```r
+n &lt;- 20
+barplot(rep(1,n), col=rainbow(n))	
+```
+
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+n &lt;- 20
+barplot(rep(1,n), col=heat.colors(n))	
+```
+
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
+]
+
+---
+**Renk adı ile renklendirme**
 
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK))+
-  geom_point()+
-  facet_grid(.~SINIF)
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basarı Puanları", 
+     ylab="Okuma  Yeterliği" ,
+     pch=SEKIL,col="red")
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+![](G_Gorsellestirme_II_files/figure-html/renklendirme-2-1.png)&lt;!-- --&gt;
+
+---
+**Kategorik değişken ile renklendirme**
 
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK))+
-  geom_point()+
-  facet_grid(SINIF~.)
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari", 
+     ylab="Okuma  Yeterligi" ,
+     pch=SEKIL,col=SINIF)
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+![](G_Gorsellestirme_II_files/figure-html/renklendirme-3-1.png)&lt;!-- --&gt;
 
-##  gruplama değişkenleri
-
-Renklendirme, sembol şekli, sembol büyüklüğü ve çizgi türü belirleyen fonksiyonlar yardımıyla gruplama yapılmaktadır.
-
-## color ile gruplandırma
-
- Açıklama kutucukları otomatik çıkar!
+---
+**Renk adı ile renklendirme**
 
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK,color=SINIF)) + geom_point()
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari", 
+     ylab="Okuma  Yeterligi" ,
+     col=c("blue","red","orange","pink"))
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+![](G_Gorsellestirme_II_files/figure-html/renklendirme-4-1.png)&lt;!-- --&gt;
+
+---
+**Cizgiler**
+
+|Argüman Değerleri |	Açıklama |
+|---|---|
+| p | Noktalar |
+| l | Çizgiler |
+| o | Devam eden cizgi uzerinde nokta gosterimi |             
+| b,c | Nokta ve cizgiler arasinda bosluklu cizme (“c” = noktalar olmadan cizme) |             
+| s,S  |  Basamak gosterimi |                
+| h |  Histogram dikey cizgileri |                     	
+| n |  Herhangi bir cizgi ya da nokta oluşturmaz |           
+  	                
+
+---
+**Cizgiler**
 
 
 ```r
-ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK,color=CINSIYET)) + geom_point()+  facet_grid(.~SINIF)	
+ders &lt;- c(22,25,30,15,20)
+plot(ders, lty=2)
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+![](G_Gorsellestirme_II_files/figure-html/cizgiler-1-1.png)&lt;!-- --&gt;
 
-## Grafik nesnesi
-
-- olsuturalan grafik **p** nesnesine atanmıştır. **p** nesnesine **+** ile katmanlar eklenebilir.
-- Kategorik degiskenler eksen değerlerini belirler.
-
+---
+**Cizgiler**
 
 
 ```r
-p &lt;- ggplot(mtcars, aes(cyl, mpg)) +
-  geom_point()
-p
+par(mfrow=c(2,4))
+cizgi_turu=c("p","l","o","b","c","s","S","h")
+for(i in 1:length(cizgi_turu)){
+baslik=paste("çizgi seçenegi =", cizgi_turu[i])
+plot(ders, main=baslik, type=cizgi_turu[i])
+}
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
-
-- cyl değişkenin sadece 4,6 ve 8 değerlerini eksende belirtmek için factor olarak tanımlamak gerekir.
-
-```r
-ggplot(mtcars, aes(factor(cyl), mpg)) +
-  geom_point()
-```
-
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
-
-## Grafikler üç bölümden oluşur
-
-![](v3.PNG)
-
-## **AESTHETICS** 
-
--   fill
--   color
--   size
--   shape
--   alpha
--   linetyepe
--   labels
-
-**color** parametresi
+![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 
 
 ```r
-ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
-  geom_point(color = "blue")
+par(mfrow=c(1,1))
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+---
+**Referans Çizgileri**
 
-**size** ve **shape** parametresi
-
-her iki parametrenin de olağan değeri 1 dir. 
 
 ```r
-ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
-  geom_point(color = "blue",size=5,shape="a")
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari",
+     ylab="Okuma  Yeterligi" , 
+     col=SINIF)
+abline(v=mean(df2$ODOKUMA1))
+abline(h=mean(df2$OK_YETERLIK))
 ```
 
-![](G_Gorsellestirme_II_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+![](G_Gorsellestirme_II_files/figure-html/cizgiler-2-1.png)&lt;!-- --&gt;
 
-&lt;!-- Veri seti her bir okul türünden 5 kişi alınarak veri seti boyutu küçültülmüştür. --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- df &lt;- PISA_OGR_2018 %&gt;% group_by(OKUL_TUR)%&gt;% sample(5) %&gt;% ungroup() --&gt;
-
-&lt;!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + --&gt;
-&lt;!--   geom_point() --&gt;
-
-&lt;!-- ``` --&gt;
-
-&lt;!-- Ustuse gelen noktalar için **position** --&gt;
-
-&lt;!-- -   identity --&gt;
-&lt;!-- -   dodge --&gt;
-&lt;!-- -   stack --&gt;
-&lt;!-- -   fill --&gt;
-&lt;!-- -   jitter --&gt;
-&lt;!-- -   jitterdodge --&gt;
-&lt;!-- -   nudge --&gt;
-
-&lt;!-- ```{r} --&gt;
-
-&lt;!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + --&gt;
-&lt;!--   geom_point() --&gt;
-
-&lt;!-- ``` --&gt;
-
-&lt;!-- ```{r} --&gt;
-
-&lt;!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + --&gt;
-&lt;!--   geom_point(position = "jitter") --&gt;
-
-&lt;!-- ``` --&gt;
+---
+**Referans Çizgileri**
 
 
-&lt;!-- **size** parametresi --&gt;
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+     xlim=c(0,1000), ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari", 
+     ylab="Okuma  Yeterligi" , 
+     col=SINIF)
+abline(h=1,col="red",lty=1)
+abline(v=500, col="black",lty=4)
+```
 
-&lt;!-- parametreler için veri setinden bir değişken değeri seçilebilir. --&gt;
+![](G_Gorsellestirme_II_files/figure-html/cizgiler-3-1.png)&lt;!-- --&gt;
 
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) + --&gt;
-&lt;!--   geom_point() --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- üst üste binen noktaları kaydırarak ayırma --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) + --&gt;
-&lt;!--   geom_point(position = "jitter") --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ## Katmanlar --&gt;
-
-&lt;!-- ![](v4.PNG) --&gt;
-
-&lt;!-- ## alpha --&gt;
-
-&lt;!-- Şeffaflık düzeyi için **alpa** --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF)) + --&gt;
-&lt;!--   geom_point(alpha = 0.4) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- Katmanları nesneye ekleme --&gt;
-&lt;!-- **grafik1** adlı nesneye istenilen katmanlar eklenebilir. --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- grafik1 &lt;- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF))  --&gt;
-&lt;!-- grafik1 +geom_point(alpha = 1.2) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- **grafik1** adlı nesneye CINSIYET değişkenine göre şekil ekleme --&gt;
-&lt;!-- ```{r} --&gt;
-&lt;!-- grafik1 +geom_point(aes(shape=CINSIYET)) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- **text** --&gt;
-
-&lt;!-- Değişken adları **text** komutu ile veri sembolu olarak eklenebilir. Gösterim amacıyla **df** veri setinin sadece ilk 10 satırı kullanılmıştır. --&gt;
-
-&lt;!-- ```{r} --&gt;
-
-&lt;!-- ggplot(df[1:10,], aes(ODOKUMA1, OK_YETERLIK))+  --&gt;
-&lt;!--          geom_text(aes(label = CINSIYET)) --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- ## Scale --&gt;
-
-&lt;!-- Scale functions --&gt;
-&lt;!-- -   scale_x() --&gt;
-&lt;!-- -   scale_y() --&gt;
-&lt;!-- -   scale_color() --&gt;
-&lt;!-- -   scale_fill() --&gt;
-&lt;!-- -   scale_shape() --&gt;
-&lt;!-- -   scale_linetype() --&gt;
-&lt;!-- -   scale_size() --&gt;
-&lt;!-- -   scale_x_continuous() --&gt;
-&lt;!-- -   scale_y() --&gt;
-&lt;!-- -   scale_color_discrete() --&gt;
-&lt;!-- -   scale_fill() --&gt;
-&lt;!-- -   scale_shape() --&gt;
-&lt;!-- -   scale_linetype() --&gt;
-&lt;!-- -   scale_size() --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(x = ODOKUMA1, --&gt;
-&lt;!-- y = OK_YETERLIK, --&gt;
-&lt;!-- color = CINSIYET)) + --&gt;
-&lt;!-- geom_point(position = "jitter") + --&gt;
-&lt;!-- scale_x_continuous("Okuma Puanları") + --&gt;
-&lt;!-- scale_color_discrete("Cinsiyet") --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- **limits** --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(x = ODOKUMA1, --&gt;
-&lt;!-- y = OK_YETERLIK, --&gt;
-&lt;!-- color = CINSIYET)) + --&gt;
-&lt;!-- geom_point(position = "jitter") + --&gt;
-&lt;!-- scale_x_continuous("Okuma Puanları",limits = c(100,900)) + --&gt;
-&lt;!-- scale_color_discrete("Cinsiyet") --&gt;
-
-&lt;!-- ``` --&gt;
-
-&lt;!-- beraks --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(x = ODOKUMA1, --&gt;
-&lt;!-- y = OK_YETERLIK, --&gt;
-&lt;!-- color = CINSIYET)) + --&gt;
-&lt;!-- geom_point(position = "jitter") + --&gt;
-&lt;!-- scale_x_continuous("Okuma Puanları",limits = c(100,900), --&gt;
-&lt;!--          breaks=seq(100,900,100)) + --&gt;
-&lt;!-- scale_color_discrete("Cinsiyet") --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- expand --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(x = ODOKUMA1, --&gt;
-&lt;!-- y = OK_YETERLIK, --&gt;
-&lt;!-- color = CINSIYET)) + --&gt;
-&lt;!-- geom_point(position = "jitter") + --&gt;
-&lt;!-- scale_x_continuous("Okuma Puanları",limits = c(100,900), --&gt;
-&lt;!--                    breaks=seq(100,900,100), --&gt;
-&lt;!--                    expand=c(0,0)) + --&gt;
-&lt;!-- scale_color_discrete("Cinsiyet") --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- labs --&gt;
-
-&lt;!-- ```{r} --&gt;
-&lt;!-- ggplot(df, aes(x = ODOKUMA1, --&gt;
-&lt;!-- y = OK_YETERLIK, --&gt;
-&lt;!-- color = CINSIYET)) + --&gt;
-&lt;!-- geom_point(position = "jitter") + --&gt;
-&lt;!--   labs(x = "Basari Puanları", --&gt;
-&lt;!--        y = "Yeterlik Puanları", --&gt;
-&lt;!--        color = "Grup") --&gt;
-
-&lt;!-- ``` --&gt;
-
-&lt;!-- ## Bar Grafiği --&gt;
-
-&lt;!-- ```{r} --&gt;
-
-&lt;!-- ggplot(df, aes(CINSIYET, fill = SINIF)) +   geom_bar() + --&gt;
-&lt;!--   labs(x = "Cinsiyet", --&gt;
-&lt;!--        y = "Frekans") --&gt;
-&lt;!-- ``` --&gt;
-
-&lt;!-- scale_fill --&gt;
-
-&lt;!-- ```{r} --&gt;
-
-&lt;!-- ggplot(df, aes(CINSIYET, fill = SINIF)) + --&gt;
-&lt;!--   geom_bar() + --&gt;
-&lt;!--    labs(x = "Cinsiyet", --&gt;
-&lt;!--        y = "Frekans") + --&gt;
-&lt;!--   scale_fill_manual("CINSIYET", values = c("red","blue","orange","green","darkblue")) --&gt;
-&lt;!-- ``` --&gt;
+---
+**Referans Çizgileri**
+Grafige 8., 9., 10. ve 11. sinif duzeylerinin ortalamalarinin sirasiyla grafiğe referans çizgisi olarak eklenmesi
 
 
+```r
+attach(df2)
+plot(OK_YETERLIK ~ ODOKUMA1 , 
+     data=df2, xlim=c(0,1000), 
+     ylim=c(-7,7),
+     xlab="Okuma Basari Puanlari", 
+     ylab="Okuma  Yeterligi" , 
+     col=SINIF)
+abline(v=by(ODOKUMA1,SINIF,mean),
+       lty=2:5,col=c("blue","red","orange","pink"))
+abline(h=by(OK_YETERLIK,SINIF,mean),
+       lty=2:5,col=c("blue","red","orange","pink"))
+```
+
+![](G_Gorsellestirme_II_files/figure-html/cizgiler-4-1.png)&lt;!-- --&gt;
+
+---
+## Metin İşlemleri
+
+`text()` fonskiyonu ile belirli bir noktaya metin eklenebilir.
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+main="PISA 2018 Özet Tablo",
+xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi",
+pch=as.numeric(SINIF), col=SINIF)
+
+# X-ekseninde "500", Y-ekseninde "-1" noktasına yazı eklenmesi
+text(500, -1, "9. Sınıf")
+```
+
+![](G_Gorsellestirme_II_files/figure-html/metin-1-1.png)&lt;!-- --&gt;
+
+---
+Grafiğe matematiksel ifadeyle eklenebilir.
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+main="PISA 2018 Özet Tablo",
+xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi",
+pch=as.numeric(SINIF), col=SINIF)
+text(500, -1, "9. Sınıf")
+
+# Matematiksel ifade (mu (ortalama) ifadesinin) eklenmesi
+text(500, -1.5, expression(mu[9]==384.2))
+```
+
+![](G_Gorsellestirme_II_files/figure-html/metin-2-1.png)&lt;!-- --&gt;
+
+---
+## Açıklama kutucuğu (legend) eklenmesi
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+main="PISA 2018 Özet Tablo",
+xlab="Okuma Basari Puanlari", ylab="Okuma  Yeterligi",
+pch=as.numeric(SINIF), col=SINIF)
+legend(550,0,c("8. Sınıf","9. Sınıf",
+"10. Sınıf","11. Sınıf"),
+pch=SINIF,col=c("black","red","green", "blue"),cex=0.75)
+```
+
+![](G_Gorsellestirme_II_files/figure-html/metin-3-1.png)&lt;!-- --&gt;
+
+---
+Açıklama kutucugunun belirli bir yere eklenmesi
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2,
+main="PISA 2018 Özet Tablo",
+xlab="Okuma Basari Puanlari", 
+ylab="Okuma  Yeterligi",
+pch=as.numeric(SINIF), col=SINIF)
+
+#bottomright gibi bir argümanla
+legend("bottomright",c("8. Sınıf","9. Sınıf",
+"10. Sınıf","11. Sınıf"),
+pch=SINIF,col=c("black","red","green", "blue"),cex=0.75)
+```
+
+![](G_Gorsellestirme_II_files/figure-html/metin-4-1.png)&lt;!-- --&gt;
+
+---
+KAYNAKLAR
+
+Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi". kaynağından alınmıştır.
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

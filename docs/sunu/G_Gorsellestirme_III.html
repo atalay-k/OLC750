@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>💪 R ile Veri Analizi</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 💪 R ile Veri Analizi
+]
+.subtitle[
+## <br> 💹 Veri Görselleştirme - III
+]
+.author[
+### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
+]
+.date[
+### <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
+]
+
+---
+
+
+
+
+## Veri Hazırlama
+
+- Grafiklerin kolay okunması adına veri sayısının azaltılması amacıyla sınıf düzeylerine ilişkin değişkenin her düzeyinden 15'şer kişilik örneklem seçilip toplam 60 gözlemle **df2** nesnesi oluşturulması
+
+
+
+
+```r
+library(tuev)
+library(dplyr)
+library(expss)
+df1 &lt;- PISA_OGR_2018 %&gt;%
+dplyr::select(SINIF,CINSIYET,OK_YETERLIK,ODOKUMA1,starts_with("ST097"))  %&gt;%  
+  na.omit()%&gt;%
+ drop_var_labs() 
+```
+
+---
+## Veri Hazırlama
+
+```r
+df2 &lt;- df1 %&gt;% 
+  drop_var_labs() %&gt;% 
+  filter(SINIF %in%c(8,9,10,11))%&gt;% 
+  group_by(SINIF)%&gt;%
+  sample_n(15, replace=TRUE) %&gt;%
+    ungroup()%&gt;%  
+  mutate(SINIF=as.factor(SINIF), CINSIYET=as.factor(CINSIYET)) 
+```
+
+---
+- ** Başarı puanları ile yeterlik puanları arasındaki ilişkiyi gösteren grafiğin plot() fonksiyonu ile çizilmesi**
+
+
+```r
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/grafik cizme-1.png)&lt;!-- --&gt;
+
+
+---
+## Sütun (Çubuk) Grafiği
+
+- Sütun grafiği oluşturmak için ilk olarak frekans tablosu elde etmek gerekir. 
+
+- Frekans tablosu `table()` fonkisyonu ile oluşturulabilir.
+
+
+```r
+Madde1_ozet &lt;- table(df2$ST097Q01TA)
+Madde1_ozet
+```
+
+```
+## 
+##  1  2  3  4 
+##  3  7 36 14
+```
+
+---
+**Dikey sütun grafiği oluşturmak için `barplot()` fonksiyonu kullanımı**
+
+
+```r
+barplot(Madde1_ozet,
+        main="Madde 1 Cevap Dağılımı",
+        xlab="Cevap Kategorisi",
+        ylab="Frekans") 
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-1-1.png)&lt;!-- --&gt;
+
+---
+**Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
+
+
+```r
+# yatay cizilmesi
+barplot(Madde1_ozet,
+        main="Madde 1 Cevap Dağılımı",
+        xlab="Cevap Kategorisi",
+        ylab="Frekans",
+        horiz=TRUE)  
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-2-1.png)&lt;!-- --&gt;
+
+---
+**Kategorik değişkenlerin her bir değeri için sütun grafiği oluşturulması**
+
+- İlk olarak frekans talosu oluşturulur. Grafiklerde kategorik değişkenlerin etiketleri görünmesi için kategorik degişkene etiket ataması yapılır.
+
+
+```r
+df2$ST097Q02TA
+```
+
+```
+##  [1] 4 4 3 1 4 3 1 3 3 3 2 3 2 1 3 2 3 3 4 2 3 3 2 2 3 1 2 3 3 3 3 4 3 2 4 3 3 3 3
+## [40] 3 3 4 3 2 3 4 3 4 3 3 2 4 4 4 3 2 3 2 2 3
+## attr(,"labels")
+##             Her ders    Derslerin cogunda cogunlukla test dili 
+##                    1                    2                    3 
+##       Bazi derslerde 
+##                    4
+```
+
+```r
+(df2$CINSIYET &lt;- factor(df2$CINSIYET , 
+                         labels = c("Kız", "Erkek")))
+```
+
+```
+##  [1] Erkek Kız   Erkek Kız   Erkek Erkek Kız   Erkek Erkek Erkek Kız   Erkek Kız  
+## [14] Kız   Kız   Kız   Erkek Erkek Erkek Erkek Erkek Erkek Erkek Erkek Kız   Erkek
+## [27] Kız   Erkek Erkek Kız   Erkek Kız   Erkek Erkek Kız   Erkek Erkek Kız   Kız  
+## [40] Kız   Kız   Erkek Kız   Erkek Erkek Kız   Erkek Kız   Erkek Kız   Erkek Kız  
+## [53] Erkek Kız   Kız   Erkek Kız   Erkek Erkek Kız  
+## Levels: Kız Erkek
+```
+
+---
+- **Cinsiyete Göre Madde 2 Cevap Dağılımı**
+
+
+```r
+# Cinsiyete Göre Madde 2 Cevap Dağılımı
+Madde2_ozet &lt;- table(df2$CINSIYET,df2$ST097Q02TA)
+Madde2_ozet
+```
+
+```
+##        
+##          1  2  3  4
+##   Kız    3  4 12  7
+##   Erkek  1  9 19  5
+```
+
+---
+- **Kategorik değişken etiketleri `legend` argümanı ile eklenebilir.**
+
+
+```r
+barplot(Madde2_ozet, 
+main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
+xlab="Cevap Kategorisi", 
+ylab="Frekans", 
+col=c("red","gray"), 
+legend=rownames(Madde2_ozet))
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-5-1.png)&lt;!-- --&gt;
+
+---
+**Kategorik değişken gösterimi ayrı çubuklara da `beside` argümanı ile alınabilir.**
+
+
+```r
+barplot(Madde2_ozet, 
+        main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
+        xlab="Cevap Kategorisi", 
+        ylab="Frekans", 
+        col=c("red","gray"), 
+        beside = TRUE,
+         legend=rownames(Madde2_ozet))
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-6-1.png)&lt;!-- --&gt;
+
+---
+**`barplot()` fonksiyonu fraklı kullanıları için `?barplot` ile incelemeler yapabilirsiniz.**
+
+
+```r
+barplot(GNP ~ Year, data = longley)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-7-1.png)&lt;!-- --&gt;
+
+```r
+barplot(cbind(Employed, Unemployed) ~ Year, data = longley,beside = TRUE)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/sütun-7-2.png)&lt;!-- --&gt;
+
+---
+## Pasta grafigi
+
+- Pasta grafiklerinde genellikle gösterimler yüzdeler üzerinden hesaplanır.
+
+
+```r
+# Cevap kategorilerinin frekans dağılımı
+Madde1_ozet
+```
+
+```
+## 
+##  1  2  3  4 
+##  3  7 36 14
+```
+
+```r
+# Cevap kategorilerinin yüzdelik dağılımı
+yuzde &lt;- round(Madde1_ozet/sum(Madde1_ozet)*100)
+yuzde
+```
+
+```
+## 
+##  1  2  3  4 
+##  5 12 60 23
+```
+
+---
+- Pasta dilimlerinin adlandırılması amacıyla karakter bir vektor oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+
+
+```r
+likert_ifade=c("Kolaylıkla yaparım","Zorlanarak yaparım",  "Tek başıma çok zor yaparım","Yapamam")
+likert_ifade
+```
+
+```
+## [1] "Kolaylıkla yaparım"         "Zorlanarak yaparım"        
+## [3] "Tek başıma çok zor yaparım" "Yapamam"
+```
+
+```r
+# likert ifadeler ile yuzdelerin birleştirilmesi
+metin &lt;- paste(likert_ifade, " ", yuzde, "%", sep="")
+metin
+```
+
+```
+## [1] "Kolaylıkla yaparım 5%"          "Zorlanarak yaparım 12%"        
+## [3] "Tek başıma çok zor yaparım 60%" "Yapamam 23%"
+```
+
+---
+- Pasta dilimlerinin adlandırılması amacıyla karakter bir vektor oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+
+.center[
+
+```r
+pie(Madde1_ozet, labels=metin, main="Madde 1 Yüzdelik Cevap Dağılımı", col=rainbow(4))
+```
+
+![](G_Gorsellestirme_III_files/figure-html/pasta-3-1.png)&lt;!-- --&gt;
+]
+
+---
+- Üç boyutlu pasta grafikleri oluşturmak amacıyla da farklı paketlerden de yararlanılabilir.
+
+
+```r
+library(plotrix)
+
+pie3D(Madde1_ozet,radius=1.5,labels=metin,explode=0.2,main="Madde 1 Yüzdelik Cevap Dağılımı")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/pasta-4-1.png)&lt;!-- --&gt;
+
+---
+## Histogram
+
+- En basit histogram grafiği `hist()` fonksiyonu ile çizilir.
+
+
+```r
+attach(df2)
+hist(ODOKUMA1)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+
+---
+- **İki uç değer eklenerek histogram grafiği çizilmesi**
+
+
+```r
+ODOKUMA_2 &lt;- c(ODOKUMA1,900,1200)
+
+hist(ODOKUMA_2)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/hist-2-1.png)&lt;!-- --&gt;
+
+---
+## Kutu Grafiği
+
+- Uç deger incelemenin cok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
+
+
+```r
+boxplot(ODOKUMA_2)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/kutu-1-1.png)&lt;!-- --&gt;
+
+---
+- Bazen uç degerler incelemesini de grupların ayrı ayrı düzeylerine (kategorik) göre yapmak gerekir).
+
+
+```r
+boxplot(ODOKUMA_2) # uc deger gorunmuyor
+```
+
+![](G_Gorsellestirme_III_files/figure-html/kutu-2-1.png)&lt;!-- --&gt;
+
+---
+- Kategorik değişkenin her bir kategorisi için kutu grafiği cizilmek istediğinde ise \~ ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
+
+
+```r
+boxplot(ODOKUMA1 ~ SINIF,
+        horizontol =TRUE,data=df2,
+        xlab= "Başarı Puanları",
+        ylab = "Sinif Düzeyleri",boxwex=0.5) 
+```
+
+![](G_Gorsellestirme_III_files/figure-html/kutu-3-1.png)&lt;!-- --&gt;
+
+`?boxplot` komutunu çalıştırarak değişebileceğiniz argümanları iceleyebilirsiniz.
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Nokta grafiği oluşturmak için `dotchart()` fonksiyonundan yararlanılır.
+
+
+```r
+dotchart(df2$OK_YETERLIK)
+```
+
+![](G_Gorsellestirme_III_files/figure-html/dot-1-1.png)&lt;!-- --&gt;
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Nokta grafiği de bir değişkenin kategorilerine göre çizdirilebilir. Bu amaçla df2 veri setinden okuma yeterlik puanları küçükten büyüğe sıralanbilir.
+
+
+```r
+ df2 &lt;- df2[order(df2$OK_YETERLIK),]
+ head(df2,15)
+```
+
+```
+## # A tibble: 15 × 9
+##    SINIF CINSIYET OK_YETERLIK ODOKUMA1 ST097Q01TA ST097Q0…¹ ST097…² ST097…³ ST097…⁴
+##    &lt;fct&gt; &lt;fct&gt;          &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+##  1 8     Kız           -2.44      360.          4         4       4       3       3
+##  2 8     Kız           -2.44      280.          3         1       3       1       2
+##  3 9     Erkek         -2.44      402.          2         3       2       1       1
+##  4 8     Kız           -1.84      362.          3         2       3       3       1
+##  5 8     Kız           -1.84      362.          3         2       3       3       1
+##  6 8     Erkek         -1.20      352.          3         4       2       2       3
+##  7 8     Erkek         -1.20      352.          3         4       2       2       3
+##  8 10    Erkek         -1.16      508.          3         3       3       2       3
+##  9 11    Kız           -1.16      448.          3         3       3       3       3
+## 10 11    Kız           -1.10      432.          3         4       3       3       3
+## 11 10    Erkek         -0.825     430.          3         3       4       3       3
+## 12 10    Kız           -0.825     384.          3         3       3       3       2
+## 13 11    Kız           -0.825     537.          4         3       3       3       3
+## 14 11    Kız           -0.825     480.          4         4       4       4       4
+## 15 11    Erkek         -0.825     482.          4         4       4       4       4
+## # … with abbreviated variable names ¹​ST097Q02TA, ²​ST097Q03TA, ³​ST097Q04TA,
+## #   ⁴​ST097Q05TA
+```
+
+---
+## Nokta Grafiği (Dot Plot)
+
+- Oluşturulacak nokta grafiğinde noktaların hangi renkle gösterilmesi isteniyorsa bu tanımlanabilir. Bu tanılama veri setine renk isimli bir sütunla eklenmiştir.
+
+
+```r
+# Sınıf düzeylerine renk atanması
+
+df2 &lt;- mutate(df2,
+ renk = ifelse(SINIF==8,"red",
+               ifelse(SINIF==9,"blue",
+                     ifelse( SINIF==10,"orange","black"))))
+```
+
+---
+## Nokta Grafiğinin Oluşturulması
+
+
+```r
+# Sınıf düzeylerine renk atanması
+attach(df2)
+dotchart(OK_YETERLIK, cex=.7, groups=SINIF, color=renk, pch=19,
+         main="Sınıflara Göre Puanları",
+         xlab="Puanları")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/dot-5-1.png)&lt;!-- --&gt;
+
+---
+## Yogunluk grafigi (Density Plot)
+
+Yogunluk grafiği çizebilmek için ilk olarak olasılık yogunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
+
+
+```r
+# 8. sınıflar için
+d1 &lt;- density(df2$ODOKUMA1[SINIF==8])
+#olusan d1 nesnesinin x ve y degerleri ile grafik cizilir.
+plot(d1, main=" Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/yogunluk-1-1.png)&lt;!-- --&gt;
+
+---
+## Grafik Birleştirme
+
+Birde fazla grafiği tek bir alanda görmek için `mfrow` grafik parametresinden yararlanılır.
+
+Bölünmek istenilen alan satır ve sütunlara gore ayrılabilir.
+
+`par(mfrow = c( satır sayısı,sütun sayısı))`
+
+---
+## Grafik Birleştirme
+
+- Birinci satır birinci sütun
+
+
+```r
+par(mfrow=c(2,2))
+
+d1 &lt;- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/grafik birlestirme-1.png)&lt;!-- --&gt;
+
+---
+## Grafik Birleştirme
+
+Birinci satır ikinci sütun
+
+
+```r
+par(mfrow=c(2,2))
+
+d1 &lt;- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 &lt;- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/grafik birlestirme-2-1.png)&lt;!-- --&gt;
+
+---
+## Grafik Birleştirme
+
+İkinci satır birinci sütun
+
+
+```r
+par(mfrow=c(2,2))
+
+
+d1 &lt;- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 &lt;- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 &lt;- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/grafik birlestirme-3-1.png)&lt;!-- --&gt;
+
+---
+## Grafik Birleştirme
+
+İkinci satır ikinci sütun
+
+
+```r
+par(mfrow=c(2,2))
+
+d1 &lt;- density(df2$ODOKUMA1[SINIF==8])
+plot(d1,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 8. Sınıf")
+polygon(d1, col="red", border="black")
+d2 &lt;- density(df2$ODOKUMA1[SINIF==9])
+plot(d2, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 9. Sınıf")
+polygon(d2, col="green", border="black")
+d3 &lt;- density(df2$ODOKUMA1[SINIF==10])
+plot(d3, main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 10. Sınıf")
+polygon(d3, col="blue", border="black")
+
+d4 &lt;- density(df2$ODOKUMA1[SINIF==11])
+plot(d4,main="Okuma Başarı Puanları 
+     Yoğunluk Grafiği 11. Sınıf")
+polygon(d4, col="yellow", border="black")
+```
+
+![](G_Gorsellestirme_III_files/figure-html/grafik birlestirme-4-1.png)&lt;!-- --&gt;
+
+---
+## Grafik Kaydetme
+
+- Grafik kaydetme islemi grafik alanındaki export sekmesi ile yapılabilmektedir.
+
+- Bunun hariçinde `jpeg()`, `pdf()` gibi kaydedilecek dosya türüne özgü fonksiyonla da aynı işlem yapılabilir.
+
+- Grafikler spesifik bir fonksiyonla kaydedildiği zaman `dev.off()` fonksiyonu ile işlem sonlandırılmalıdır. Bu işlem grafik grafik alanında görüntülenmez.
+
+- Grafiği jpeg olarak kaydetmek
+
+
+```r
+# kaydetme
+
+jpeg("Ornek1.jpg")
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
+---
+## Grafik Kaydetme
+
+Grafiği pdf olarak kaydetmek
+
+
+```r
+# kaydetme
+
+pdf("Ornek1.pdf") # Grafik boyutu kadar yer kaplar. 
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
+---
+## Grafik Kaydetme
+
+Grafiği kaydetmek isleminde sayfa boyutu da değiştirilebilir.
+
+
+```r
+pdf("Ornek2.pdf", paper="a4") # A4 Sayfa boyutunda grafiği kaydeder. 
+
+plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
+     xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+
+
+dev.off()
+```
+
+```
+## png 
+##   2
+```
+
+---
+##
+
+Bu ders notları "Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (Baskıda). R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi”. kaynağından alınmıştır.
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
