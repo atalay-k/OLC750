@@ -1,6 +1,6 @@
 ---
 title: "`r emo::ji('muscle')` R ile Veri Analizi"
-subtitle: " <br> `r emo::ji('graph')` Veri Görselleştirme - II"
+subtitle: " <br> `r emo::ji('graph')` Veri Görselleştirme - IV"
 author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
 date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
 output:
@@ -124,7 +124,8 @@ library(ggplot2)
 
 -   **geom()** argümanı çizilecek grafiği türünü belirlemek için kullanılmaktadır. Geometrik nesneler (geometric objects) olarak adlandırılmaktadır.
 
-Örneğin **yoğunluk grafiği** çizilmek istendiğinde; 
+- Örneğin **yoğunluk grafiği** çizilmek istendiğinde; 
+
   - **ggplot(x, y, data, geom="density")** veya  
   
   - **ggplot( data, aes(x, y)) + geom.density()**
@@ -145,7 +146,8 @@ ls(pattern = '^geom_', env = as.environment('package:ggplot2'))
 ```{r}
 library(tuev)
 data(PISA_OGR_2018)
-grafik_1 <- ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))
+grafik_1 <- ggplot(PISA_OGR_2018,
+                   aes(x=ODOKUMA1))
 ```
 ]
 
@@ -154,6 +156,7 @@ grafik_1 <- ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))
 grafik_1 
 ```
 ]
+
 ---
 ## Saçılım Grafiği
 
@@ -183,6 +186,7 @@ geom_histogram()  +
 facet_wrap(~CINSIYET, nrow=2)
 ```
 ]
+
 ---
 ## Saçılım Grafiği
 
@@ -202,6 +206,7 @@ grafik_1 + geom_histogram() +
    facet_wrap(~SINIF, nrow=2)
 ```
 ]
+
 ---
 ## Yüzeyler
 
@@ -239,15 +244,15 @@ grafik_1 +
 .pull-left[
 - Yüzeylerin sütunda oluşturulması
 
-```{r out.width="40%"}
+```{r message=FALSE, warning=FALSE, out.width="40%"}
 ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
   geom_histogram()+
   facet_grid(.~CINSIYET)
 ```
 ]
 .pull-right[
-- Yüzeylerin satırlarda olusturlması
-```{r out.width="40%"}
+- Yüzeylerin satırlarda oluşturulması
+```{r  message=FALSE, warning=FALSE,out.width="40%"}
 ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
   geom_histogram()+
   facet_grid(CINSIYET~.)
@@ -257,65 +262,87 @@ ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
 ---
 ## Yüzeyler
 
-```{r}
+```{r  fig.height=4, fig.width=6}
 ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
   geom_histogram()+
   facet_grid(.~SINIF)
 ```
 
-```{r}
+
+---
+## Yüzeyler
+
+```{r fig.height=4, fig.width=6}
 ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
   geom_histogram()+
   facet_grid(SINIF~.)
 ```
 
+---
 ##  gruplama değişkenleri
 
 - Renklendirme, sembol şekli, sembol büyüklüğü ve çizgi türü belirleyen fonksiyonlar yardımıyla gruplama yapılmaktadır.
 
+---
 ## color ile gruplandırma
 
+.pull-left[
 - Açıklama kutucukları otomatik çıkar!
 
-```{r}
-
-
-
-ggplot( PISA_OGR_2018 %>% group_by(SINIF) %>% mutate(ort=mean(ODOKUMA1)) %>% ungroup(),
-        aes(x=SINIF, y=ort, color=CINSIYET )) +
-  geom_line() +
-  geom_point() + 
+```{r }
+p1 <- ggplot(
+      PISA_OGR_2018 %>% 
+      group_by(SINIF) %>%
+      mutate(ort=mean(ODOKUMA1)) %>% ungroup(),
+     aes(x=SINIF, y=ort, color=CINSIYET )) +
+  geom_point() +  
   xlab("Toplam Puan")+
   ylab("Yüzde") +
-  scale_y_continuous(labels = scales::percent)+
-    scale_colour_discrete("Cinsiyet", breaks=c("1","2"), labels=c("Kiz", "Erkek"))
+  scale_y_continuous(labels = scales::percent)
+  # scale_colour_discrete("Cinsiyet", breaks=c("1","2"), 
+  # labels=c("Kiz", "Erkek"))
 
 
 ```
 
-```{r}
+]
+.pull-right[
+```{r  fig.height=4, fig.width=6}
+p1
+
+```
+
+]
+
+---
+## color ile gruplandırma
+```{r  fig.height=4, fig.width=6}
 ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK,color=CINSIYET)) + geom_point()+  facet_grid(.~SINIF)	
 
 ```
 
+---
 ## Grafik nesnesi
 
 - olsuturalan grafik **p** nesnesine atanmıştır. **p** nesnesine **+** ile katmanlar eklenebilir.
-- Kategorik degiskenler eksen değerlerini belirler.
+- Kategorik degişkenler eksen değerlerini belirler.
 
 
-```{r}
+```{r fig.height=4, fig.width=6}
 p <- ggplot(mtcars, aes(cyl, mpg)) +
   geom_point()
 p
 ```
 
+---
+
 - cyl değişkenin sadece 4,6 ve 8 değerlerini eksende belirtmek için factor olarak tanımlamak gerekir.
-```{r}
+```{r  fig.height=4, fig.width=6}
 ggplot(mtcars, aes(factor(cyl), mpg)) +
   geom_point()
 ```
 
+---
 ## Grafikler üç bölümden oluşur
 
 ![](v3.PNG)
@@ -330,200 +357,236 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 -   linetyepe
 -   labels
 
-**color** parametresi
+---
 
-```{r}
+- **color** parametresi
+
+```{r  fig.height=4, fig.width=6}
 
 ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
   geom_point(color = "blue")
 ```
 
-**size** ve **shape** parametresi
+---
+- **size** ve **shape** parametresi
 
 her iki parametrenin de olağan değeri 1 dir. 
-```{r}
+```{r  fig.height=4, fig.width=6}
 ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
   geom_point(color = "blue",size=5,shape="a")
 ```
 
-<!-- Veri seti her bir okul türünden 5 kişi alınarak veri seti boyutu küçültülmüştür. -->
-<!-- ```{r} -->
-<!-- df <- PISA_OGR_2018 %>% group_by(OKUL_TUR)%>% sample(5) %>% ungroup() -->
 
-<!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + -->
-<!--   geom_point() -->
+---
+- Veri seti her bir okul türünden 5 kişi alınarak veri seti boyutu küçültülmüştür.
 
-<!-- ``` -->
+```{r fig.height=4, fig.width=6}
+df <- PISA_OGR_2018 %>% group_by(OKUL_TUR)%>% sample_n(5) %>% ungroup()
 
-<!-- Ustuse gelen noktalar için **position** -->
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point()
 
-<!-- -   identity -->
-<!-- -   dodge -->
-<!-- -   stack -->
-<!-- -   fill -->
-<!-- -   jitter -->
-<!-- -   jitterdodge -->
-<!-- -   nudge -->
+```
 
-<!-- ```{r} -->
+---
+.pull-left[
 
-<!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + -->
-<!--   geom_point() -->
+- Üstüse gelen noktalar için **position**
 
-<!-- ``` -->
+-   identity
+-   dodge
+-   stack
+-   fill
+-   jitter
+-   jitterdodge
+-   nudge
 
-<!-- ```{r} -->
+]
 
-<!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) + -->
-<!--   geom_point(position = "jitter") -->
+.pull-right[
+```{r fig.height=4, fig.width=6}
 
-<!-- ``` -->
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point()
 
-
-<!-- **size** parametresi -->
-
-<!-- parametreler için veri setinden bir değişken değeri seçilebilir. -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) + -->
-<!--   geom_point() -->
-<!-- ``` -->
-
-<!-- üst üste binen noktaları kaydırarak ayırma -->
-<!-- ```{r} -->
-<!-- ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) + -->
-<!--   geom_point(position = "jitter") -->
-<!-- ``` -->
-
-<!-- ## Katmanlar -->
-
-<!-- ![](v4.PNG) -->
-
-<!-- ## alpha -->
-
-<!-- Şeffaflık düzeyi için **alpa** -->
-<!-- ```{r} -->
-<!-- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF)) + -->
-<!--   geom_point(alpha = 0.4) -->
-<!-- ``` -->
-
-<!-- Katmanları nesneye ekleme -->
-<!-- **grafik1** adlı nesneye istenilen katmanlar eklenebilir. -->
-<!-- ```{r} -->
-<!-- grafik1 <- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF))  -->
-<!-- grafik1 +geom_point(alpha = 1.2) -->
-<!-- ``` -->
-
-<!-- **grafik1** adlı nesneye CINSIYET değişkenine göre şekil ekleme -->
-<!-- ```{r} -->
-<!-- grafik1 +geom_point(aes(shape=CINSIYET)) -->
-<!-- ``` -->
-
-<!-- **text** -->
-
-<!-- Değişken adları **text** komutu ile veri sembolu olarak eklenebilir. Gösterim amacıyla **df** veri setinin sadece ilk 10 satırı kullanılmıştır. -->
-
-<!-- ```{r} -->
-
-<!-- ggplot(df[1:10,], aes(ODOKUMA1, OK_YETERLIK))+  -->
-<!--          geom_text(aes(label = CINSIYET)) -->
-<!-- ``` -->
-
-<!-- ## Scale -->
-
-<!-- Scale functions -->
-<!-- -   scale_x() -->
-<!-- -   scale_y() -->
-<!-- -   scale_color() -->
-<!-- -   scale_fill() -->
-<!-- -   scale_shape() -->
-<!-- -   scale_linetype() -->
-<!-- -   scale_size() -->
-<!-- -   scale_x_continuous() -->
-<!-- -   scale_y() -->
-<!-- -   scale_color_discrete() -->
-<!-- -   scale_fill() -->
-<!-- -   scale_shape() -->
-<!-- -   scale_linetype() -->
-<!-- -   scale_size() -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(x = ODOKUMA1, -->
-<!-- y = OK_YETERLIK, -->
-<!-- color = CINSIYET)) + -->
-<!-- geom_point(position = "jitter") + -->
-<!-- scale_x_continuous("Okuma Puanları") + -->
-<!-- scale_color_discrete("Cinsiyet") -->
-<!-- ``` -->
-
-<!-- **limits** -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(x = ODOKUMA1, -->
-<!-- y = OK_YETERLIK, -->
-<!-- color = CINSIYET)) + -->
-<!-- geom_point(position = "jitter") + -->
-<!-- scale_x_continuous("Okuma Puanları",limits = c(100,900)) + -->
-<!-- scale_color_discrete("Cinsiyet") -->
-
-<!-- ``` -->
-
-<!-- beraks -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(x = ODOKUMA1, -->
-<!-- y = OK_YETERLIK, -->
-<!-- color = CINSIYET)) + -->
-<!-- geom_point(position = "jitter") + -->
-<!-- scale_x_continuous("Okuma Puanları",limits = c(100,900), -->
-<!--          breaks=seq(100,900,100)) + -->
-<!-- scale_color_discrete("Cinsiyet") -->
-<!-- ``` -->
-
-<!-- expand -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(x = ODOKUMA1, -->
-<!-- y = OK_YETERLIK, -->
-<!-- color = CINSIYET)) + -->
-<!-- geom_point(position = "jitter") + -->
-<!-- scale_x_continuous("Okuma Puanları",limits = c(100,900), -->
-<!--                    breaks=seq(100,900,100), -->
-<!--                    expand=c(0,0)) + -->
-<!-- scale_color_discrete("Cinsiyet") -->
-<!-- ``` -->
-
-<!-- labs -->
-
-<!-- ```{r} -->
-<!-- ggplot(df, aes(x = ODOKUMA1, -->
-<!-- y = OK_YETERLIK, -->
-<!-- color = CINSIYET)) + -->
-<!-- geom_point(position = "jitter") + -->
-<!--   labs(x = "Basari Puanları", -->
-<!--        y = "Yeterlik Puanları", -->
-<!--        color = "Grup") -->
-
-<!-- ``` -->
-
-<!-- ## Bar Grafiği -->
-
-<!-- ```{r} -->
-
-<!-- ggplot(df, aes(CINSIYET, fill = SINIF)) +   geom_bar() + -->
-<!--   labs(x = "Cinsiyet", -->
-<!--        y = "Frekans") -->
-<!-- ``` -->
-
-<!-- scale_fill -->
-
-<!-- ```{r} -->
-
-<!-- ggplot(df, aes(CINSIYET, fill = SINIF)) + -->
-<!--   geom_bar() + -->
-<!--    labs(x = "Cinsiyet", -->
-<!--        y = "Frekans") + -->
-<!--   scale_fill_manual("CINSIYET", values = c("red","blue","orange","green","darkblue")) -->
-<!-- ``` -->
+```
+]
 
 
+---
+
+```{r fig.height=4, fig.width=6}
+
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point(position = "jitter")
+
+```
+
+---
+**size** parametresi
+
+- parametreler için veri setinden bir değişken değeri seçilebilir.
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) +
+  geom_point()
+```
+
+---
+**size** parametresi
+
+- üst üste binen noktaları kaydırarak ayırma
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) +
+  geom_point(position = "jitter")
+```
+
+---
+## Katmanlar
+
+![](v4.PNG)
+
+---
+## alpha
+
+- Şeffaflık düzeyi için **alpa**
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF)) +
+  geom_point(alpha = 0.4)
+```
+
+---
+- Katmanları nesneye ekleme
+**grafik1** adlı nesneye istenilen katmanlar eklenebilir.
+
+```{r}
+grafik1 <- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF))
+grafik1 +geom_point(alpha = 1.2)
+```
+
+---
+
+**grafik1** adlı nesneye CINSIYET değişkenine göre şekil ekleme
+```{r}
+grafik1 +geom_point(aes(shape=CINSIYET))
+```
+
+---
+
+## **text**
+
+Değişken adları **text** komutu ile veri sembolu olarak eklenebilir. Gösterim amacıyla **df** veri setinin sadece ilk 10 satırı kullanılmıştır.
+
+```{r}
+
+ggplot(df[1:10,], aes(ODOKUMA1, OK_YETERLIK))+
+         geom_text(aes(label = CINSIYET))
+```
+
+---
+## Scale
+
+Scale functions
+-   scale_x()
+-   scale_y()
+-   scale_color()
+-   scale_fill()
+-   scale_shape()
+-   scale_linetype()
+-   scale_size()
+-   scale_x_continuous()
+-   scale_y()
+-   scale_color_discrete()
+-   scale_fill()
+-   scale_shape()
+-   scale_linetype()
+-   scale_size()
+
+---
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları") +
+scale_color_discrete("Cinsiyet")
+```
+
+---
+## **limits**
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900)) +
+scale_color_discrete("Cinsiyet")
+
+```
+
+---
+## beraks
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900),
+         breaks=seq(100,900,100)) +
+scale_color_discrete("Cinsiyet")
+```
+
+---
+## expand
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900),
+                   breaks=seq(100,900,100),
+                   expand=c(0,0)) +
+scale_color_discrete("Cinsiyet")
+```
+
+---
+## labs
+
+```{r fig.height=4, fig.width=6}
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+  labs(x = "Basari Puanları",
+       y = "Yeterlik Puanları",
+       color = "Grup")
+
+```
+
+---
+## Bar Grafiği
+
+```{r fig.height=4, fig.width=6}
+
+ggplot(df, aes(CINSIYET, fill = SINIF)) +   geom_bar() +
+  labs(x = "Cinsiyet",
+       y = "Frekans")
+```
+
+---
+## scale_fill
+
+```{r fig.height=4, fig.width=6}
+
+ggplot(df, aes(CINSIYET, fill = SINIF)) +
+  geom_bar() +
+   labs(x = "Cinsiyet",
+       y = "Frekans") +
+  scale_fill_manual("CINSIYET", values = c("red","blue","orange","green","darkblue"))
+```
+
+---

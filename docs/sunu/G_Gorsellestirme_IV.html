@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>💪 R ile Veri Analizi</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
+    <script src="libs/header-attrs-2.17/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="slides-style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# 💪 R ile Veri Analizi
+]
+.subtitle[
+## <br> 📊 Veri Görselleştirme - IV
+]
+.author[
+### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
+]
+.date[
+### <br> <br> <br> <br>📧 <a href="mailto:katalay@hacettepe.edu.tr" class="email">katalay@hacettepe.edu.tr</a>
+]
+
+---
+
+
+
+
+
+
+
+# Veri Görselleştirme ggplot2 .huge[📊]
+
+.hand[İçerik...]
+
+- Neden görşelleştirme
+&lt;br&gt;
+&lt;br&gt;
+
+--
+- 
+&lt;br&gt;
+&lt;br&gt;
+
+--
+- 
+&lt;br&gt;
+&lt;br&gt;
+
+--
+-
+&lt;br&gt;
+&lt;br&gt;
+
+--
+
+
+&lt;!-- https://rpubs.com/odenipinedo/introduction-to-data-visualization-with-ggplot2 --&gt;
+
+
+---
+## Görselleştirme
+
+
+```r
+library(tuev)
+library(ggplot2)
+```
+
+.pull-left[
+
+![](figs\v1.PNG)
+]
+
+--
+.pull-right[
+
+![](figs\v2.PNG)
+]
+
+---
+## ggplot
+
+-   **ggplot2** paketi, **lattice** paketi gibi verilerdeki birden çok değişkeni aynı grafik üzerinde göstermek ve veriler arasındaki çok düzeyli ilişkileri özetlemek amacıyla geliştirilmiştir.
+
+-   Açılımı grafiğin grameri (grammer of graphics) şeklindedir.
+
+-   **lattice** grafiklerindeki gibi grafikler nesneler olarak kaydedilmekte ve birden çok grafiği tek bir grafiğin üzerinde gösterebilmektedir.
+
+-   **lattice** paketine göre en önemli farkı **katman** mantığıyla çalışmasıdır.
+  -   Metin ekleme,
+  -   renklendirme,
+  -   açıklama kutucukları vb... özelleştirmeler toplama **(+)** işareti ile kodlara eklenebilmektedir.
+
+---
+## Temel Fonksiyonların Kullanımı
+-   **qplot()** ve **ggplot()** fonksiyonları
+-   **qplot()**, hızlı grafik (quick plot) çizimi anlamına gelmektedir.
+
+  -   **qplot(x, y, data, geom)** veya
+
+  -   **ggplot(x, y, data, geom)** veya
+
+  -   **ggplot( data, aes(x, y)) + geom.grafikismi()**
+
+---
+## Temel Fonksiyonların Kullanımı
+
+-   **aes()** her bir değişkenin alacağı rolü belirlemede kullanılır.
+
+-   **geom()** argümanı çizilecek grafiği türünü belirlemek için kullanılmaktadır. Geometrik nesneler (geometric objects) olarak adlandırılmaktadır.
+
+- Örneğin **yoğunluk grafiği** çizilmek istendiğinde; 
+
+  - **ggplot(x, y, data, geom="density")** veya  
+  
+  - **ggplot( data, aes(x, y)) + geom.density()**
+
+---
+# ggplot2 paketindeki grafikler
+
+
+```r
+library(ggplot2)
+ls(pattern = '^geom_', env = as.environment('package:ggplot2'))
+```
+
+```
+##  [1] "geom_abline"            "geom_area"              "geom_bar"              
+##  [4] "geom_bin_2d"            "geom_bin2d"             "geom_blank"            
+##  [7] "geom_boxplot"           "geom_col"               "geom_contour"          
+## [10] "geom_contour_filled"    "geom_count"             "geom_crossbar"         
+## [13] "geom_curve"             "geom_density"           "geom_density_2d"       
+## [16] "geom_density_2d_filled" "geom_density2d"         "geom_density2d_filled" 
+## [19] "geom_dotplot"           "geom_errorbar"          "geom_errorbarh"        
+## [22] "geom_freqpoly"          "geom_function"          "geom_hex"              
+## [25] "geom_histogram"         "geom_hline"             "geom_jitter"           
+## [28] "geom_label"             "geom_line"              "geom_linerange"        
+## [31] "geom_map"               "geom_path"              "geom_point"            
+## [34] "geom_pointrange"        "geom_polygon"           "geom_qq"               
+## [37] "geom_qq_line"           "geom_quantile"          "geom_raster"           
+## [40] "geom_rect"              "geom_ribbon"            "geom_rug"              
+## [43] "geom_segment"           "geom_sf"                "geom_sf_label"         
+## [46] "geom_sf_text"           "geom_smooth"            "geom_spoke"            
+## [49] "geom_step"              "geom_text"              "geom_tile"             
+## [52] "geom_violin"            "geom_vline"
+```
+
+---
+## Saçılım Grafiği
+- Aşağıdaki kod sadece ilk katmanı oluşturur.
+
+.pull-left[
+
+```r
+library(tuev)
+data(PISA_OGR_2018)
+grafik_1 &lt;- ggplot(PISA_OGR_2018,
+                   aes(x=ODOKUMA1))
+```
+]
+
+.pull-right[
+
+```r
+grafik_1 
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-4-1.png" width="80%" /&gt;
+]
+
+---
+## Saçılım Grafiği
+
+- Katman eklenmesi
+
+
+```r
+grafik_1 + geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-5-1.png" width="30%" /&gt;
+
+---
+## Saçılım Grafiği
+
+- Yüzey eklenmesi
+
+.pull-left[
+
+```r
+grafik_1 + 
+geom_histogram() +
+facet_wrap(~CINSIYET)
+```
+]
+
+.pull-right[
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-7-1.png" width="40%" /&gt;
+]
+
+---
+## Saçılım Grafiği
+
+.pull-left[
+
+- Yüzey eklenmesi
+
+
+```r
+grafik_1 + geom_histogram() +
+  facet_wrap(~SINIF, nrow=2)
+```
+]
+
+.pull-right[
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-9-1.png" width="40%" /&gt;
+]
+
+---
+## Yüzeyler
+
+- **facet_grid** fonksiyonu ise hem tek hem de iki değişkenin panellerde gösterimi için 
+
+  - **facet_grid(satırdeğişkeni~sütundeğişkeni)** 
+  
+  - **facet_grid(satırdeğişkeni~.)** veya     
+  
+  - **facet_grid(.~sütundeğişkeni)**
+
+---
+## Yüzeyler
+.pull-left[
+- Yüzeyde kategorik değişkenlerin düzeylerini görebilmek için **factor** değişken olarak tanımlamak gerekir.
+
+
+```r
+library(haven)
+PISA_OGR_2018 &lt;- 
+  PISA_OGR_2018 %&gt;% 
+  mutate_if(is.labelled, funs(as_factor(.)))
+```
+]
+.pull-right[
+
+```r
+grafik_1 +
+  geom_histogram()+
+  facet_grid(SINIF~CINSIYET)
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-11-1.png" width="80%" /&gt;
+]
+
+---
+## Yüzeyler
+.pull-left[
+- Yüzeylerin sütunda oluşturulması
+
+
+```r
+ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
+  geom_histogram()+
+  facet_grid(.~CINSIYET)
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-12-1.png" width="40%" /&gt;
+]
+.pull-right[
+- Yüzeylerin satırlarda oluşturulması
+
+```r
+ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
+  geom_histogram()+
+  facet_grid(CINSIYET~.)
+```
+
+&lt;img src="G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-13-1.png" width="40%" /&gt;
+]
+
+---
+## Yüzeyler
+
+
+```r
+ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
+  geom_histogram()+
+  facet_grid(.~SINIF)
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+
+---
+## Yüzeyler
+
+
+```r
+ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
+  geom_histogram()+
+  facet_grid(SINIF~.)
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+##  gruplama değişkenleri
+
+- Renklendirme, sembol şekli, sembol büyüklüğü ve çizgi türü belirleyen fonksiyonlar yardımıyla gruplama yapılmaktadır.
+
+---
+## color ile gruplandırma
+
+.pull-left[
+- Açıklama kutucukları otomatik çıkar!
+
+
+```r
+p1 &lt;- ggplot(
+      PISA_OGR_2018 %&gt;% 
+      group_by(SINIF) %&gt;%
+      mutate(ort=mean(ODOKUMA1)) %&gt;% ungroup(),
+     aes(x=SINIF, y=ort, color=CINSIYET )) +
+  geom_point() +  
+  xlab("Toplam Puan")+
+  ylab("Yüzde") +
+  scale_y_continuous(labels = scales::percent)
+  # scale_colour_discrete("Cinsiyet", breaks=c("1","2"), 
+  # labels=c("Kiz", "Erkek"))
+```
+
+]
+.pull-right[
+
+```r
+p1
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+]
+
+---
+## color ile gruplandırma
+
+```r
+ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK,color=CINSIYET)) + geom_point()+  facet_grid(.~SINIF)	
+```
+
+```
+## Warning: Removed 199 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+---
+## Grafik nesnesi
+
+- olsuturalan grafik **p** nesnesine atanmıştır. **p** nesnesine **+** ile katmanlar eklenebilir.
+- Kategorik degişkenler eksen değerlerini belirler.
+
+
+
+```r
+p &lt;- ggplot(mtcars, aes(cyl, mpg)) +
+  geom_point()
+p
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+
+---
+
+- cyl değişkenin sadece 4,6 ve 8 değerlerini eksende belirtmek için factor olarak tanımlamak gerekir.
+
+```r
+ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_point()
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+
+---
+## Grafikler üç bölümden oluşur
+
+![](v3.PNG)
+
+## **AESTHETICS** 
+
+-   fill
+-   color
+-   size
+-   shape
+-   alpha
+-   linetyepe
+-   labels
+
+---
+
+- **color** parametresi
+
+
+```r
+ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
+  geom_point(color = "blue")
+```
+
+```
+## Warning: Removed 199 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+
+---
+- **size** ve **shape** parametresi
+
+her iki parametrenin de olağan değeri 1 dir. 
+
+```r
+ggplot(PISA_OGR_2018, aes(CINSIYET, OK_YETERLIK)) +
+  geom_point(color = "blue",size=5,shape="a")
+```
+
+```
+## Warning: Removed 199 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+
+
+---
+- Veri seti her bir okul türünden 5 kişi alınarak veri seti boyutu küçültülmüştür.
+
+
+```r
+df &lt;- PISA_OGR_2018 %&gt;% group_by(OKUL_TUR)%&gt;% sample_n(5) %&gt;% ungroup()
+
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point()
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+
+---
+.pull-left[
+
+- Üstüse gelen noktalar için **position**
+
+-   identity
+-   dodge
+-   stack
+-   fill
+-   jitter
+-   jitterdodge
+-   nudge
+
+]
+
+.pull-right[
+
+```r
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point()
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
+]
+
+
+---
+
+
+```r
+ggplot(df, aes(CINSIYET, OK_YETERLIK, color = SINIF)) +
+  geom_point(position = "jitter")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-25-1.png)&lt;!-- --&gt;
+
+---
+**size** parametresi
+
+- parametreler için veri setinden bir değişken değeri seçilebilir.
+
+
+```r
+ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) +
+  geom_point()
+```
+
+```
+## Warning: Using size for a discrete variable is not advised.
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-26-1.png)&lt;!-- --&gt;
+
+---
+**size** parametresi
+
+- üst üste binen noktaları kaydırarak ayırma
+
+```r
+ggplot(df, aes(CINSIYET, OK_YETERLIK, size = SINIF)) +
+  geom_point(position = "jitter")
+```
+
+```
+## Warning: Using size for a discrete variable is not advised.
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+
+---
+## Katmanlar
+
+![](v4.PNG)
+
+---
+## alpha
+
+- Şeffaflık düzeyi için **alpa**
+
+```r
+ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF)) +
+  geom_point(alpha = 0.4)
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+
+---
+- Katmanları nesneye ekleme
+**grafik1** adlı nesneye istenilen katmanlar eklenebilir.
+
+
+```r
+grafik1 &lt;- ggplot(df, aes(ODOKUMA1, OK_YETERLIK, color = SINIF))
+grafik1 +geom_point(alpha = 1.2)
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+
+---
+
+**grafik1** adlı nesneye CINSIYET değişkenine göre şekil ekleme
+
+```r
+grafik1 +geom_point(aes(shape=CINSIYET))
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+
+---
+
+## **text**
+
+Değişken adları **text** komutu ile veri sembolu olarak eklenebilir. Gösterim amacıyla **df** veri setinin sadece ilk 10 satırı kullanılmıştır.
+
+
+```r
+ggplot(df[1:10,], aes(ODOKUMA1, OK_YETERLIK))+
+         geom_text(aes(label = CINSIYET))
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+
+---
+## Scale
+
+Scale functions
+-   scale_x()
+-   scale_y()
+-   scale_color()
+-   scale_fill()
+-   scale_shape()
+-   scale_linetype()
+-   scale_size()
+-   scale_x_continuous()
+-   scale_y()
+-   scale_color_discrete()
+-   scale_fill()
+-   scale_shape()
+-   scale_linetype()
+-   scale_size()
+
+---
+
+
+```r
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları") +
+scale_color_discrete("Cinsiyet")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+---
+## **limits**
+
+
+```r
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900)) +
+scale_color_discrete("Cinsiyet")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+
+---
+## beraks
+
+
+```r
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900),
+         breaks=seq(100,900,100)) +
+scale_color_discrete("Cinsiyet")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+
+---
+## expand
+
+
+```r
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+scale_x_continuous("Okuma Puanları",limits = c(100,900),
+                   breaks=seq(100,900,100),
+                   expand=c(0,0)) +
+scale_color_discrete("Cinsiyet")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+
+---
+## labs
+
+
+```r
+ggplot(df, aes(x = ODOKUMA1,
+y = OK_YETERLIK,
+color = CINSIYET)) +
+geom_point(position = "jitter") +
+  labs(x = "Basari Puanları",
+       y = "Yeterlik Puanları",
+       color = "Grup")
+```
+
+```
+## Warning: Removed 5 rows containing missing values (geom_point).
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+---
+## Bar Grafiği
+
+
+```r
+ggplot(df, aes(CINSIYET, fill = SINIF)) +   geom_bar() +
+  labs(x = "Cinsiyet",
+       y = "Frekans")
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
+
+---
+## scale_fill
+
+
+```r
+ggplot(df, aes(CINSIYET, fill = SINIF)) +
+  geom_bar() +
+   labs(x = "Cinsiyet",
+       y = "Frekans") +
+  scale_fill_manual("CINSIYET", values = c("red","blue","orange","green","darkblue"))
+```
+
+![](G_Gorsellestirme_IV_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+
+---
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "solarized-light",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9",
+"slideNumberFormat": "<div class=\"progress-bar-container\">\n  <div class=\"progress-bar\" style=\"width: calc(%current% / %total% * 100%);\">\n  </div>\n</div>\n"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
