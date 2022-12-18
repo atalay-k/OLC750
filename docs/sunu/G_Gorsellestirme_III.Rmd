@@ -77,7 +77,11 @@ Madde1_ozet
 ```
 
 ---
+<<<<<<< HEAD
 - **Dikey sütun grafiği oluşturmak için `barplot()` fonksiyonu kullanımı**
+=======
+**Dikey sütun grafiği oluşturmak için `barplot()` fonksiyonu kullanımı**
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r sütun-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 barplot(Madde1_ozet,
@@ -87,7 +91,11 @@ barplot(Madde1_ozet,
 ```
 
 ---
+<<<<<<< HEAD
 - **Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
+=======
+**Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r sütun-2, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 # yatay cizilmesi
@@ -99,7 +107,11 @@ barplot(Madde1_ozet,
 ```
 
 ---
+<<<<<<< HEAD
 - **Kategorik değişkenlerin her bir değeri için sütun grafiği oluşturulması**
+=======
+**Kategorik değişkenlerin her bir değeri için sütun grafiği oluşturulması**
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 - İlk olarak frekans talosu oluşturulur. Grafiklerde kategorik değişkenlerin etiketleri görünmesi için kategorik degişkene etiket ataması yapılır.
 
@@ -136,7 +148,11 @@ legend=rownames(Madde2_ozet))
 ```
 
 ---
+<<<<<<< HEAD
 - **Kategorik değişken gösterimi ayrı çubuklara da `beside` argümanı ile alınabilir.**
+=======
+**Kategorik değişken gösterimi ayrı çubuklara da `beside` argümanı ile alınabilir.**
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r sütun-6, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 barplot(Madde2_ozet, 
@@ -149,25 +165,37 @@ barplot(Madde2_ozet,
 ```
 
 ---
+<<<<<<< HEAD
 - **`barplot()` fonksiyonu farklı kullanımları için `?barplot` ile incelemeler yapabilirsiniz.**
+=======
+**`barplot()` fonksiyonu fraklı kullanıları için `?barplot` ile incelemeler yapabilirsiniz.**
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r sütun-7, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 
 barplot(GNP ~ Year, data = longley)
+<<<<<<< HEAD
 ```
 
 ---
 **`barplot()` fonksiyonu**
 
 ```{r message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+=======
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 barplot(cbind(Employed, Unemployed) ~ Year, data = longley,beside = TRUE)
 ```
 
+<<<<<<< HEAD
 
 
 ---
 ## Pasta grafiği
+=======
+---
+## Pasta grafigi
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 - Pasta grafiklerinde genellikle gösterimler yüzdeler üzerinden hesaplanır.
 
@@ -182,7 +210,11 @@ yuzde
 ```
 
 ---
+<<<<<<< HEAD
 - **Pasta dilimlerinin adlandırılması** amacıyla karakter bir vektör oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+=======
+- Pasta dilimlerinin adlandırılması amacıyla karakter bir vektor oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r pasta-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
@@ -206,7 +238,11 @@ pie(Madde1_ozet, labels=metin, main="Madde 1 Yüzdelik Cevap Dağılımı", col=
 ---
 - Üç boyutlu pasta grafikleri oluşturmak amacıyla da farklı paketlerden de yararlanılabilir.
 
+<<<<<<< HEAD
 ```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+=======
+```{r pasta-4, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 library(plotrix)
 
@@ -238,7 +274,11 @@ hist(ODOKUMA_2)
 ---
 ## Kutu Grafiği
 
+<<<<<<< HEAD
 - Uç deger incelemenin çok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
+=======
+- Uç deger incelemenin cok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r kutu-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
@@ -250,6 +290,7 @@ boxplot(ODOKUMA_2)
 
 ```{r kutu-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
+<<<<<<< HEAD
 boxplot(ODOKUMA1) # uc deger gorunmuyor
 ```
 
@@ -257,6 +298,16 @@ boxplot(ODOKUMA1) # uc deger gorunmuyor
 - Kategorik değişkenin her bir kategorisi için kutu grafiği çizilmek istediğinde ise **~** ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
 
 ```{r kutu-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+=======
+boxplot(ODOKUMA_2) # uc deger gorunmuyor
+```
+
+---
+- Kategorik değişkenin her bir kategorisi için kutu grafiği cizilmek istediğinde ise \~ ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
+
+```{r kutu-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 boxplot(ODOKUMA1 ~ SINIF,
         horizontol =TRUE,data=df2,
         xlab= "Başarı Puanları",
@@ -312,7 +363,11 @@ dotchart(OK_YETERLIK, cex=.7, groups=SINIF, color=renk, pch=19,
 ---
 ## Yogunluk grafigi (Density Plot)
 
+<<<<<<< HEAD
 Yogunluk grafiği çizebilmek için ilk olarak olasılık yoğunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
+=======
+Yogunluk grafiği çizebilmek için ilk olarak olasılık yogunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ```{r yogunluk-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 # 8. sınıflar için
@@ -349,10 +404,16 @@ polygon(d1, col="red", border="black")
 ---
 ## Grafik Birleştirme
 
+<<<<<<< HEAD
 - Birinci satır ikinci sütun
 
 .pull-left[
 ```{r eval=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+=======
+Birinci satır ikinci sütun
+
+```{r grafik birlestirme-2, message=FALSE, warning=FALSE, paged.print=TRUE}
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 par(mfrow=c(2,2))
 
 d1 <- density(df2$ODOKUMA1[SINIF==8])
@@ -366,6 +427,7 @@ polygon(d2, col="green", border="black")
 
 ```
 
+<<<<<<< HEAD
 ]
 
 .pull-right[
@@ -393,6 +455,14 @@ polygon(d2, col="green", border="black")
 .pull-left[
 
 ```{r eval=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+=======
+---
+## Grafik Birleştirme
+
+İkinci satır birinci sütun
+
+```{r grafik birlestirme-3, message=FALSE, warning=FALSE, paged.print=TRUE}
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 par(mfrow=c(2,2))
 
 
@@ -410,6 +480,7 @@ plot(d3, main="Okuma Başarı Puanları
 polygon(d3, col="blue", border="black")
 
 ```
+<<<<<<< HEAD
 ]
 
 .pull-right[
@@ -433,15 +504,23 @@ polygon(d3, col="blue", border="black")
 
 ```
 ]
+=======
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 ---
 ## Grafik Birleştirme
 
+<<<<<<< HEAD
 - İkinci satır ikinci sütun
 
 .pull-left[
 
 ```{r  eval=FALSE,message=FALSE, warning=FALSE, paged.print=TRUE}
+=======
+İkinci satır ikinci sütun
+
+```{r grafik birlestirme-4, message=FALSE, warning=FALSE, paged.print=TRUE}
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 par(mfrow=c(2,2))
 
 d1 <- density(df2$ODOKUMA1[SINIF==8])
@@ -463,6 +542,7 @@ plot(d4,main="Okuma Başarı Puanları
 polygon(d4, col="yellow", border="black")
 
 ```
+<<<<<<< HEAD
 ]
 .pull-right[
 
@@ -493,6 +573,13 @@ polygon(d4, col="yellow", border="black")
 ## Grafik Kaydetme
 
 - Grafik kaydetme işlemi grafik alanındaki export sekmesi ile yapılabilmektedir.
+=======
+
+---
+## Grafik Kaydetme
+
+- Grafik kaydetme islemi grafik alanındaki export sekmesi ile yapılabilmektedir.
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 
 - Bunun hariçinde `jpeg()`, `pdf()` gibi kaydedilecek dosya türüne özgü fonksiyonla da aynı işlem yapılabilir.
 
@@ -507,6 +594,10 @@ polygon(d4, col="yellow", border="black")
 jpeg("Ornek1.jpg")
 plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
      xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 dev.off()
 
 ```
@@ -519,6 +610,10 @@ Grafiği pdf olarak kaydetmek
 ```{r grafik kaydetme-2, message=FALSE, warning=FALSE, paged.print=TRUE}
 
 # kaydetme
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 pdf("Ornek1.pdf") # Grafik boyutu kadar yer kaplar. 
 plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
      xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
@@ -545,4 +640,8 @@ dev.off()
 ---
 ##
 
+<<<<<<< HEAD
 - Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (Baskıda). R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi
+=======
+Bu ders notları "Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (Baskıda). R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi”. kaynağından alınmıştır.
+>>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c

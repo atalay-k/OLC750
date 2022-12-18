@@ -31,7 +31,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-```{r veri okuma, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 
 library(tuev)
 library(dplyr)
@@ -59,7 +59,7 @@ df2 <- df1 %>%
 ---
 - ** Başarı puanları ile yeterlik puanları arasındaki ilişkiyi gösteren grafiğin plot() fonksiyonu ile çizilmesi**
 
-```{r grafik cizme, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 plot(OK_YETERLIK ~ ODOKUMA1 , data=df2)
 ```
 
@@ -79,7 +79,7 @@ Madde1_ozet
 ---
 - **Dikey sütun grafiği oluşturmak için `barplot()` fonksiyonu kullanımı**
 
-```{r sütun-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 barplot(Madde1_ozet,
         main="Madde 1 Cevap Dağılımı",
         xlab="Cevap Kategorisi",
@@ -87,9 +87,10 @@ barplot(Madde1_ozet,
 ```
 
 ---
+<<<<<<< HEAD
 - **Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
 
-```{r sütun-2, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 # yatay cizilmesi
 barplot(Madde1_ozet,
         main="Madde 1 Cevap Dağılımı",
@@ -101,9 +102,10 @@ barplot(Madde1_ozet,
 ---
 - **Kategorik değişkenlerin her bir değeri için sütun grafiği oluşturulması**
 
+
 - İlk olarak frekans talosu oluşturulur. Grafiklerde kategorik değişkenlerin etiketleri görünmesi için kategorik degişkene etiket ataması yapılır.
 
-```{r sütun-3, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r  message=FALSE, warning=FALSE, paged.print=TRUE}
 df2$ST097Q02TA
 (df2$CINSIYET <- factor(df2$CINSIYET , 
                          labels = c("Kız", "Erkek")))
@@ -112,7 +114,7 @@ df2$ST097Q02TA
 ---
 - **Cinsiyete Göre Madde 2 Cevap Dağılımı**
 
-```{r sütun-4, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 
 # Cinsiyete Göre Madde 2 Cevap Dağılımı
 Madde2_ozet <- table(df2$CINSIYET,df2$ST097Q02TA)
@@ -124,7 +126,7 @@ Madde2_ozet
 ---
 - **Kategorik değişken etiketleri `legend` argümanı ile eklenebilir.**
 
-```{r sütun-5, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 barplot(Madde2_ozet, 
 main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
@@ -138,7 +140,7 @@ legend=rownames(Madde2_ozet))
 ---
 - **Kategorik değişken gösterimi ayrı çubuklara da `beside` argümanı ile alınabilir.**
 
-```{r sütun-6, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 barplot(Madde2_ozet, 
         main="Cinsiyete Göre Madde 2 Cevap Dağılımı", 
         xlab="Cevap Kategorisi", 
@@ -151,7 +153,8 @@ barplot(Madde2_ozet,
 ---
 - **`barplot()` fonksiyonu farklı kullanımları için `?barplot` ile incelemeler yapabilirsiniz.**
 
-```{r sütun-7, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+
+```{r  message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 
 barplot(GNP ~ Year, data = longley)
 ```
@@ -160,18 +163,18 @@ barplot(GNP ~ Year, data = longley)
 **`barplot()` fonksiyonu**
 
 ```{r message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
-
 barplot(cbind(Employed, Unemployed) ~ Year, data = longley,beside = TRUE)
 ```
 
 
 
+
 ---
-## Pasta grafiği
+## Pasta grafigi
 
 - Pasta grafiklerinde genellikle gösterimler yüzdeler üzerinden hesaplanır.
 
-```{r pasta-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 # Cevap kategorilerinin frekans dağılımı
 Madde1_ozet
@@ -184,7 +187,8 @@ yuzde
 ---
 - **Pasta dilimlerinin adlandırılması** amacıyla karakter bir vektör oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
 
-```{r pasta-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 likert_ifade=c("Kolaylıkla yaparım","Zorlanarak yaparım",  "Tek başıma çok zor yaparım","Yapamam")
 likert_ifade
@@ -197,7 +201,7 @@ metin
 - Pasta dilimlerinin adlandırılması amacıyla karakter bir vektor oluşturulur. İsimlendirme farklı şekillerde yapılabilir.
 
 .center[
-```{r pasta-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 pie(Madde1_ozet, labels=metin, main="Madde 1 Yüzdelik Cevap Dağılımı", col=rainbow(4))
 ```
@@ -207,6 +211,7 @@ pie(Madde1_ozet, labels=metin, main="Madde 1 Yüzdelik Cevap Dağılımı", col=
 - Üç boyutlu pasta grafikleri oluşturmak amacıyla da farklı paketlerden de yararlanılabilir.
 
 ```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
 
 library(plotrix)
 
@@ -228,7 +233,7 @@ hist(ODOKUMA1)
 ---
 - **İki uç değer eklenerek histogram grafiği çizilmesi**
 
-```{r hist-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 ODOKUMA_2 <- c(ODOKUMA1,900,1200)
 
@@ -238,9 +243,9 @@ hist(ODOKUMA_2)
 ---
 ## Kutu Grafiği
 
-- Uç deger incelemenin çok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
+- Uç deger incelemenin cok sayıda yolu olmakla birlikte, bunlardan biri de kutu grafiklerinden yararlanmaktır.
 
-```{r kutu-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 boxplot(ODOKUMA_2)
 ```
@@ -248,7 +253,7 @@ boxplot(ODOKUMA_2)
 ---
 - Bazen uç degerler incelemesini de grupların ayrı ayrı düzeylerine (kategorik) göre yapmak gerekir).
 
-```{r kutu-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r , message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 
 boxplot(ODOKUMA1) # uc deger gorunmuyor
 ```
@@ -256,7 +261,15 @@ boxplot(ODOKUMA1) # uc deger gorunmuyor
 ---
 - Kategorik değişkenin her bir kategorisi için kutu grafiği çizilmek istediğinde ise **~** ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
 
-```{r kutu-3, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+boxplot(ODOKUMA_2) # uc deger gorunmuyor
+```
+
+---
+- Kategorik değişkenin her bir kategorisi için kutu grafiği cizilmek istediğinde ise \~ ile formülasyon oluşturmak gerekir. Her bir sınıf düzeyi için kutu grafiği çizilmesi
+
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
 boxplot(ODOKUMA1 ~ SINIF,
         horizontol =TRUE,data=df2,
         xlab= "Başarı Puanları",
@@ -270,7 +283,7 @@ boxplot(ODOKUMA1 ~ SINIF,
 
 - Nokta grafiği oluşturmak için `dotchart()` fonksiyonundan yararlanılır.
 
-```{r dot-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 dotchart(df2$OK_YETERLIK)
 ```
 
@@ -279,7 +292,7 @@ dotchart(df2$OK_YETERLIK)
 
 - Nokta grafiği de bir değişkenin kategorilerine göre çizdirilebilir. Bu amaçla df2 veri setinden okuma yeterlik puanları küçükten büyüğe sıralanbilir.
 
-```{r dot-2, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
  df2 <- df2[order(df2$OK_YETERLIK),]
  head(df2,15)
 ```
@@ -289,7 +302,7 @@ dotchart(df2$OK_YETERLIK)
 
 - Oluşturulacak nokta grafiğinde noktaların hangi renkle gösterilmesi isteniyorsa bu tanımlanabilir. Bu tanılama veri setine renk isimli bir sütunla eklenmiştir.
 
-```{r dot-4, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+```{r message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 # Sınıf düzeylerine renk atanması
 
 df2 <- mutate(df2,
@@ -301,7 +314,7 @@ df2 <- mutate(df2,
 ---
 ## Nokta Grafiğinin Oluşturulması
 
-```{r dot-5, message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
+```{r  message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
 # Sınıf düzeylerine renk atanması
 attach(df2)
 dotchart(OK_YETERLIK, cex=.7, groups=SINIF, color=renk, pch=19,
@@ -312,9 +325,10 @@ dotchart(OK_YETERLIK, cex=.7, groups=SINIF, color=renk, pch=19,
 ---
 ## Yogunluk grafigi (Density Plot)
 
-Yogunluk grafiği çizebilmek için ilk olarak olasılık yoğunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
+- Yogunluk grafiği çizebilmek için ilk olarak olasılık yoğunluk fonksiyonu olan `density`fonksiyonunun kullanılması gerekir.
 
-```{r yogunluk-1, message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
+
+```{r   message=FALSE, warning=FALSE, fig.height=4, fig.width=6}
 # 8. sınıflar için
 d1 <- density(df2$ODOKUMA1[SINIF==8])
 #olusan d1 nesnesinin x ve y degerleri ile grafik cizilir.
@@ -353,7 +367,6 @@ polygon(d1, col="red", border="black")
 
 .pull-left[
 ```{r eval=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
-par(mfrow=c(2,2))
 
 d1 <- density(df2$ODOKUMA1[SINIF==8])
 plot(d1,main="Okuma Başarı Puanları 
@@ -442,8 +455,6 @@ polygon(d3, col="blue", border="black")
 .pull-left[
 
 ```{r  eval=FALSE,message=FALSE, warning=FALSE, paged.print=TRUE}
-par(mfrow=c(2,2))
-
 d1 <- density(df2$ODOKUMA1[SINIF==8])
 plot(d1,main="Okuma Başarı Puanları 
      Yoğunluk Grafiği 8. Sınıf")
@@ -494,6 +505,11 @@ polygon(d4, col="yellow", border="black")
 
 - Grafik kaydetme işlemi grafik alanındaki export sekmesi ile yapılabilmektedir.
 
+---
+## Grafik Kaydetme
+
+- Grafik kaydetme islemi grafik alanındaki export sekmesi ile yapılabilmektedir.
+
 - Bunun hariçinde `jpeg()`, `pdf()` gibi kaydedilecek dosya türüne özgü fonksiyonla da aynı işlem yapılabilir.
 
 - Grafikler spesifik bir fonksiyonla kaydedildiği zaman `dev.off()` fonksiyonu ile işlem sonlandırılmalıdır. Bu işlem grafik grafik alanında görüntülenmez.
@@ -516,13 +532,12 @@ dev.off()
 
 Grafiği pdf olarak kaydetmek
 
-```{r grafik kaydetme-2, message=FALSE, warning=FALSE, paged.print=TRUE}
+```{r message=FALSE, warning=FALSE, paged.print=TRUE}
 
 # kaydetme
 pdf("Ornek1.pdf") # Grafik boyutu kadar yer kaplar. 
 plot(OK_YETERLIK ~ ODOKUMA1 , data=df2, 
      xlim=c(0,1000), ylim=c(-7,7),xlab="Okuma başarı puanları", ylab="Okuma oz Yeterligi")
-
 dev.off()
 ```
 
@@ -546,3 +561,4 @@ dev.off()
 ##
 
 - Atar, B., Atalay Kabasakal, K., Ünsal Özberk, E. B. , Özberk, E.. H. ve Kıbrıslıoğlu Uysal, N. (Baskıda). R ile Veri Analizi ve Psikometri Uygulamaları. PegemA Akademi
+
