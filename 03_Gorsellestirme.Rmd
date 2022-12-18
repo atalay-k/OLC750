@@ -28,11 +28,7 @@ knitr::write_bib(x = c(.packages(), "ggplot2"), file = "packages.bib")
 |---|---|
 |**Konu I: ** [Grafikler](sunu\G_Gorsellestirme_I.html) |![](figures/g1.png) |
 |**Konu II: **   [Temel Grafikler](sunu\G_Gorsellestirme_II.html) | ![](figures/g2.jfif) |
-<<<<<<< HEAD
 | **Konu III: **   [Grafikler Türleri](sunu\G_Gorsellestirme_III.html) | |
-=======
-| **Konu III: **   [Grafikler Türleri](sunu\G_Gorsellestirme_II.html) | |
->>>>>>> ad7317c22c876641009d57fa7faae3547223fd9c
 | **Konu IV: **   []() |  |
 | **Konu V: **   []() |  |
 

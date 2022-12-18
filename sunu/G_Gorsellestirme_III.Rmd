@@ -87,7 +87,6 @@ barplot(Madde1_ozet,
 ```
 
 ---
-<<<<<<< HEAD
 - **Yatay sütun grafiği oluşturmak için `barplot()` fonksiyonu `horiz` argümanı ile kullanımı**
 
 ```{r message=FALSE, warning=FALSE,fig.height=4, fig.width=6}
