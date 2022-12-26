@@ -4,7 +4,7 @@
     <title>💪 R ile Veri Analizi</title>
     <meta charset="utf-8" />
     <meta name="author" content="    👩‍🏫 Dr. Kübra ATALAY KABASAKAL   Hacettepe Üniversitesi" />
-    <script src="libs/header-attrs-2.16/header-attrs.js"></script>
+    <script src="libs/header-attrs-2.19/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
     <link rel="stylesheet" href="slides-style.css" type="text/css" />
   </head>
@@ -16,7 +16,7 @@ class: center, middle, inverse, title-slide
 # 💪 R ile Veri Analizi
 ]
 .subtitle[
-## <br> 📈 Veri Manipulasyonu_05
+## <br> 📉 Görselleştirme_05
 ]
 .author[
 ### <br> <br> 👩‍🏫 Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi
@@ -35,302 +35,1161 @@ class: center, middle, inverse, title-slide
 
 
 
-# Veri Formatı Degiştirme .huge[📊]
 
-.hand[İçerik...]
-- **tiydr** paketi
-- **gather()** fonksiyonu
-- **separete()** fonksiyonu
-- **spread()** fonksiyonu
-- **unite()** fonksiyonu 
 
+
+class: middle
+
+# Grafikler
 
 ---
-## Veriyi İnceleme
 
-- Bir veriyi R ortamamına aktardıktan sonra
+# Grafikler
 
-  - Veri setinizde yer alan tüm satırlar/sütunlar doğru bir şekilde aktarılmış mı?
-  
-  - Sütun isimleri düzgün mü? 
-  
-  - Özellikle sütun adlarında boşluk olması ya da farklı      karakterler bulunması sıkıntı yaratabilir.
+&gt; *"The simple graph has brought more information to the data analyst's mind than any other device." --- John Tukey*
+
+- Veri görselleştirme, verilerin görsel temsilinin oluşturulması ve incelenmesidir.
+
+- Verileri görselleştirmek için birçok araç bulunmaktadır.
+
+- Veri görselleştirmeleri için R içindeki birçok yaklaşım/sistem - **ggplot2** bunlardan biridir.
 
 ---
-## Veriyi İnceleme
 
-- Aktarılan boş satır ve sütunlar var mı?
+## Kitap Önerisi?
 
-  - **filter()** ve **select()** gibi fonksiyonlarla            incelebilir. 
-   
-- Eksik veriler nasıl temsil ediliyor?
+.pull-left[
+- Tüm istatistiksel grafiklerin altında yatan temel özellikleri açıklar
+- Leland Wilkinson 
+]
+.pull-right[
+&lt;img src="figs/grammar-of-graphics-book.png" width="60%" /&gt;
+]
 
-  - **NA**,**" "** (bosluk), **.**, **999** ,  **9999**
-  
-  - eksik veriler **mutate()** ve **ifelse()** ile             düzenlebilir.
-  
-- character ve factor değişkenler düzgün tanımlanımış mı?
-  
 ---
-.center[## Dağınık Veri]
+
+## Gözden Geçirme
+
+.pull-left[
+- Grafik **map**s  
+ - **data** 
+ - **aes**thetic attributes (colour, shape, size) of 
+ - **geom**etric shapes (points, lines, bars)
+ 
+- Plot may also include **stat**istical transformations of the data,  information about the **coord**inate system, and the **theme**
+
+- **Facet**ting can be used to plot for different subsets of the data
+
+]
+.pull-right[
+&lt;img src="figs/grammar-of-graphics.png" width="100%" /&gt;
+]
+
+.footnote[
+.small[
+Sources: [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/introduction.html) and [BloggoType](http://bloggotype.blogspot.com/2016/08/holiday-notes2-grammar-of-graphics.html)
+]
+]
+
+---
+
+## Grafik Elemanları
+
+- Tüm grafikler
+
+  - the **data**: görselleştimek istenilen veri
+
+  - a **mapping**: veri değişkenlerinin estetik niteliklerle nasıl eşleştirildiğinin açıklaması
+
+---
+
+## Mapping 
+
+
+- **katman**: **geom**metrik öğelerin koleksiyonu (grafik elemanları: noktalar, çizgiler, çokgenler vb.) ve istatistiksel dönüşümler (**istatistikler**) (ör. frekans) histogram oluşturmak veya doğrusal bir modele uyumu göstermek)
+
+
+--
+
+- **scales**: Veri alanındaki değerlerin **aes**thetic alandaki değerlerle (ör. renk, şekil, boyut kullanımı) ve ayrıca orijinal veri değerlerinin grafikten okunmasını mümkün kılmak için ters eşlemeyle (ör. etiketler, eksenler vb.) eşlenmesi )
+--
+
+- **coord**inate system: Veri koordinatlarının grafik düzlemine eşlenmesi ve grafiğin okunmasına yardımcı olacak eksenler ve kılavuz çizgileri sağlar(e.g. Cartesian, polar, map projections, vb)
+
+--
+
+- **facet**: Veri alt kümelerinin yüzeylere olarak nasıl ayrılacağını belirtir
+
+--
+
+- **theme**: Ekranın daha ince noktalarını kontrol eder (ör. yazı tipi boyutu, arka plan rengi) ve özelleştirilebilir.
+
+---
+
+
+## Ağırlık vs. Uzunluk
+
+
+```r
+ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
+  geom_point() +
+  labs(title = "Starwars karakterlerinin ağırlık ve uzunluğu",
+       x = "Uzunluğu (cm)", y = "Ağırlık (kg)")
+```
+
+```
+## Warning: Removed 28 rows containing missing values (`geom_point()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/mass-height-1.png" width="50%" /&gt;
+
+---
+
+.question[ 
+- Çizimi yapan fonksiyonlar nelerdir?
+- Çizilen veri kümesi nedir?
+- Hangi değişkenler olay örgüsünün hangi özelliklerine (estetik) eşlenir?
+- Uyarı ne anlama geliyor?&lt;sup&gt;+&lt;/sup&gt;
+]
+
+
+```r
+ggplot(data = starwars, mapping = aes(x = height, y = mass)) +
+  geom_point() +
+  labs(title = "Starwars karakterlerinin ağırlık ve uzunluğu",
+       x = "Uzunluğu (cm)", y = "Ağırlık (kg)")
+```
+
+```
+## Warning: Removed 28 rows containing missing values (`geom_point()`).
+```
+
+.footnote[
+&lt;sup&gt;+&lt;/sup&gt;Sonraki sayfalarda uyarı notu kod bloğundan çıkarılmıştır
+]
+
+---
+
+## ggplot2 `\(\in\)` tidyverse
+
+.pull-left[
+- "ggplot2" içindeki "gg", Grafik Grameri anlamına gelir.
+- **grafiklerin gramerine** dayalı olarak oluşturulmuştur
+- **ggplot2**,tidyverse'in veri görselleştirme paketidir
+
+
+```r
+library(tidyverse)
+
+# or
+library(ggplot2)
+```
+] 
+.pull-right[ 
+&lt;img src="figs/ggplot2-part-of-tidyverse.png" width="80%" /&gt;
+]
+
+---
+
+## ggplot2!
+
+- `ggplot()`  ggplot2 paketinin temel fonksiyonudur
+- Grafikler katmanlar olarak inşa edilir.
+- kodun genel yapısı
+
+
+```r
+ggplot(data = [dataset], 
+       mapping = aes(x = [x-variable], y = [y-variable])) +
+   geom_xxx() +
+   other options
+```
+
+---
+
+class: middle
+
+# ggplot2 ❤️ 🐧
+
+---
+
+## Data: Palmer Penguins
+
+-  Palmer Archipelago adasındaki Penguen türlerinin ölçümleri (yüzgeç uzunluğu, vücut kütlesi, gaga boyutları) ve cinsiyet bilgilerini içermektedir.
 
 .pull-left-narrow[
-  
-    
-| **Program**     | **Kadın** | **Erkek**|
-|-----------------|----------:|---------:|
-| Olcme           |      6    |    6     |
-| Program         |      5    |    5     |
-| Yonetim         |      7    |    8     |
-| PDR             |      5    |    3     |
-
+&lt;img src="figs/penguins.png" width="80%" /&gt;
 ]
 .pull-right-wide[
-- Gözlem nedir?
-  - Her bir programda yer alan öğrencilerin cinsiyeti
-- Değişkenler nelerdir?
-  - Program, Cinsiyet, Frekans
-- Değerler nelerdir?
-    + Program: Olcme, Program, Yonetim, PDR
-    + Cinsiyet: Kadın, Erkek 
-- Bunların degisken değeri olması gerekiyor, sutun baslığı değil!
-    + Frekans: ***Frekanslar iki sütuna dağılmış !!!**
+
+```r
+library(palmerpenguins)
+glimpse(penguins)
+```
+
+```
+## Rows: 344
+## Columns: 8
+## $ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+## $ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgerse…
+## $ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, NA, 36.7, 39.3, 38.9, 39.2, 34.1, …
+## $ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, NA, 19.3, 20.6, 17.8, 19.6, 18.1, …
+## $ flipper_length_mm &lt;int&gt; 181, 186, 195, NA, 193, 190, 181, 195, 193, 190, 186…
+## $ body_mass_g       &lt;int&gt; 3750, 3800, 3250, NA, 3450, 3650, 3625, 4675, 3475, …
+## $ sex               &lt;fct&gt; male, female, female, NA, female, male, female, male…
+## $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007…
+```
 ]
----
-## Düzgün Veri
-
-
-| **Program**     | **Cinsiyet** | **Frekans** |
-|-----------------|-------------:|------------:|
-| Olcme           |     Kadın    |    6        |
-| Olcme           |     Erkek    |    6        |
-| Program         |     Kadın    |    5        |
-| Program         |     Erkek    |    5        |
-| Yonetim         |     Kadın    |    7        |
-| Yonetim         |     Erkek    |    8        |
-| PDR             |     Kadın    |    5        |
-| PDR             |     Erkek    |    3        |
-
---
-- Değişkenler sütunda
-
---
-
-- Gözlemler Satırlarda olmalıdır !
---
 
 ---
-## Düzgün Veri
 
-- Çok sayıda **satırı** anlamlandırmak, çok sayıda **sütunu** anlamlandırmaktan daha kolaydır.
+.panelset[
+.panel[.panel-name[Grafik]
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-9-1.png" width="70%" /&gt;
+]
+.panel[.panel-name[Kod]
 
-- **ggplot2**,**plotly**,**lattice** gibi paketleri rahat kullanabilmek için düzenli veri gereklidir.
+```r
+ggplot(data = penguins, 
+       mapping = aes(x = bill_depth_mm, y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinliği ve uzunluğu",
+       subtitle = "Adelie, Chinstrap, and Gentoo Penguenleri için Ölçüler",
+       x = "Gaga derinliği(mm)", y = "Gaga uzunluğu (mm)",
+       colour = "Türler")
+```
 
-- hiyerarşik ve karma modeller için de verinin düzgün olması önemlidir.
-
-- Değişken adları mümkün olduğunca anlamlı olmalıdır.
-
-- Eksik değerler ve **dengesiz** tekrarlanan ölçüm verileriyle ilgili daha az sorun sağlar.
+```
+## Warning: Removed 2 rows containing missing values (`geom_point()`).
+```
+]
+]
 
 ---
-## Düzgün Veri
 
-- **tidyr** paketi **reshape** paketi gibi veri düzenlemede kullanılabilir.
+class: middle
 
-- **gather()**: bir dizi sütun alır ve onları iki yeni sütuna (kendi adını verebileceğin) dönüştürür.
+# Aşama aşama grafik çizimi
 
-  - A key:  Orijinal sütun adlarını saklayan bir anahtar
-  - A value: Bu orijinal sütunlardaki değerlere sahip bir değer.
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**
+]
+
+.pull-left[
+
+```r
+*ggplot(data = penguins)
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-10-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayın**   
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+*      mapping = aes(x = bill_depth_mm))
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-11-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**   
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+&gt; **y-eksenine de gaga uzunluğunu**  
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+*                    y = bill_length_mm))
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-12-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**  
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+&gt; **y-eksenine de gaga uzunluğunu**   
+&gt; **grafik türü ise saçılım grafiği olsun**  
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm)) + 
+* geom_point()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-13-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**   
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+&gt; **y-eksenine de gaga uzunluğunu**     
+&gt; **grafik türü ise saçılım grafiği olsun**  
+&gt; **her bir türü ayrı renk ile belirtelim.**  
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+*                    colour = species)) +
+  geom_point()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-14-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**  
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**   
+&gt; **y-eksenine de gaga uzunluğunu**   
+&gt; **grafik türü ise saçılım grafiği olsun**    
+&gt; **her bir türü ayrı renk ile belirtelim.**  
+&gt; **Başlık ekleyelim "Gaga derinlik ve uzunluğu"**   
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+* labs(title = "Gaga derinlik ve uzunluğu")
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-15-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**    
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+&gt; **y-eksenine de gaga uzunluğunu**  
+&gt; **grafik türü ise saçılım grafiği olsun**  
+&gt; **her bir türü ayrı renk ile belirtelim.**  
+&gt; **Başlık ekleyelim "Gaga derinlik ve uzunluğu"**  
+&gt; **Alt başlık "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar"**
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinlik ve uzunluğu",
+*      subtitle = "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar")
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-16-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; ** x and y Eksen isimleri  "Gaga derinliği (mm)" and "Gaga uzunluğu (mm)"**
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinlik ve uzunluğu",
+       subtitle = "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar",
+*      x = "Gaga derinliği (mm)", y = "Gaga uzunluğu  (mm)")
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-17-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; ** x and y Eksen isimleri  "Gaga derinliği (mm)" and "Gaga uzunluğu (mm)"**  
+&gt; **Etiket ekle "Türler"**  
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Bill depth and length",
+       subtitle = "Dimensions for Adelie, Chinstrap, and Gentoo Penguins",
+       x = "Bill depth (mm)", y = "Bill length (mm)",
+*      colour = "Species")
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-18-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **Etiket ekle "Türler"**  
+&gt; **Data kaynağı için bilgi eklenebilir. **
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinlik ve uzunluğu",
+       subtitle = "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar",
+       x = "Gaga derinliği (mm)", y = "Gaga uzunluğu  (mm)",
+       colour = "Species",
+*      caption = "Kaynak: Palmer Station LTER / palmerpenguins paketinden")
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-19-1.png" width="100%" /&gt;
+]
+
+---
+
+.midi[
+&gt; **Son olarak,  renk körlüğü sahip bireyler tarafından algılanmak üzere tasarlanmış ayrı bir renk skalası kullanın.**
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinlik ve uzunluğu",
+       subtitle = "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar",
+       x = "Gaga derinliği (mm)", y = "Gaga uzunluğu  (mm)",
+       colour = "Species",
+       caption = "Kaynak: Palmer Station LTER / palmerpenguins paketinden") +
+* scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-20-1.png" width="100%" /&gt;
+]
+
+---
+
+.panelset[
+.panel[.panel-name[Grafik]
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-21-1.png" width="70%" /&gt;
+]
+.panel[.panel-name[Kod]
+
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  labs(title = "Gaga derinlik ve uzunluğu",
+       subtitle = "Adelie, Chinstrap, and Gentoo Penguen Türleri için Boyutlar",
+       x = "Gaga derinliği (mm)", y = "Gaga uzunluğu  (mm)",
+       colour = "Species",
+       caption = "Kaynak: Palmer Station LTER / palmerpenguins paketinden") +
+  scale_colour_viridis_d()
+```
+
+```
+## Warning: Removed 2 rows containing missing values (`geom_point()`).
+```
+]
+.panel[.panel-name[Özet]
+.pull-left-wide[
+.midi[
+&gt; **`penguins` veri seti ile başlayalım**  
+&gt; **x-eksenine gaga derinlğini yerleştirelim.**  
+&gt; **y-eksenine de gaga uzunluğunu**   
+&gt; **grafik türü ise saçılım grafiği olsun**  
+&gt; **her bir türü ayrı renk ile belirtelim.**  
+&gt; **Başlık ekleyelim "Gaga derinlik ve uzunluğu"**  
+&gt; **Alt başlık "Adelie, Chinstrap, and Gentoo Penguin Türleri için **   
+&gt; ** x and y Eksen isimleri  "Gaga derinliği (mm)" and "Gaga uzunluğu (mm)"**
+&gt; **Etiket ekle "Türler"**  
+&gt; **Data kaynağı için bilgi eklenebilir. **  
+&gt; **Renk körlüğü için özel renk skalası eklendi**
+]
+]
+]
+]
+
+---
+
+## Argüman adları
+
+.tip[
+**ggplot()** ile çizimler oluştururken ilk iki argüman adını atlayabilirsiniz..
+]
+
+.pull-left[
+
+```r
+ggplot(data = penguins,
+       mapping = aes(x = bill_depth_mm,
+                     y = bill_length_mm,
+                     colour = species)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+           colour = species)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+
+---
+
+class: middle
+
+# Aesthetics
+
+---
+
+## Aesthetics seçenekleri
+
+Verilerde **belirli bir değişkenle eşlenebilen** çizim karakterlerinin yaygın olarak kullanılan özellikleri şunlardır:
+- `colour`
+- `shape`
+- `size`
+- `alpha` (transparency)
+
+---
+
+## Colour
+
+.pull-left[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm, 
+           y = bill_length_mm,
+*          colour = species)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-22-1.png" width="100%" /&gt;
+]
+
+---
+
+## Shape
+
+"renk" değişkeninden farklı bir değişkenle eşlendi
+
+.pull-left[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm, 
+           y = bill_length_mm,
+           colour = species,
+*          shape = island)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-23-1.png" width="100%" /&gt;
+]
+
+---
+
+## Shape
+
+"renk" ile aynı değişkene eşlendi
+
+.pull-left[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm, 
+           y = bill_length_mm,
+           colour = species,
+*          shape = species)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-24-1.png" width="100%" /&gt;
+]
+
+---
+
+## Size
+
+.pull-left[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm, 
+           y = bill_length_mm,
+           colour = species,
+           shape = species,
+*          size = body_mass_g)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-25-1.png" width="100%" /&gt;
+]
+
+---
+
+## Alpha
+
+.pull-left[
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm, 
+           y = bill_length_mm,
+           colour = species,
+           shape = species,
+           size = body_mass_g,
+*          alpha = flipper_length_mm)) +
+  geom_point() +
+  scale_colour_viridis_d()
+```
+]
+.pull-right[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-26-1.png" width="100%" /&gt;
+]
+
+---
+
+.pull-left[
+**Mapping**
+
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm,
+*          size = body_mass_g,
+*          alpha = flipper_length_mm)) +
+  geom_point()
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-27-1.png" width="100%" /&gt;
+]
+.pull-right[
+**Setting**
+
+
+```r
+ggplot(penguins,
+       aes(x = bill_depth_mm,
+           y = bill_length_mm)) + 
+* geom_point(size = 2, alpha = 0.5)
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-28-1.png" width="100%" /&gt;
+]
+
+---
+
+## Mapping vs. setting
+
+- **Mapping:** Verilerdeki bir değişkenin değerlerine göre noktaların boyutunu, saydamlığını vb. belirler.
+   - "aes()" içine gider
+  - `aes()`
+
+- **Setting:** Verilerdeki bir değişkenin değerlerine göre **değil** noktaların boyutunu, saydamlığını vb. belirler
+  -  `geom_*()` 
   
 ---
-## **gather()** fonksiyonu
 
-- Fonksiyonun kullanım şekli
+class: middle
 
-```r
-gather(data, key, value, ..., na.rm = FALSE, 
-       convert = FALSE, factor_key = FALSE)
-```
-
-- Fonksiyonun kullanımı göstermek için veri seti oluşturma
-
-
-```r
-n=20
-genisveri &lt;- data.frame(
-  ID = paste("ID",101:120,sep=""),
-  Sure_1 = sample(50:60,20,replace=TRUE),
-  Sure_2 = sample(40:55,20,replace=TRUE),
-  Sure_3 = sample(35:50,20,replace=TRUE)
-)
-```
-
-
----
-## **gather()** fonksiyonu
-
-
-```r
-genisveri
-```
-
-```
-##       ID Sure_1 Sure_2 Sure_3
-## 1  ID101     51     44     40
-## 2  ID102     55     48     37
-## 3  ID103     57     54     41
-## 4  ID104     59     51     39
-## 5  ID105     52     54     39
-## 6  ID106     60     52     49
-## 7  ID107     60     42     48
-## 8  ID108     58     45     50
-## 9  ID109     50     50     40
-## 10 ID110     54     44     39
-## 11 ID111     55     43     39
-## 12 ID112     54     53     48
-## 13 ID113     54     43     39
-## 14 ID114     51     49     47
-## 15 ID115     55     43     45
-## 16 ID116     59     53     43
-## 17 ID117     60     52     47
-## 18 ID118     55     41     46
-## 19 ID119     54     46     35
-## 20 ID120     50     50     37
-```
-
----
-## **gather()** 
-
-- gather() fonksiyonu geniş veriyi, uzun veri haline getirir.
-
-
-```r
-uzun &lt;- genisveri %&gt;% gather(Sure, Zaman, Sure_1:Sure_3)
-```
-
-- Olusan veride Sure_1,Sure_2 ve Sure_3, Sure değişkenin değerleri haline geldi.
-
----
-## **gather()** 
-
-
-```r
-uzun %&gt;% head(3)
-```
-
-```
-##      ID   Sure Zaman
-## 1 ID101 Sure_1    51
-## 2 ID102 Sure_1    55
-## 3 ID103 Sure_1    57
-```
-
-```r
-uzun %&gt;% tail(3)
-```
-
-```
-##       ID   Sure Zaman
-## 58 ID118 Sure_3    46
-## 59 ID119 Sure_3    35
-## 60 ID120 Sure_3    37
-```
-
-
-- Gördüğünüz gibi, şimdi iki sütunumuz var: Biri *Sure* için, diğeri **Zaman** için. Her katılımcı icin üç farklı süre değeri olduğu için her bir ID değeri üç kere tekrarlamaktadır.
-
----
-## **separate()**
-
-- **separate()** bir sütunu birden çok sütuna ayırır.
-
-- değerlerin sütun adlarına gömüldüğü toplanmış verilerde ortaktır.
-
-- Olusan veride Sure_1,Sure_2 ve Sure_3 değerlerinin karakter ve sayısal değerlerini ayırmak için **separate():** fonkisyonu kullanabilirsiniz.
-
-
-
-```r
-uzun_ayrı &lt;- uzun %&gt;% 
-            separate(Sure, c("Sure","Sayı"),"_") 
-
-uzun_ayrı %&gt;% head(3)
-```
-
-```
-##      ID Sure Sayı Zaman
-## 1 ID101 Sure    1    51
-## 2 ID102 Sure    1    55
-## 3 ID103 Sure    1    57
-```
-
----
-## **unite()** fonksiyonu
-
-- **gather*()** fonksiyonun tam tersi olarak iki sütunu alıp
-tek sütunda birleştirir.
-
-
-```r
-uzun_birles &lt;- uzun_ayrı %&gt;% unite(SURE, Sure, Sayı, sep = ".")
-uzun_birles %&gt;% head(3)
-```
-
-```
-##      ID   SURE Zaman
-## 1 ID101 Sure.1    51
-## 2 ID102 Sure.1    55
-## 3 ID103 Sure.1    57
-```
-
----
-## **spread()** fonksiyonu
-
-- **spread():**  **gather*()** fonksiyonun tam tersini yaparak uzun veriden geniş veri oluşturmaya yarar.
-
-
-```r
-tekrar_genis &lt;- uzun_birles %&gt;% spread(SURE, Zaman)
-tekrar_genis
-```
-
-```
-##       ID Sure.1 Sure.2 Sure.3
-## 1  ID101     51     44     40
-## 2  ID102     55     48     37
-## 3  ID103     57     54     41
-## 4  ID104     59     51     39
-## 5  ID105     52     54     39
-## 6  ID106     60     52     49
-## 7  ID107     60     42     48
-## 8  ID108     58     45     50
-## 9  ID109     50     50     40
-## 10 ID110     54     44     39
-## 11 ID111     55     43     39
-## 12 ID112     54     53     48
-## 13 ID113     54     43     39
-## 14 ID114     51     49     47
-## 15 ID115     55     43     45
-## 16 ID116     59     53     43
-## 17 ID117     60     52     47
-## 18 ID118     55     41     46
-## 19 ID119     54     46     35
-## 20 ID120     50     50     37
-```
-
----
-## Çalışma
-
-
-Veri [seti üzerinde](data/DATA2.csv) [soruları](dplyrsorular.pdf) cevaplayınız.
+# Geometries
 
 ---
 
-&lt;br&gt;
+## `geom_histogram()`
 
-.hand-large[teşekkürler !]
 
---
+```r
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram()
+```
+
+```
+## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_bin()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-29-1.png" width="50%" /&gt;
+
+---
+
+## `geom_histogram()`
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_histogram(binwidth =250)
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_bin()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-30-1.png" width="50%" /&gt;
+
+---
+
+## `geom_density()`
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g)) +
+  geom_density(color = "skyblue", fill = "skyblue", alpha = 0.2)
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-31-1.png" width="50%" /&gt;
+
+---
+
+## `geom_density()`
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g, color = species, fill = species)) +
+  geom_density(alpha = 0.2)
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-32-1.png" width="50%" /&gt;
+
+---
+
+## `geom_bar()`
+
+
+```r
+ggplot(penguins, aes(x = species)) +
+  geom_bar()
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+
+---
+
+## `geom_bar()`
+
+
+```r
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar()
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
+
+---
+
+## `geom_bar()`
+
+
+```r
+ggplot(penguins, aes(x = island, fill = species)) +
+  geom_bar(position = "fill")
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+
+---
+
+## `geom_bar()`
+
+
+```r
+ggplot(penguins, aes(y = island, fill = species)) +
+  geom_bar(position = "fill") +
+  labs(x = "proportion")
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+
+---
+
+## Diğer grafik türleri için
+
+.center[
+&lt;iframe width="900" height="450" src="https://ggplot2.tidyverse.org/reference/index.html#section-geoms" frameborder="0" style="background:white;"&gt;&lt;/iframe&gt;  
+]
+
+
+---
+
+## ggplot2 garici seçenekler
+
+
+```r
+library(ggridges)
+```
+
+```
+## Warning: package 'ggridges' was built under R version 4.2.2
+```
+
+```r
+ggplot(penguins, aes(x = body_mass_g, y = species)) +
+  geom_density_ridges2()
+```
+
+```
+## Picking joint bandwidth of 153
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density_ridges()`).
+```
+
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-37-1.png" width="40%" /&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g, y = species, color = species, fill = species)) +
+  geom_density_ridges2(alpha = 0.5)
+```
+
+```
+## Picking joint bandwidth of 153
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density_ridges()`).
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = body_mass_g, y = species, color = species, fill = species)) +
+  geom_density_ridges2(alpha = 0.5, show.legend = FALSE)
+```
+
+```
+## Picking joint bandwidth of 153
+```
+
+```
+## Warning: Removed 2 rows containing non-finite values (`stat_density_ridges()`).
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
+
+---
+
+class: middle
+
+# Facetting
+
+---
+
+## Facetting
+
+- Verilerin farklı alt kümelerini gösteren daha küçük grafikler
+
+- Koşullu ilişkileri ve büyük verileri keşfetmek için kullanışlıdır
+
+---
+
+.panelset[
+.panel[.panel-name[Grafik]
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-40-1.png" width="70%" /&gt;
+]
+.panel[.panel-name[Kod]
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_grid(species ~ island)
+```
+
+```
+## Warning: Removed 2 rows containing missing values (`geom_point()`).
+```
+]
+]
+
+---
+
+## Yüzey Ekleme
+
+.question[
+Farklı grafik türleri inceleyerek, kod ile ilişkisini kurmanızı bekliyorum.
+]
+
+---
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_grid(species ~ sex)
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-41-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_grid(sex ~ species)
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-42-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_wrap(~ species)
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-43-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_grid(. ~ species)
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-44-1.png)&lt;!-- --&gt;
+
+---
+
+
+```r
+ggplot(penguins, aes(x = bill_depth_mm, y = bill_length_mm)) + 
+  geom_point() +
+* facet_wrap(~ species, ncol = 2)
+```
+
+![](V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-45-1.png)&lt;!-- --&gt;
+
+---
+
+## Yüzeyler
+
+- `facet_grid()`:
+    - 2d grid
+    - `satir ~ sütun`
+    -  `.` kullanımına dikkat
+- `facet_wrap()`: belirtilen satir ve sütun sayına göre ayarlama yapılabilen alan tasarlar
+
+---
+
+## Facet and color
+
+.pull-left-narrow[
+
+```r
+ggplot(
+  penguins, 
+  aes(x = bill_depth_mm, 
+      y = bill_length_mm, 
+*     color = species)) +
+  geom_point() +
+  facet_grid(species ~ sex) +
+* scale_color_viridis_d()
+```
+]
+.pull-right-wide[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-46-1.png" width="100%" /&gt;
+]
+
+---
+
+## Face and color, no legend
+
+.pull-left-narrow[
+
+```r
+ggplot(
+  penguins, 
+  aes(x = bill_depth_mm, 
+      y = bill_length_mm, 
+      color = species)) +
+* geom_point(show.legend = FALSE) +
+  facet_grid(species ~ sex) +
+  scale_color_viridis_d()
+```
+]
+.pull-right-wide[
+&lt;img src="V_Veri_Duzenleme_V_files/figure-html/unnamed-chunk-47-1.png" width="100%" /&gt;
+]
+
+---
+
+class: middle
+
+# Daha fazlası için
+
+---
+
+## Grafiklerin grameri **nedir** ve **değildir**?
+
+- Hangi grafiklerin kullanılacağını önermez.
+
+- Etkileşimli grafikleri tanımlamaz, yalnızca statik olanları tanımlar.
+
+---
+
+##  Videos
+
+- ggplot2 workshop by Thomas Lin Pedersen:
+  - [Part 1](https://www.youtube.com/watch?v=h29g21z0a68)
+  - [Part 2](https://www.youtube.com/watch?v=0m4yywqNPVY)
+
+- Kara Woo - [Always look on the bright side of plots](https://www.youtube.com/watch?v=izV-qK3nlhA&amp;ab_channel=RStudio) (rstudio::global(2021))
+
+- Athanasia Monika Mowinckel - [Zhoosh up your ggplots!](https://www.youtube.com/watch?v=DcUZO-d5JmY&amp;t=4s&amp;ab_channel=R-LadiesGlobalR-LadiesGlobal)
+
+---
+
+## Kitaplar
+
+- [ggplot2: elegant graphics for data analysis](https://ggplot2-book.org/) by Hadley Wickham, Danielle Navarro, and Thomas Lin Pedersen
+
+- [Fundamentals of Data Visualization](https://clauswilke.com/dataviz/) by Claus O. Wilke
+
+- [Data Visualization: A practical introduction](https://socviz.co/) by Kieran Healy
+
+---
+
+## Dersler
+
+- Introductory: [Data Science in a Box](https://datasciencebox.org/exploring-data.html#slides-videos-and-application-exercises-1) by Mine Çetinkaya-Rundel
+
+- Intermediate: [Data Visualization in R](https://wilkelab.org/SDS375/) by Claus O. Wilke
+
+---
+
+##Interactive
+
+- RStudio primers: [Data visualization](https://rstudio.cloud/learn/primers/3) 
+
+- OpenIntro: [Summarizing and visualizing data](https://openintrostat.github.io/ims-tutorials/02-summarizing-and-visualizing-data/)
+
+---
+
+## Getting help
+
+- [ggplot2.tidyverse.org](http://ggplot2.tidyverse.org/)
+
+- [ggplot2 cheat sheet](https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf)
+
+---
+
+## Community
+
+- Tidy Tuesday: https://github.com/rfordatascience/tidytuesday
+
+&lt;img src="figs/tidytuesday.png" width="60%" /&gt;
+
+- Collection of Tidy Tuesday posts by Silvia Canelón: https://www.notion.so/Data-Viz-Bookmarks-dc01718020bd4fd6a8a4ca80e6bce933
+
+---
+
+class: middle, center
+
+.large-pink[
+teşekkürler
+]
 
 
     </textarea>

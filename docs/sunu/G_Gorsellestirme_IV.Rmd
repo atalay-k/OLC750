@@ -292,15 +292,12 @@ ggplot(PISA_OGR_2018,aes(x=ODOKUMA1))+
 ```{r }
 p1 <- ggplot(
       PISA_OGR_2018 %>% 
-      group_by(SINIF) %>%
+      group_by(SINIF,CINSIYET) %>%
       mutate(ort=mean(ODOKUMA1)) %>% ungroup(),
      aes(x=SINIF, y=ort, color=CINSIYET )) +
   geom_point() +  
   xlab("Toplam Puan")+
-  ylab("Yüzde") +
-  scale_y_continuous(labels = scales::percent)
-  # scale_colour_discrete("Cinsiyet", breaks=c("1","2"), 
-  # labels=c("Kiz", "Erkek"))
+  ylab("Yüzde") 
 
 
 ```
@@ -324,7 +321,7 @@ ggplot(PISA_OGR_2018,aes(x=ODOKUMA1,y=OK_YETERLIK,color=CINSIYET)) + geom_point(
 ---
 ## Grafik nesnesi
 
-- olsuturalan grafik **p** nesnesine atanmıştır. **p** nesnesine **+** ile katmanlar eklenebilir.
+- Oluşturulan grafik **p** nesnesine atanmıştır. **p** nesnesine **+** ile katmanlar eklenebilir.
 - Kategorik degişkenler eksen değerlerini belirler.
 
 
@@ -354,7 +351,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 -   size
 -   shape
 -   alpha
--   linetyepe
+-   linetype
 -   labels
 
 ---
@@ -561,8 +558,8 @@ ggplot(df, aes(x = ODOKUMA1,
 y = OK_YETERLIK,
 color = CINSIYET)) +
 geom_point(position = "jitter") +
-  labs(x = "Basari Puanları",
-       y = "Yeterlik Puanları",
+  labs(x = "\nBasari Puanları",
+       y = "\nYeterlik Puanları",
        color = "Grup")
 
 ```
