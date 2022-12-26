@@ -296,8 +296,8 @@ p1 <- ggplot(
       mutate(ort=mean(ODOKUMA1)) %>% ungroup(),
      aes(x=SINIF, y=ort, color=CINSIYET )) +
   geom_point() +  
-  xlab("Toplam Puan")+
-  ylab("Yüzde") 
+  xlab("Sınıf Düzeyi")+
+  ylab("Ortalama Puan") 
 
 
 ```
