@@ -524,7 +524,7 @@ scale_color_discrete("Cinsiyet")
 ```
 
 ---
-## beraks
+## breaks
 
 ```{r fig.height=4, fig.width=6}
 ggplot(df, aes(x = ODOKUMA1,
