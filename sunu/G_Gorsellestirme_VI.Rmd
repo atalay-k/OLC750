@@ -1,26 +1,16 @@
 ---
-title: "`r emo::ji('muscle')` R ile Veri Analizi"
+title: "R ile Veri Analizi"
 subtitle: " <br> `r emo::ji('graph')` Görselleştirme_05"
-author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
-date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+author: "Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
 output:
-  xaringan::moon_reader:
-    lib_dir: libs
-    css: ["xaringan-themer.css", "slides-style.css"]
-    nature:
-      highlightStyle: solarized-light
-      highlightLines: true
-      countIncrementalSlides: false
-      ratio: "16:9"
-      slideNumberFormat: |
-        <div class="progress-bar-container">
-          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
-          </div>
-        </div>
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: hide
 ---
 
 
-## R plotly Bar Grafiği
+# R plotly Bar Grafiği
 
 - `mtcars` veri setini kullananarak basit bir bar grafiği elde edelim.
 - X ekseni silindir sayısı `cyl` 
@@ -32,7 +22,7 @@ library(plotly) # interaktif grafikler için
 library(dplyr)  # veri düzenleme için
 ```
 
----
+
 ## mtcars
 
 ```{r}
@@ -41,8 +31,8 @@ table(mtcars$cyl)
 
 
 
----
-## Slindir Sayısı Frekans Grafiği
+
+### Slindir Sayısı Frekans Grafiği
 
 
 ```{r echo=FALSE}
@@ -51,8 +41,8 @@ ggplot(mtcars, aes(cyl,fill=cyl)) + geom_bar()
 
 ```
 
----
-## Silindir Sayısı Frekans Grafiği
+
+### Silindir Sayısı Frekans Grafiği
 
 
 ```{r echo=FALSE}
@@ -74,8 +64,8 @@ mtcars %>%
 ```
 
 
----
-## Plotly
+
+# Plotly
 
 ```{r include=TRUE,eval=FALSE}
 data %>% 
@@ -89,11 +79,11 @@ plot_ly(data,
 ```
 
 
----
+
 ## Silindir Sayısı Frekans Grafiği
 
 
-.pull-left[
+
 ```{r}
 bar <- mtcars %>%
   mutate(cyl = as.factor(cyl)) %>% 
@@ -102,17 +92,17 @@ bar <- mtcars %>%
           y=~n,
           color=~cyl)
 ```
-]
 
-.pull-right[
+
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 bar
 ```
 
-]
 
----
+
+
 ## Silindir Sayısı Frekans Grafiği
 
 
@@ -125,7 +115,7 @@ layout(title="mtcars veri seti ile
   xaxis = list(title="Slindir Sayısı "),
   yaxis = list(title = "Frekans"))
 ```
-]
+
 
 .pull-right[
 
@@ -133,10 +123,10 @@ layout(title="mtcars veri seti ile
 bar1
 ```
 
-]
 
 
----
+
+
 ## Silindir Sayısı Frekans Grafiği
 
 
@@ -158,7 +148,7 @@ mtcars %>%
          xaxis = list(title = "Frekans"))
 ```
 
----
+
 ## Silindir Sayısı-Vites Türü Frekans Grafiği
 
 - `mtcars` veri setini kullananarak basit bir bar grafiği elde edelim.
@@ -173,7 +163,7 @@ mtcars %>%
 ```
 
 
----
+
 ## Silindir Sayısı-Vites Türü Frekans Grafiği
 
 ```{r echo=FALSE}
@@ -185,7 +175,7 @@ ggplot(mtcars %>%
 
 
 
----
+
 ## Silindir Sayısı-Vites Türü Frekans Grafiği
 
 .pull-left[
@@ -201,16 +191,16 @@ bar2 <- mtcars %>%
   color=~am)
 ```
 
-]
+
 .pull-left[
 ```{r echo=FALSE,message=FALSE, warning=FALSE}
 bar2 
 ```
 
-]
 
 
----
+
+
 ## Silindir Sayısı-Vites Türü Frekans Grafiği
 
 .pull-left[
@@ -223,21 +213,21 @@ layout(title="mtcars veri seti ile
          barmode="stack")
 ```
 
-]
+
 .pull-left[
 ```{r echo=FALSE,message=FALSE, warning=FALSE}
 bar3
 ```
 
-]
 
 
----
-## Histogram
+
+
+# Histogram
 - Sürekli değişkenle histogram çizimi
 - `diamonds` veri setinde `price` değişkeninin histogramı
 
-```{r echo=FALSE,out.width="40%"}
+```{r echo=FALSE}
 ggplot(diamonds,
       aes(x=price)) +
   geom_histogram(bins=25) +
@@ -248,74 +238,67 @@ ggplot(diamonds,
 
 
 
----
+
 ## Histogram
 
-.pull-left[
 ```{r}
 hist1 <- diamonds %>% 
   plot_ly() %>% 
   add_histogram(x=~price)
 ```
-]
 
-.pull-right[
+
 ```{r echo=FALSE}
 hist1 
 ```
-]
 
 
 
 
----
+
+
 ## Histogram
 
 - Histogram çubukları arasına boşluk
 
-.pull-left[
 ```{r}
 hist2 <- diamonds %>% 
   plot_ly() %>% 
   add_histogram(x=~price) %>% 
   layout(bargap=0.1)
 ```
-]
 
-.pull-right[
+
 ```{r echo=FALSE}
 hist2 
 ```
-]
 
 
----
+
+
 ## Histogram
 
 - Çubuk sayısını ve rengini değiştirme
 
-.pull-left[
 ```{r}
 hist3 <- diamonds %>% 
   plot_ly(x=~price) %>% 
   add_histogram(nbinsx = 50, color=I("green")) %>% 
   layout(bargap=0.1)
 ```
-]
 
-.pull-right[
+
 ```{r echo=FALSE}
 hist3
 ```
-]
 
 
----
+
+
 ## Histogram
 
 - Çubuk aralığı belirleme
 
-.pull-left[
 ```{r}
 hist4 <- 
 diamonds %>% 
@@ -325,21 +308,20 @@ xbins = list(start=0, end=20000, size=2000)) %>%
 layout(bargap=0.1)
 
 ```
-]
 
-.pull-right[
+
 ```{r echo=FALSE}
 hist4
 ```
-]
 
 
----
+
+
 ## Histogram
 
 - Kategorik değişkenin histogramı
 
-.pull-left[
+
 ```{r}
 hist5 <- diamonds %>% 
   plot_ly() %>% 
@@ -347,21 +329,21 @@ hist5 <- diamonds %>%
 
 
 ```
-]
 
-.pull-right[
+
+
 ```{r echo=FALSE}
 hist5
 ```
-]
 
 
----
+
+
 ## Histogram
 
 - İki kategorik değişkenin histogramı
 
-.pull-left[
+
 ```{r}
 hist6 <- diamonds %>% 
   plot_ly() %>% 
@@ -369,16 +351,16 @@ hist6 <- diamonds %>%
 
 
 ```
-]
 
-.pull-right[
+
+
 ```{r echo=FALSE}
 hist6
 ```
-]
 
 
----
+
+
 ## Çizgi Grafiği
 
 - 1975 -2020 yılları arasında fırtına  türlerini içeren `storms` data setini kullanarak yıllara göre fırtına türlerinin gözleneme sayıları
@@ -389,7 +371,7 @@ storm_n <- storms %>%
 storm_n
 ```
 
----
+
 ## Çizgi Grafiği
 
 .pull-left[
@@ -398,16 +380,16 @@ cizgi1 <- ggplot(storm_n,
         aes(x=year, y= n, color=status))+ 
   geom_line()
 ```
-]
+
 
 .pull-right[
 ```{r}
 cizgi1
 ```
-]
 
 
----
+
+
 ## Çizgi Grafiği
 
 ```{r}
@@ -415,7 +397,7 @@ ggplotly(cizgi1)
 ```
 
 
----
+
 ## Çizgi Grafiği
 
 .pull-left[
@@ -424,37 +406,37 @@ cizgi2 <- storm_n %>%
   plot_ly(x=~year, y=~n) %>% 
   add_lines(color=~status)
 ```
-]
+
 
 .pull-right[
 ```{r echo=FALSE,message=FALSE, warning=FALSE}
 cizgi2
 ```
-]
 
 
 
----
+
+
 ### Kutu Grafiği
 
 .pull-left[
-```{r out.width="70%"}
+```{r }
 kutu1 <- ggplot(diamonds,aes(price)) +
   geom_boxplot()
 kutu1
 ```
-]
+
 .pull-right[
-```{r out.width="70%"}
+```{r }
 kutu2<-  diamonds %>%
   plot_ly()  %>%
   add_boxplot(x=~price,
   boxpoints = "outliers")
 kutu2
 ```
-]
 
----
+
+
 ## Grafik Birleştirme
 
 .pull-left[
@@ -474,21 +456,97 @@ comb <- subplot(hist, kutu , nrows = 2,
         shareX = TRUE) %>%
   hide_legend()
 ```
-]
+
 .pull-right[
-```{r echo=FALSE, out.width="70%"}
+```{r echo=FALSE, }
 comb
 ```
-]
-
----
 
 
 
-class: middle, center
+## Hareketli Saçılım Grafiği
 
-.large-pink[
-teşekkürler
-]
+
+```{r}
+library(gapminder)
+gapminder %>% 
+  str()
+```
+
+
+
+## Saçılım Grafiği
+
+- 2002 yılı için `LifeExp  ~ gdpPercap` ilişkisi
+
+.pull-left[
+```{r echo=FALSE, }
+sacilim1 <- ggplot(gapminder %>% 
+  filter(year==2002), aes( x=gdpPercap, y=lifeExp)) +
+  geom_point()+theme_bw()
+sacilim1 
+
+```
+
+
+
+.pull-right[
+```{r echo=FALSE, }
+ggplotly(sacilim1)
+```
+
+
+
+
+## Saçılım Grafiği
+
+
+.pull-left[
+```{r}
+sacilim2 <- gapminder %>% 
+  filter(year==2002) %>%
+  plot_ly() %>% 
+  add_markers(x=~gdpPercap, y=~lifeExp) %>% 
+  layout(title="Plotly SSaçılım Grafiği",
+         xaxis=list(title="Kişi Başına 
+                    GBT(log ölçeğinde)", type="log"),
+         yaxis=list(title= "Bekelenen Ömür")) %>% 
+  hide_legend()
+```
+
+
+.pull-right[
+```{r }
+sacilim2
+```
+
+
+
+
+## Saçılım Grafiği
+
+- Frame argümanı ile aynı grafiği farklı yıllar için elde edebiliriz.
+
+```{r }
+sacilim3 <- gapminder %>% 
+  plot_ly() %>%  
+  add_markers(x=~gdpPercap, y=~lifeExp, 
+              frame=~year) %>% 
+    layout(title="Plotly SSaçılım Grafiği",
+         xaxis=list(title="Kişi Başına
+                    GBT(log ölçeğinde)", type="log"),
+         yaxis=list(title= "Bekelenen Ömür"))
+```
+
+
+
+## Saçılım Grafiği
+
+```{r}
+sacilim3
+```
+
+
+
 
 
