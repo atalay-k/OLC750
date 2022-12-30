@@ -1,0 +1,494 @@
+---
+title: "`r emo::ji('muscle')` R ile Veri Analizi"
+subtitle: " <br> `r emo::ji('graph')` Görselleştirme_05"
+author: "<br> <br> `r emo::ji('woman_teacher')` Dr. Kübra ATALAY KABASAKAL <br> Hacettepe Üniversitesi"
+date: "<br> <br> <br> <br>`r emo::ji('e-mail')` katalay@hacettepe.edu.tr"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["xaringan-themer.css", "slides-style.css"]
+    nature:
+      highlightStyle: solarized-light
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+      slideNumberFormat: |
+        <div class="progress-bar-container">
+          <div class="progress-bar" style="width: calc(%current% / %total% * 100%);">
+          </div>
+        </div>
+---
+
+
+## R plotly Bar Grafiği
+
+- `mtcars` veri setini kullananarak basit bir bar grafiği elde edelim.
+- X ekseni silindir sayısı `cyl` 
+- Y ekseni ise her bir türün frekans değerini göstersin. `n` 
+
+```{r message=FALSE, warning=FALSE}
+library(ggplot2)
+library(plotly) # interaktif grafikler için
+library(dplyr)  # veri düzenleme için
+```
+
+---
+## mtcars
+
+```{r}
+table(mtcars$cyl)
+```
+
+
+
+---
+## Slindir Sayısı Frekans Grafiği
+
+
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(mtcars, aes(cyl,fill=cyl)) + geom_bar()
+
+```
+
+---
+## Silindir Sayısı Frekans Grafiği
+
+
+```{r echo=FALSE}
+mtcars %>%
+  mutate(cyl = as.factor(cyl)) %>%  # convert cyl to categorical variable
+  count(cyl) %>%  ## count to get the frequency table (from dplyr package)
+  plot_ly(x=~cyl,
+          y=~n,
+          color=~cyl,
+          text = ~n,
+          ## below 3 lines for the bar label and hover text
+          textposition = "outside",
+          hovertext = ~paste("No. of cyl=", cyl, "\n", "Count=", n),
+          hoverinfo = "text") %>%  # apply plotly on the frequency data
+  add_bars(width=0.2) %>%  # use the width argument to adjust the width of the bars
+  layout(title="mtcars veri seti ile örnek bar grafiği",
+         xaxis = list(title="Slindir Sayısı "),
+         yaxis = list(title = "Frekans"))
+```
+
+
+---
+## Plotly
+
+```{r include=TRUE,eval=FALSE}
+data %>% 
+ plot_ly(x=~değişken,
+          y=~değişken)
+
+
+plot_ly(data,
+         x=~değişken,
+          y=~değişken)
+```
+
+
+---
+## Silindir Sayısı Frekans Grafiği
+
+
+.pull-left[
+```{r}
+bar <- mtcars %>%
+  mutate(cyl = as.factor(cyl)) %>% 
+  count(cyl) %>%    # Frekans tablosu oluştur
+  plot_ly(x=~cyl,
+          y=~n,
+          color=~cyl)
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+bar
+```
+
+]
+
+---
+## Silindir Sayısı Frekans Grafiği
+
+
+.pull-left[
+```{r}
+bar1 <- bar %>%   
+add_bars(width=0.5) %>%  # bar genişliği
+layout(title="mtcars veri seti ile
+  örnek bar grafiği",
+  xaxis = list(title="Slindir Sayısı "),
+  yaxis = list(title = "Frekans"))
+```
+]
+
+.pull-right[
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+bar1
+```
+
+]
+
+
+---
+## Silindir Sayısı Frekans Grafiği
+
+
+```{r echo=FALSE}
+mtcars %>%
+  mutate(cyl = as.factor(cyl)) %>%  # convert cyl to categorical variable
+  count(cyl) %>%  ## count to get the frequency table (from dplyr package)
+  plot_ly(y=~cyl,
+          x=~n,
+          color=~cyl,
+          text = ~n,
+          ## below 3 lines for the bar label and hover text
+          textposition = "outside",
+          hovertext = ~paste("No. of cyl=", cyl, "\n", "Count=", n),
+          hoverinfo = "text") %>%  # apply plotly on the frequency data
+  add_bars(width=0.2) %>%  # use the width argument to adjust the width of the bars
+  layout(title="mtcars veri seti ile örnek bar grafiği",
+         yaxis = list(title="Slindir Sayısı "),
+         xaxis = list(title = "Frekans"))
+```
+
+---
+## Silindir Sayısı-Vites Türü Frekans Grafiği
+
+- `mtcars` veri setini kullananarak basit bir bar grafiği elde edelim.
+- X ekseni silindir sayısı `cyl` (vites türüne göre gruplandırma ile `am` )
+- Y ekseni ise her bir türün frekans değerini göstersin. `n` 
+
+```{r}
+mtcars %>% 
+  mutate(cyl = as.factor(cyl), 
+         am = as.factor(am)) %>% 
+    count(cyl, am)
+```
+
+
+---
+## Silindir Sayısı-Vites Türü Frekans Grafiği
+
+```{r echo=FALSE}
+library(ggplot2)
+ggplot(mtcars %>% 
+  mutate(cyl = as.factor(cyl), 
+         am = as.factor(am)), aes(cyl)) + geom_bar(aes(fill = am))
+```
+
+
+
+---
+## Silindir Sayısı-Vites Türü Frekans Grafiği
+
+.pull-left[
+```{r message=FALSE, warning=FALSE}
+bar2 <- mtcars %>% 
+  mutate(cyl = as.factor(cyl), 
+         am = as.factor(am)) %>%  
+  count(cyl, am) %>% 
+  mutate(am=recode(am,
+`0`= "Otomatik", `1`="Manual")) %>% 
+    plot_ly(x=~cyl,       
+    y=~n, 
+  color=~am)
+```
+
+]
+.pull-left[
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+bar2 
+```
+
+]
+
+
+---
+## Silindir Sayısı-Vites Türü Frekans Grafiği
+
+.pull-left[
+```{r message=FALSE, warning=FALSE}
+bar3 <- bar2  %>% 
+layout(title="mtcars veri seti ile 
+      örnek bar grafiği",
+         yaxis = list(title="Slindir Sayısı "),
+         xaxis = list(title = "Frekans"),
+         barmode="stack")
+```
+
+]
+.pull-left[
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+bar3
+```
+
+]
+
+
+---
+## Histogram
+- Sürekli değişkenle histogram çizimi
+- `diamonds` veri setinde `price` değişkeninin histogramı
+
+```{r echo=FALSE,out.width="40%"}
+ggplot(diamonds,
+      aes(x=price)) +
+  geom_histogram(bins=25) +
+  theme_bw() + 
+  xlab("Ücret") + 
+  ylab("Frekans")
+```
+
+
+
+---
+## Histogram
+
+.pull-left[
+```{r}
+hist1 <- diamonds %>% 
+  plot_ly() %>% 
+  add_histogram(x=~price)
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist1 
+```
+]
+
+
+
+
+---
+## Histogram
+
+- Histogram çubukları arasına boşluk
+
+.pull-left[
+```{r}
+hist2 <- diamonds %>% 
+  plot_ly() %>% 
+  add_histogram(x=~price) %>% 
+  layout(bargap=0.1)
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist2 
+```
+]
+
+
+---
+## Histogram
+
+- Çubuk sayısını ve rengini değiştirme
+
+.pull-left[
+```{r}
+hist3 <- diamonds %>% 
+  plot_ly(x=~price) %>% 
+  add_histogram(nbinsx = 50, color=I("green")) %>% 
+  layout(bargap=0.1)
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist3
+```
+]
+
+
+---
+## Histogram
+
+- Çubuk aralığı belirleme
+
+.pull-left[
+```{r}
+hist4 <- 
+diamonds %>% 
+plot_ly() %>% 
+add_histogram(x=~price, 
+xbins = list(start=0, end=20000, size=2000)) %>% 
+layout(bargap=0.1)
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist4
+```
+]
+
+
+---
+## Histogram
+
+- Kategorik değişkenin histogramı
+
+.pull-left[
+```{r}
+hist5 <- diamonds %>% 
+  plot_ly() %>% 
+  add_histogram(x=~cut) 
+
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist5
+```
+]
+
+
+---
+## Histogram
+
+- İki kategorik değişkenin histogramı
+
+.pull-left[
+```{r}
+hist6 <- diamonds %>% 
+  plot_ly() %>% 
+  add_histogram(x=~cut, color=~clarity) 
+
+
+```
+]
+
+.pull-right[
+```{r echo=FALSE}
+hist6
+```
+]
+
+
+---
+## Çizgi Grafiği
+
+- 1975 -2020 yılları arasında fırtına  türlerini içeren `storms` data setini kullanarak yıllara göre fırtına türlerinin gözleneme sayıları
+
+```{r}
+storm_n <- storms %>% 
+  count(year, status)
+storm_n
+```
+
+---
+## Çizgi Grafiği
+
+.pull-left[
+```{r}
+cizgi1 <- ggplot(storm_n,
+        aes(x=year, y= n, color=status))+ 
+  geom_line()
+```
+]
+
+.pull-right[
+```{r}
+cizgi1
+```
+]
+
+
+---
+## Çizgi Grafiği
+
+```{r}
+ggplotly(cizgi1)
+```
+
+
+---
+## Çizgi Grafiği
+
+.pull-left[
+```{r}
+cizgi2 <- storm_n %>% 
+  plot_ly(x=~year, y=~n) %>% 
+  add_lines(color=~status)
+```
+]
+
+.pull-right[
+```{r echo=FALSE,message=FALSE, warning=FALSE}
+cizgi2
+```
+]
+
+
+
+---
+### Kutu Grafiği
+
+.pull-left[
+```{r out.width="70%"}
+kutu1 <- ggplot(diamonds,aes(price)) +
+  geom_boxplot()
+kutu1
+```
+]
+.pull-right[
+```{r out.width="70%"}
+kutu2<-  diamonds %>%
+  plot_ly()  %>%
+  add_boxplot(x=~price,
+  boxpoints = "outliers")
+kutu2
+```
+]
+
+---
+## Grafik Birleştirme
+
+.pull-left[
+- Grafik birleştirme işlemi `subplot`
+
+```{r}
+hist <- diamonds %>%
+  plot_ly() %>%
+  add_histogram(x=~price)
+
+kutu <- diamonds %>%
+  plot_ly()  %>%
+  add_boxplot(x=~price,
+  boxpoints = "outliers")
+
+comb <- subplot(hist, kutu , nrows = 2, 
+        shareX = TRUE) %>%
+  hide_legend()
+```
+]
+.pull-right[
+```{r echo=FALSE, out.width="70%"}
+comb
+```
+]
+
+---
+
+
+
+class: middle, center
+
+.large-pink[
+teşekkürler
+]
+
+

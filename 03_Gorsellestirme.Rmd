@@ -31,7 +31,7 @@ knitr::write_bib(x = c(.packages(), "ggplot2"), file = "packages.bib")
 | **Konu III: **   [Grafikler Türleri](sunu\G_Gorsellestirme_III.html) | |
 | **Konu IV: **   [ggplot2](sunu\G_Gorsellestirme_IV.html)  |  |
 | **Konu V: **   [ggplot2](sunu\G_Gorsellestirme_V.html) |  |
-
+| **Konu VI: **   [plotly](sunu\G_Gorsellestirme_VI.html) |  |
 
 
 
